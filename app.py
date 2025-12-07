@@ -510,16 +510,11 @@ def profile():
 
 @app.route("/projects")
 def projects():
+    # Import locally to use the new projects module
+    import projects as projects_module
+    
     project_images = list_images("projects")
-    html = "<h2>Projects</h2><p style='color:var(--muted-gray)'>A few highlights and demo screenshots.</p>"
-    if project_images:
-        html += "<div class='grid' style='margin-top:12px;'>"
-        for p in project_images:
-          img_url = url_for("image_file", filename=f"projects/{p}")
-          html += f"<div class='project-card card'><img src='{img_url}' alt='{p}' style='width:100%;height:160px;object-fit:cover;border-radius:8px;display:block;'><div style='padding:8px;'><strong style='color:#0b1620'>{p}</strong><div style='color:var(--muted-gray);font-size:13px;margin-top:6px'>Short description or tech tags here</div></div></div>"
-        html += "</div>"
-    else:
-        html += "<div style='margin-top:12px;color:var(--muted-gray)'>No project images found in <code>images/projects/</code>. Drop screenshots there and refresh.</div>"
+    html = projects_module.render(project_images)
     return render_page(html, active="projects")
 
 @app.route("/contact", methods=["GET", "POST"])
