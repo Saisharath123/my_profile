@@ -245,8 +245,6 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             </a>
             """
 
-        html += "</div>"
-
         return render_page_func(Markup(html), active="courses")
 
 

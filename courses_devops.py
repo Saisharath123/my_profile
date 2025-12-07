@@ -90,344 +90,184 @@ def render():
     page_style = """
     <style>
       /* --- BASE STYLES & UTILITIES --- */
+      @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap');
+
       .devops-page-shell {
         position:relative;
-        padding:30px; /* More padding */
-        border-radius:30px;
-        background:
-          linear-gradient(135deg, #f0f9ff 0%, #e0f7ff 100%); /* Lighter, cleaner background */
-        border:1px solid #cceeff;
-        box-shadow:0 25px 50px rgba(15,23,42,0.15); /* Deeper shadow */
+        padding:40px;
+        border-radius:32px;
+        background: #ffffff; /* White background requested */
+        border:1px solid #e2e8f0;
+        box-shadow:0 25px 50px rgba(0,0,0,0.1);
         overflow:hidden;
+        font-family: 'Outfit', sans-serif;
+        color: #1e293b; /* Dark text */
+        max-width: 1400px; /* Increase max width to accommodate 5 columns */
+        margin: 0 auto;
       }
 
-      /* --- BACKGROUND ORBS (More subtle) --- */
-      .devops-bg-orb {
-        position:absolute;
-        border-radius:999px;
-        filter:blur(40px);
-        opacity:0.6;
-        pointer-events:none;
-        mix-blend-mode:multiply; /* More dramatic blend */
-        animation:devops-orb-drift 20s ease-in-out infinite alternate;
+      /* --- DYNAMIC BACKGROUND (Subtle light mode) --- */
+      .devops-page-shell::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05), transparent 50%),
+                    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05), transparent 40%);
+        animation: rotate-bg 20s linear infinite;
+        z-index: 0;
+      }
+      
+      @keyframes rotate-bg {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
-      .devops-bg-orb-1 {
-        width:300px;
-        height:300px;
-        top:-100px;
-        right:-80px;
-        background:radial-gradient(circle, rgba(0,123,255,0.6), transparent 70%);
-      }
-
-      .devops-bg-orb-2 {
-        width:250px;
-        height:250px;
-        bottom:-90px;
-        left:-60px;
-        background:radial-gradient(circle, rgba(40,167,69,0.5), transparent 70%);
-        animation-delay:-7s;
-      }
-
-      .devops-bg-orb-3 {
-        width:220px;
-        height:220px;
-        top:30%;
-        left:50%;
-        background:radial-gradient(circle, rgba(255,193,7,0.5), transparent 70%);
-        animation-delay:-12s;
-      }
-
-      @keyframes devops-orb-drift {
-        0%   { transform:translate3d(0,0,0) scale(1); }
-        100% { transform:translate3d(40px,-30px,0) scale(1.05); }
-      }
-
-      /* --- MAIN CONTENT WRAPPER --- */
+      /* --- HERO SECTION --- */
       .devops-wrapper {
         position:relative;
         z-index:1;
         display:flex;
         flex-direction:column;
-        gap:30px;
+        gap:40px;
       }
 
-      /* --- HERO SECTION --- */
       .devops-hero-row {
         display:flex;
         gap:30px;
         align-items:center;
+        justify-content: center;
+        text-align: center;
         flex-wrap:wrap;
-        padding-bottom:15px;
-        border-bottom:2px solid #e9ecef; /* Thicker separator */
-      }
-
-      .devops-hero-img-col {
-        flex:0 0 150px;
+        padding-bottom:30px;
+        border-bottom:1px solid #e2e8f0;
       }
 
       .devops-hero-img-col img {
-        width:130px;
-        height:130px;
-        object-fit:cover;
-        border-radius:50%; /* Circular image */
-        box-shadow:0 15px 35px rgba(0,0,0,0.15);
-        display:block;
-        border: 6px solid #ffffff; /* White border for pop */
+        width:140px;
+        height:140px;
+        object-fit:contain; /* Fit properly */
+        border-radius:50%;
+        box-shadow:0 10px 30px rgba(56, 189, 248, 0.2);
+        border: 4px solid #fff;
+        background: #f8fafc; /* Slight bg to ensure circle shape if image is transparent */
+        animation: rotate-hero 20s linear infinite; /* Slow rotation */
       }
-
-      .devops-hero-text-col {
-        flex:1;
-        min-width:250px;
+      
+      @keyframes rotate-hero {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
       .devops-hero-text-col h1 {
-        margin:0;
-        font-size:2.5rem; /* Larger heading */
-        color:#007bff; /* Primary blue color */
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        margin:0 0 12px 0;
+        font-size:3rem;
+        background: linear-gradient(135deg, #0f172a 0%, #334155 100%); /* Dark gradient */
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
       }
 
       .devops-hero-text-col p {
-        color:#495057;
-        font-weight:500;
-        margin:8px 0 0 0;
-        font-size:1.2rem;
+        color: #64748b; /* Slate 500 */
+        font-size:1.25rem;
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 300;
       }
 
-      /* --- MODULE GRID --- */
+      /* --- GRID LAYOUT (5 Columns) --- */
       .devops-grid {
-        display:flex;
-        flex-wrap:wrap;
-        gap:25px;
-        justify-content:center;
+        display:grid;
+        /* Force 5 columns, min 180px each */
+        grid-template-columns: repeat(5, 1fr); 
+        gap: 20px;
+        padding: 20px;
+      }
+      
+      /* Responsive fallback for smaller screens */
+      @media (max-width: 1200px) {
+        .devops-grid {
+           grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
       }
 
-      /* --- CARD STYLES (MODULAR) --- */
+      /* --- EXTREME CARD STYLES --- */
       .devops-module-card {
         cursor:pointer;
         position:relative;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        gap:10px;
-        width:220px; /* Slightly wider card */
-        padding:0;
-        
-        /* FALLING FROM AIR ON LOAD */
-        opacity:0;
-        transform:translateY(-60px) scale(0.9);
-        animation:devops-fall-in 0.8s cubic-bezier(0.22, 0.8, 0.3, 1.1) forwards;
-        transition:
-          transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), /* Rocket launch curve */
-          box-shadow 0.4s ease;
-      }
-
-      /* Staggered delays for animation */
-      .devops-grid a:nth-child(1)  .devops-module-card { animation-delay:0.00s; }
-      .devops-grid a:nth-child(2)  .devops-module-card { animation-delay:0.08s; }
-      .devops-grid a:nth-child(3)  .devops-module-card { animation-delay:0.16s; }
-      .devops-grid a:nth-child(4)  .devops-module-card { animation-delay:0.24s; }
-      .devops-grid a:nth-child(5)  .devops-module-card { animation-delay:0.32s; }
-      .devops-grid a:nth-child(6)  .devops-module-card { animation-delay:0.40s; }
-      .devops-grid a:nth-child(7)  .devops-module-card { animation-delay:0.48s; }
-      .devops-grid a:nth-child(8)  .devops-module-card { animation-delay:0.56s; }
-      .devops-grid a:nth-child(9)  .devops-module-card { animation-delay:0.64s; }
-      .devops-grid a:nth-child(10) .devops-module-card { animation-delay:0.72s; }
-
-      @keyframes devops-fall-in {
-        0%   { opacity:0; transform:translateY(-60px) scale(0.9); }
-        70%  { opacity:1; transform:translateY(5px) scale(1.02); }
-        100% { opacity:1; transform:translateY(0) scale(1.0); }
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 1;
+        /* Ensure card takes full height of grid cell */
+        height: 100%;
       }
 
       .devops-module-card-inner {
-        width:100%;
-        height:140px; /* Slightly taller */
-        border-radius:18px; /* More rounded */
-        padding:10px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        overflow:hidden;
-        
-        /* Glassmorphism/Neumorphism base look */
-        background:rgba(255, 255, 255, 0.8);
-        border:1px solid rgba(255, 255, 255, 0.4);
-        box-shadow:0 10px 30px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.5);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        transition:
-          box-shadow 0.4s ease,
-          background 0.4s ease,
-          transform 0.4s ease;
-      }
-      
-      /* Specific style for 'cover' cards */
-      .devops-module-card-cover .devops-module-card-inner {
-          height:160px;
-          padding:0;
+        height: auto; /* Let content dictate height */
+        min-height: 160px; /* Minimum height for consistency */
+        border-radius: 20px;
+        background: #fff; /* White cards */
+        border: 1px solid #e2e8f0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px 15px; /* Comfortable padding */
+        gap: 15px;
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s ease;
+        overflow: hidden;
+        position: relative;
       }
 
-      /* Image styles */
-      .devops-card-img-contain {
-          max-width:90%;
-          max-height:90%;
-          height:auto;
-          display:block;
-          object-fit:contain;
+      /* Image styling - CONTAINED */
+      .devops-card-img-contain, .devops-card-img-cover {
+        position: relative;
+        width: 80px; /* Reduced from 100px to fit */
+        height: 80px;
+        object-fit: contain;
+        transition: transform 0.4s ease, filter 0.4s ease;
+        z-index: 0;
       }
       
-      .devops-card-img-cover {
-          width:100%;
-          height:100%;
-          display:block;
-          object-fit:cover;
-          border-radius:18px;
-      }
-
+      /* Label styling - BELOW IMAGE */
       .devops-card-label {
-        font-weight:800;
-        color:#212529;
-        text-align:center;
-        font-size:15px;
-        line-height:1.4;
-        padding: 0 4px;
+        font-size: 0.95rem; /* Slightly smaller text */
+        font-weight: 700;
+        text-align: center;
+        color: #1e293b;
+        position: relative;
+        width: 100%;
+        padding: 0;
+        z-index: 2;
+        text-shadow: none;
+        transition: transform 0.3s ease, color 0.3s ease;
+        line-height: 1.2;
       }
 
-      /* --- ROCKET HOVER EFFECT --- */
+      /* --- HOVER EFFECTS (MAGNIFY + GLOW) --- */
       .devops-module-card:hover {
-        /* ROCKET LIFT-OFF */
-        transform:translateY(-30px) scale(1.1) rotateZ(-1deg); /* Lift, scale, and slight wobble */
-        z-index: 10; /* Bring to front */
+        transform: scale(1.1) translateY(-5px);
+        z-index: 10;
       }
 
       .devops-module-card:hover .devops-module-card-inner {
-        /* ENGINE FIRE GLOW */
-        background:rgba(255, 255, 255, 0.95);
-        box-shadow:
-          0 0 5px rgba(255, 165, 0, 0.8), /* Orange glow */
-          0 0 20px rgba(255, 69, 0, 0.6), /* Red glow */
-          0 25px 50px rgba(0,0,0,0.25); /* Deep shadow */
-        border-color: #ffc107; /* Yellow border */
+        border-color: #38bdf8;
+        box-shadow: 
+            0 0 0 2px rgba(56, 189, 248, 0.2),
+            0 25px 50px -12px rgba(56, 189, 248, 0.25);
+      }
+
+      .devops-module-card:hover .devops-card-img-contain, 
+      .devops-module-card:hover .devops-card-img-cover {
+        transform: scale(1.1) rotate(5deg);
+        filter: brightness(1.05);
       }
       
-      /* --- SERVICE DETAIL PAGE STYLES (MODULAR) --- */
-      .service-detail-container {
-          display:flex;
-          gap:40px;
-          flex-wrap:wrap;
-          align-items:flex-start;
-      }
-      
-      .service-icon-col {
-          flex:0 0 200px; /* Wider column */
-          display:flex;
-          align-items:flex-start;
-          justify-content:center;
-      }
-      
-      .service-icon-wrapper {
-          width:200px;
-          height:200px;
-          border-radius:50%; /* Circular icon */
-          background:linear-gradient(145deg, #ffffff, #f0f0f0);
-          border:4px solid #007bff; /* Primary color border */
-          box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          padding:15px;
-      }
-      
-      .service-icon-wrapper img {
-          max-width:90%;
-          max-height:90%;
-          height:auto;
-          display:block;
-          object-fit:contain;
-      }
-      
-      .service-content-col {
-          flex:1;
-          min-width:350px;
-      }
-      
-      .service-content-col h2 {
-          font-size:2.5rem;
-          color:#007bff;
-          margin-top:0;
-          border-bottom: 3px solid #e9ecef;
-          padding-bottom: 10px;
-          margin-bottom: 20px;
-      }
-      
-      .service-content-col h3 {
-          font-size:1.6rem;
-          color:#28a745; /* Secondary green color for subheadings */
-          margin-top:30px;
-          margin-bottom:12px;
-      }
-      
-      .service-content-col p {
-          color:#495057;
-          font-weight:400;
-          font-size:1.15rem;
-          line-height:1.7;
-      }
-      
-      .service-content-col ol {
-          color:#495057;
-          font-weight:600;
-          font-size:1.05rem;
-          line-height:2;
-          padding-left: 25px;
-          list-style-type: decimal-leading-zero; /* Advanced list style */
-      }
-      
-      .service-content-col li {
-          margin-bottom: 8px;
-      }
-      
-      /* Button Style (More prominent) */
-      .btn-primary {
-          display: inline-block;
-          padding: 12px 25px;
-          background-color: #007bff;
-          color: white;
-          text-decoration: none;
-          border-radius: 50px; /* Pill shape */
-          font-weight: 700;
-          font-size: 1.1rem;
-          letter-spacing: 0.5px;
-          transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-          box-shadow: 0 8px 20px rgba(0, 123, 255, 0.4);
-      }
-      
-      .btn-primary:hover {
-          background-color: #0056b3;
-          transform: translateY(-3px);
-          box-shadow: 0 12px 25px rgba(0, 123, 255, 0.6);
-      }
-      
-      .btn-primary:active {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 10px rgba(0, 123, 255, 0.4);
-      }
-      
-      /* Back Link */
-      .back-link {
-          display: inline-block;
-          margin-top:20px;
-          font-weight:700;
-          color:#6c757d;
-          text-decoration:none;
-          transition: color 0.2s ease;
-      }
-      
-      .back-link:hover {
-          color:#007bff;
-          text-decoration:underline;
+      .devops-module-card:hover .devops-card-label {
+        color: #0284c7; /* Blue text on hover */
       }
       
     </style>
@@ -435,18 +275,14 @@ def render():
 
     page_html = f"""
     <div class="devops-page-shell">
-      <div class="devops-bg-orb devops-bg-orb-1"></div>
-      <div class="devops-bg-orb devops-bg-orb-2"></div>
-      <div class="devops-bg-orb devops-bg-orb-3"></div>
-
       <div class="devops-wrapper">
         <div class="devops-hero-row">
           <div class="devops-hero-img-col">
             <img src="{LOCAL_DEVOPS_IMG}" alt="DevOps Course" />
           </div>
           <div class="devops-hero-text-col">
-            <h1>The Complete DevOps Course</h1>
-            <p>Master the tools and practices for modern software delivery and infrastructure automation.</p>
+            <h1>DevOps Mastery 2025</h1>
+            <p>Future-proof your career with next-gen infrastructure automation and CI/CD pipelines.</p>
           </div>
         </div>
 
@@ -454,7 +290,6 @@ def render():
           {cards}
         </div>
       </div>
-    </div>
     """
     return page_style + page_html
 
@@ -620,6 +455,7 @@ def render_service(service):
         </div>
       </div>
     """
+
 
 def get_course_html():
     return render()
