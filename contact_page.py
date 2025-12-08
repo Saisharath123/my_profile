@@ -69,79 +69,164 @@ def register_routes(app, render_page_func, base_dir, email_config):
         # GET request - render form
         form_html = """
           <style>
-            .contact-wrap { display:flex; gap:18px; flex-wrap:wrap; }
+            @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+            
+            .contact-wrap { 
+              display: flex; 
+              gap: 24px; 
+              flex-wrap: wrap; 
+              animation: fadeIn 0.6s ease-out;
+            }
 
             .contact-panel {
-              flex:1; min-width:300px;
-              border-radius:14px; padding:18px;
-              background:linear-gradient(180deg,#ffffff,#fbfdff);
-              box-shadow:0 20px 50px rgba(2,6,23,0.06);
-              border:1px solid rgba(10,20,30,0.04);
+              flex: 1; 
+              min-width: 320px;
+              border-radius: 20px; 
+              padding: 32px;
+              background: #ffffff;
+              box-shadow: 0 20px 40px -12px rgba(0,0,0,0.05);
+              border: 1px solid rgba(0,0,0,0.04);
+              transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .contact-panel:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
             }
 
-            h2.contact-title { margin:0 0 6px 0; font-size:22px; color:#02203a; }
-            p.contact-sub { margin:0 0 14px 0; color:var(--muted-gray); font-weight:700; }
+            h2.contact-title { 
+              margin: 0 0 8px 0; 
+              font-size: 28px; 
+              color: #111827; 
+              letter-spacing: -0.5px;
+            }
+            p.contact-sub { 
+              margin: 0 0 24px 0; 
+              color: #6B7280; 
+              font-size: 15px; 
+              line-height: 1.5;
+            }
 
-            .form-row { display:flex; gap:10px; margin-bottom:10px; }
-            .form-row .field { flex:1; }
+            .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+            .form-row .field { flex: 1; }
+            
+            label {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                color: #374151;
+                margin-bottom: 6px;
+                margin-left: 2px;
+            }
 
             .field input, .field textarea {
-              padding:12px 14px;
-              border-radius:10px;
-              border:1px solid rgba(10,20,30,0.06);
-              background:#fff;
-              font-weight:700;
-              font-size:15px;
+              width: 100%;
+              padding: 14px 16px;
+              border-radius: 12px;
+              border: 1px solid #E5E7EB;
+              background: #F9FAFB;
+              color: #111827;
+              font-weight: 500;
+              font-size: 15px;
+              transition: all 0.2s ease;
+              box-sizing: border-box;
+              font-family: inherit;
             }
-
-            .message-wrap { display:flex; gap:12px; }
-            .message-container { width:50%; min-width:240px; }
-            .message-container textarea {
-              width:100%;
-              min-height:220px;
-              resize:vertical;
+            .field input:focus, .field textarea:focus {
+              outline: none;
+              border-color: #60A5FA;
+              background: #ffffff;
+              box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
             }
+            .field textarea { resize: vertical; min-height: 150px; }
 
-            .send-row { margin-top:8px; }
+            .message-wrap { display: flex; gap: 24px; flex-wrap: wrap; }
+            .message-container { flex: 1; min-width: 300px; }
+            
             .btn-send {
-              background:linear-gradient(90deg,#60A5FA,#6EE7B7);
-              border:none; padding:10px 16px;
-              border-radius:10px; color:#02203a;
-              font-weight:800; cursor:pointer;
+              margin-top: 8px;
+              background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+              border: none; 
+              padding: 14px 28px;
+              border-radius: 12px; 
+              color: white;
+              font-weight: 700; 
+              font-size: 16px;
+              cursor: pointer;
+              transition: filter 0.2s ease, transform 0.1s ease;
+              width: 100%;
+              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            .btn-send:hover {
+              filter: brightness(110%);
+              transform: translateY(-1px);
+            }
+            .btn-send:active {
+                transform: translateY(0);
             }
 
             .contact-side {
-              width:320px; min-width:240px;
-              border-radius:14px; padding:16px;
-              background:linear-gradient(180deg,#f8fbff,#fff);
-              box-shadow:0 16px 44px rgba(2,6,23,0.04);
-              border:1px solid rgba(10,20,30,0.04);
+              width: 320px; 
+              min-width: 280px;
+              border-radius: 20px; 
+              padding: 28px;
+              background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+              border: 1px solid rgba(186, 230, 253, 0.4);
+              height: fit-content;
             }
 
-            .side-cards { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px; }
-            .side-cards .card {
-              background:#fff; padding:10px; border-radius:10px;
-              box-shadow:0 8px 20px rgba(10,20,30,0.03);
-              text-align:center; font-weight:700;
+            .side-cards { 
+                display: grid; 
+                grid-template-columns: 1fr 1fr; 
+                gap: 12px; 
+                margin-top: 20px; 
             }
+            .side-card {
+              background: #ffffff; 
+              padding: 16px 12px; 
+              border-radius: 12px;
+              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+              text-align: center; 
+              font-weight: 600;
+              font-size: 13px;
+              color: #0F172A;
+              border: 1px solid #E2E8F0;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 8px;
+              transition: transform 0.2s;
+            }
+            .side-card:hover {
+                transform: translateY(-2px);
+                border-color: #BAE6FD;
+            }
+            .side-card span { font-size: 20px; }
 
             .right-contact-info {
-              margin-top:18px; padding-top:10px;
-              border-top:1px solid rgba(10,20,30,0.06);
+              margin-top: 24px; 
+              padding-top: 20px;
+              border-top: 1px solid rgba(0,0,0,0.06);
             }
-            .email-row, .phone-row {
-              display:flex;
-              align-items:center;
-              gap:8px;
-              white-space:nowrap;
+            .contact-link-row {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 10px 0;
+              color: #334155;
+              text-decoration: none;
+              transition: transform 0.2s;
             }
-            .email-row span.email-text { font-size:15px; font-weight:900; color:#02203a; }
-            .phone-row span.phone-text { font-size:17px; font-weight:900; color:#02203a; }
+            .contact-link-row:hover {
+                transform: translateX(4px);
+                color: #0284c7;
+            }
+            .contact-link-row span { font-weight: 600; font-size: 15px; }
 
-            @media (max-width:900px){
-              .contact-wrap { flex-direction:column; }
-              .contact-side { width:100%; }
-              .message-container { width:100%; }
+            @media (max-width: 768px){
+              .contact-wrap { flex-direction: column; }
+              .contact-side { width: 100%; box-sizing: border-box; }
+              .message-container { width: 100%; }
+              .form-row { flex-direction: column; gap: 12px; }
             }
           </style>
 
@@ -149,61 +234,65 @@ def register_routes(app, render_page_func, base_dir, email_config):
 
             <!-- LEFT FORM PANEL -->
             <div class="contact-panel">
-              <h2 class="contact-title">Contact</h2>
-              <p class="contact-sub">Send a quick message — for course enquiries, demos, or project collaboration.</p>
+              <h2 class="contact-title">Get in Touch</h2>
+              <p class="contact-sub">Have a question or want to collaborate? Drop me a message below.</p>
 
               <form method="post" action="{{ url_for('contact') }}" novalidate>
 
                 <div class="form-row">
-                  <div class="field"><input name="name" type="text" placeholder="Your name" required></div>
-                  <div class="field"><input name="email" type="email" placeholder="Your email" required></div>
+                  <div class="field">
+                    <label>Name</label>
+                    <input name="name" type="text" placeholder="John Doe" required>
+                  </div>
+                  <div class="field">
+                    <label>Email</label>
+                    <input name="email" type="email" placeholder="john@example.com" required>
+                  </div>
                 </div>
 
                 <div class="form-row">
-                  <div class="field"><input name="mobile" type="tel" placeholder="Your mobile number" required></div>
-                </div>
-
-                <div class="message-wrap">
-                  <div class="message-container">
-                    <div class="field">
-                      <textarea name="message" rows="8" placeholder="Your message" required></textarea>
-                    </div>
-
-                    <div class="send-row">
-                      <button class="btn-send" type="submit">Send Message</button>
-                    </div>
+                  <div class="field">
+                    <label>Mobile</label>
+                    <input name="mobile" type="tel" placeholder="+91 98765 43210" required>
                   </div>
-                  <div style="flex:1"></div>
                 </div>
+
+                <div class="field">
+                   <label>Message</label>
+                   <textarea name="message" placeholder="Tell me about your project or enquiry..." required></textarea>
+                </div>
+
+                <button class="btn-send" type="submit">
+                    Send Message
+                </button>
 
               </form>
             </div>
 
             <!-- RIGHT INFO PANEL -->
             <div class="contact-side">
-              <h3 style="margin:0 0 6px 0;color:#02203a;">Why reach out?</h3>
-              <p style="margin:0 0 12px 0;color:var(--muted-gray);font-weight:700;">
-                For demos, course details, or project collaboration — I reply as soon as possible.
+              <h3 style="margin:0 0 8px 0; color:#0f172a; font-size: 18px;">Why reach out?</h3>
+              <p style="margin:0 0 16px 0; color:#64748b; font-size: 14px; line-height: 1.5;">
+                Whether you need a demo, course details, or technical mentorship — I'm here to help.
               </p>
 
               <div class="side-cards">
-                <div class="card">Live Labs</div>
-                <div class="card">Project Demos</div>
-                <div class="card">Mentorship</div>
-                <div class="card">Cert Prep</div>
+                <div class="side-card"><span>🧪</span>Live Labs</div>
+                <div class="side-card"><span>🚀</span>Project Demos</div>
+                <div class="side-card"><span>👨‍💻</span>Mentorship</div>
+                <div class="side-card"><span>🏆</span>Cert Prep</div>
               </div>
 
               <!-- CONTACT INFO -->
               <div class="right-contact-info">
-                  <div class="email-row">
-                      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h13A2.5 2.5 0 0 1 21 6.5v11A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5v-11zM5.5 6L12 10.2 18.5 6" fill="#0b1620"/></svg>
-                      <a href="mailto:multiclouddevops4u@gmail.com" style="text-decoration:none;"><span class="email-text">multiclouddevops4u@gmail.com</span></a>
-                  </div>
-                  <div style="height:8px;"></div>
-                  <div class="phone-row">
-                      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M6.6 10.2a15.05 15.05 0 0 0 7.2 7.2l1.9-1.9a1 1 0 0 1 1.0-.2c1.1.4 2.4.7 3.7.7a1 1 0 0 1 1 1v3.0a1 1 0 0 1-1 1C10.7 21 3 13.3 3 3.5A1 1 0 0 1 4 2.5h3.0a1 1 0 0 1 1 1c0 1.3.3 2.6.7 3.7a1 1 0 0 1-.2 1.0l-1.9 1.9z" fill="#0b1620"/></svg>
-                      <a href="tel:+919666562012" style="text-decoration:none;"><span class="phone-text">+91 96665 62012</span></a>
-                  </div>
+                  <a href="mailto:multiclouddevops4u@gmail.com" class="contact-link-row">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                      <span>multiclouddevops4u@gmail.com</span>
+                  </a>
+                  <a href="tel:+919666562012" class="contact-link-row">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                      <span>+91 96665 62012</span>
+                  </a>
               </div>
             </div>
 
