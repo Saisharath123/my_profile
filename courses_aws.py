@@ -417,50 +417,14 @@ def render_service(service_id: str):
     
     label, icon = SERVICES[sid]
     
-    # Use existing detail content logic (simplified for brevity, can be expanded)
-    # The user asked for enhanced UI, so we wrap the detail content in a nice container.
-    
-    # Pre-defined content mapping (reusing user's existing logic styles)
-    details_map = {
-        "compute": "<h3>Core Concepts</h3><p>EC2 provides scalable computing capacity. It eliminates the need to invest in hardware up front, so you can develop and deploy applications faster.</p><h3>Key Labs</h3><ul><li>Launch Linux/Windows Instance</li><li>Create Custom AMI</li><li>Configure Security Groups</li></ul>",
-        "storage": "<h3>Core Concepts</h3><p>Amazon S3 provides 99.999999999% durability. EBS offers persistent block storage for use with EC2 instances.</p><h3>Key Labs</h3><ul><li>Host a static website on S3</li><li>Mount EFS on multiple instances</li><li>EBS Snapshots & Restore</li></ul>"
-    }
-    # Fallback for others to generic text to save space in this rewrite, 
-    # but in a real scenario we'd copy the full text from the original file. 
-    # I will try to preserve the original detailed text structure but styled better.
-    
-    # Define generic content if not specific (to ensure all pages work)
-    content_html = details_map.get(sid, f"<h3>About {label}</h3><p>Detailed curriculum and hands-on labs for <strong>{label}</strong> are currently being updated for the new cohort.</p>")
-    
-    # Restoring original text context for key services to ensure no data loss compared to previous file
-    if sid == "compute":
-        content_html = """
-        <h3>Core Concepts</h3>
-        <p>EC2 (Elastic Compute Cloud) is the backbone of AWS. You will learn about Instance Types (T3, C5, R5), purchasing options (Spot, Reserved), and placement groups.</p>
-        <div style="background:#f3f4f6; padding:20px; border-radius:12px; margin-top:20px;">
-            <h4 style="margin-top:0;">🧪 Hands-on Labs</h4>
-            <ul style="margin-bottom:0; padding-left:20px;">
-                <li>Launch an HTTPD Web Server on Amazon Linux 2</li>
-                <li>Create a golden AMI and launch new instances from it</li>
-                <li>Configure an Application Load Balancer (ALB) with Auto Scaling</li>
-            </ul>
-        </div>
-        """
-    elif sid == "storage":
-        content_html = """
-        <h3>Core Concepts</h3>
-        <p>Object storage vs Block storage. Master S3 classes (Standard, Intelligent-Tiering, Glacier) for cost optimization. Understand EBS volume types (gp3, io2) for performance.</p>
-        <div style="background:#f3f4f6; padding:20px; border-radius:12px; margin-top:20px;">
-            <h4 style="margin-top:0;">🧪 Hands-on Labs</h4>
-            <ul style="margin-bottom:0; padding-left:20px;">
-                <li>Enable Cross-Region Replication (CRR) on S3 buckets</li>
-                <li>Resize an active EBS volume without downtime</li>
-                <li>Mount an EFS file system to two instances in different AZs</li>
-            </ul>
-        </div>
-        """
-        # (I am keeping the fallback for others to keep the file concise, as purely UI was requested, 
-        # but normally I would migrate all text. Given the constraint of 'enhance UI', showcasing the structure is key.)
+    # Retrieve content from backend_aws backend
+    try:
+        from backend_aws import AWS_CONTENT
+    except ImportError:
+        AWS_CONTENT = {}
+
+    default_text = f"<h3>About {label}</h3><p>Detailed curriculum and hands-on labs for <strong>{label}</strong> are currently being updated.</p>"
+    content_html = AWS_CONTENT.get(sid, default_text)
 
     return f"""
     <style>
