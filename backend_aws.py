@@ -196,6 +196,7 @@ AWS_MODULES = [
         "image": local_img("Amazon Q.jpg"),
         "description": "Your Generative AI assistant designed for work.",
         "services": [
+            {"name": "Amazon Q", "image": local_img("Amazon Q.jpg"), "description": "Generative AI powered assistant."},
             {"name": "Amazon Q Business", "image": local_backend_img("Amazon Q Business.png"), "description": "AI assistant for business data."},
         ]
     },

@@ -445,11 +445,14 @@ def render_service(service_id: str):
         }}
         
         .inner-service-icon {{
-            width: 60px; height: 60px;
-            margin-bottom: 8px;
+            width: 100%; height: 100px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }}
         .inner-service-icon img {{
-            width: 100%; height: 100%; object-fit: contain;
+            max-width: 100%; height: 100%; object-fit: contain;
             display: block; 
         }}
 
