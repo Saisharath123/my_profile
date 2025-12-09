@@ -43,6 +43,9 @@ def render():
     except ImportError:
         widget_html = "<div style='color:white'>Error loading widget.</div>"
 
+    # Prepare JS data injection for Lab
+    lab_config_js = json.dumps(LAB_CONFIG)
+
     return f"""
     <style>
         /* --- CSS STYLES --- */
