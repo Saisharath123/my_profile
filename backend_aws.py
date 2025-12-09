@@ -27,6 +27,7 @@ AWS_MODULES = [
              {"name": "Amazon Lightsail", "image": f"{ICON_BASE}/Compute/Lightsail.svg", "description": "Easy-to-use cloud platform."},
              {"name": "Amazon ECS", "image": f"{ICON_BASE}/Containers/Elastic-Container-Service.svg", "description": "Container orchestration service."},
              {"name": "AWS Fargate", "image": f"{ICON_BASE}/Containers/Fargate.svg", "description": "Serverless compute for containers."},
+             {"name": "Amazon EKS", "image": f"{ICON_BASE}/Containers/Elastic-Kubernetes-Service.svg", "description": "Managed Kubernetes service."},
         ]
     },
     {
