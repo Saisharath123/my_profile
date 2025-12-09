@@ -6,15 +6,12 @@ import json
 
 def render():
     # --- DATA IMPORT ---
+    # --- DATA IMPORT ---
     try:
         from all_modules import LINUX_TOPICS
-        from smart_widget import COMMAND_MAP
-        from virtual_lab import LAB_CONFIG
     except ImportError:
         # Fallback for dev safety
         LINUX_TOPICS = []
-        COMMAND_MAP = {}
-        LAB_CONFIG = {"welcome_message": "Error loading lab config", "user": "user", "hostname": "host"}
 
     # Generate HTML for grid items (Server-Side)
     modules_html = ""
