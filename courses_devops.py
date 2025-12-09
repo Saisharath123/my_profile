@@ -11,7 +11,7 @@ LOCAL_DEVOPS_IMG = "/images/devops.png"
 # Service/tool definitions: id -> (label, served_image_url)
 SERVICES = {
     "git-github": (
-        "Git & GitHub Fundamentals",
+        "Version Control System (Git / GitHub)",
         "/images/devops_images/Git Hub.png"
     ),
     "ci-cd": (
@@ -23,7 +23,7 @@ SERVICES = {
         "/images/devops_images/docker.png"
     ),
     "kubernetes": (
-        "Kubernetes (K8s)",
+        "Container Orchestration (Kubernetes / K8)",
         "/images/devops_images/k8.png"
     ),
     "iac-terraform": (
