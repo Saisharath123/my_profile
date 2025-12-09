@@ -6,12 +6,16 @@
 # We will use specific URLs for better accuracy, but this variable helps if we need to switch CDNs.
 ICON_BASE = "https://icon.icepanel.io/AWS/svg" 
 
+# Local Image Path Helper
+def local_img(filename):
+    return f"/images/aws_images/{filename}"
+
 AWS_MODULES = [
     {
         "id": "compute",
         "title": "Compute",
-        # Category Icon
-        "image": f"{ICON_BASE}/Compute/Compute.svg", 
+        # REVERTED TO LOCAL IMAGE
+        "image": local_img("compute.svg"), 
         "description": "Compute services are the backbone of your AWS infrastructure. Master virtual servers, serverless, and scaling.",
         "services": [
             {
@@ -44,7 +48,7 @@ AWS_MODULES = [
     {
         "id": "storage",
         "title": "Storage",
-        "image": f"{ICON_BASE}/Storage/Storage.svg",
+        "image": local_img("storage.svg"),
         "description": "Durable, scalable, and secure storage solutions for any data type.",
         "services": [
             {
@@ -77,7 +81,7 @@ AWS_MODULES = [
     {
         "id": "databases",
         "title": "Databases",
-        "image": f"{ICON_BASE}/Database/Database.svg",
+        "image": local_img("databases.png"),
         "description": "Purpose-built databases for all your application needs.",
         "services": [
             {
@@ -110,7 +114,7 @@ AWS_MODULES = [
     {
         "id": "networking-and-content-delivery",
         "title": "Networking & Content Delivery",
-        "image": f"{ICON_BASE}/Networking-Content-Delivery/Networking-Content-Delivery.svg",
+        "image": local_img("Networking & Content Delivery.webp"),
         "description": "Isolate your cloud infrastructure and deliver content with low latency.",
         "services": [
             {
@@ -143,7 +147,7 @@ AWS_MODULES = [
     {
         "id": "security-identity-and-compliance",
         "title": "Security, Identity & Compliance",
-        "image": f"{ICON_BASE}/Security-Identity-Compliance/Security-Identity-Compliance.svg",
+        "image": local_img("Security, Identity & Compliance.png"),
         "description": "Secure your workloads and manage identities effectively.",
         "services": [
             {
@@ -176,7 +180,7 @@ AWS_MODULES = [
     {
         "id": "monitoring",
         "title": "Monitoring & Logging",
-        "image": f"{ICON_BASE}/Management-Governance/CloudWatch.svg", # CloudWatch is central for this
+        "image": local_img("Monitoring & Logging.png"),
         "description": "Visibility into your AWS resources and applications.",
         "services": [
             {
@@ -204,7 +208,7 @@ AWS_MODULES = [
     {
         "id": "application-integration",
         "title": "Application Integration",
-        "image": f"{ICON_BASE}/Application-Integration/Application-Integration.svg",
+        "image": local_img("Application Integration.png"),
         "description": "Decouple microservices and distributed systems.",
         "services": [
             {
@@ -237,7 +241,7 @@ AWS_MODULES = [
     {
         "id": "deployment-and-management",
         "title": "Deployment Management",
-        "image": f"{ICON_BASE}/Management-Governance/Management-Governance.svg",
+        "image": local_img("Deployment & Management.png"),
         "description": "Automate resource provisioning and infrastructure management.",
         "services": [
             {
@@ -265,7 +269,7 @@ AWS_MODULES = [
     {
         "id": "containers",
         "title": "Containers",
-        "image": f"{ICON_BASE}/Containers/Containers.svg",
+        "image": local_img("Containers.svg"),
         "description": "Run containerized applications utilizing managed services.",
         "services": [
             {
@@ -293,7 +297,7 @@ AWS_MODULES = [
     {
         "id": "migration",
         "title": "Migration",
-        "image": f"{ICON_BASE}/Migration-Transfer/Migration-Transfer.svg",
+        "image": local_img("Migration.png"),
         "description": "Move data and applications to AWS quickly and securely.",
         "services": [
             {
@@ -321,7 +325,7 @@ AWS_MODULES = [
     {
         "id": "analytics",
         "title": "Analytics",
-        "image": f"{ICON_BASE}/Analytics/Analytics.svg",
+        "image": local_img("Analytics.svg"),
         "description": "Derive insights with the broadest set of analytics services.",
         "services": [
             {
@@ -354,7 +358,7 @@ AWS_MODULES = [
     {
         "id": "machine-learning",
         "title": "Machine Learning",
-        "image": f"{ICON_BASE}/Machine-Learning/Machine-Learning.svg",
+        "image": local_img("Machine Learning.png"),
         "description": "Build, train, and deploy ML models for any use case.",
         "services": [
             {
@@ -382,19 +386,12 @@ AWS_MODULES = [
     {
         "id": "amazon-q",
         "title": "Amazon Q",
-        "image": f"{ICON_BASE}/Machine-Learning/DeepComposer.svg", # Placeholder or closest available if generic Q icon missing
-        # Better option: Use a generic AI/Chat icon if Q isn't in this specific set yet, 
-        # but let's try to find a relevant one. "Q" is very new. 
-        # I'll use a chat/bot style icon from General or similar.
-        # Actually, let's use the local one if it fails, but I'll stick to URL for consistency.
-        # I'll use "Amazon-Connect" or similar as a proxy if Q is missing, but "Q" is distinct.
-        # Let's use a generic generic "T-Rex" or "Robot" if needed? No.
-        # I will use a known AI icon.
+        "image": local_img("Amazon Q.jpg"),
         "description": "Your Generative AI assistant designed for work.",
         "services": [
             {
                 "name": "Amazon Q Business",
-                "image": f"{ICON_BASE}/General/Internet-of-Things.svg", # Placeholder
+                "image": f"{ICON_BASE}/General/Internet-of-Things.svg", # Placeholder or generic
                 "description": "AI assistant for business data."
             },
             {
@@ -407,12 +404,12 @@ AWS_MODULES = [
     {
         "id": "cloud-automation",
         "title": "Cloud Automation",
-        "image": f"{ICON_BASE}/Developer-Tools/Cloud-Development-Kit.svg",
+        "image": local_img("cloud automation.png"),
         "description": "Modern cloud operations rely on heavy automation and IaC.",
         "services": [
             {
                 "name": "Terraform",
-                "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg", # Third party but standard
+                "image": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg",
                 "description": "Open-source IaC tool."
             },
             {
