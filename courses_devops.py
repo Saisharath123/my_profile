@@ -206,7 +206,7 @@ def render():
 
       .devops-module-card-inner {
         height: auto; /* Let content dictate height */
-        min-height: 160px; /* Minimum height for consistency */
+        min-height: 200px; /* Minimum height for consistency */
         border-radius: 20px;
         background: #fff; /* White cards */
         border: 1px solid #e2e8f0;
@@ -225,8 +225,8 @@ def render():
       /* Image styling - CONTAINED */
       .devops-card-img-contain, .devops-card-img-cover {
         position: relative;
-        width: 80px; /* Reduced from 100px to fit */
-        height: 80px;
+        width: 110px; /* Increased from 80px */
+        height: 110px;
         object-fit: contain;
         transition: transform 0.4s ease, filter 0.4s ease;
         z-index: 0;
