@@ -450,6 +450,7 @@ def render_service(service_id: str):
         }}
         .inner-service-icon img {{
             width: 100%; height: 100%; object-fit: contain;
+            display: block; 
         }}
 
         .inner-service-info h4 {{

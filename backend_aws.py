@@ -9,6 +9,9 @@ ICON_BASE = "https://icon.icepanel.io/AWS/svg"
 def local_img(filename):
     return f"/images/aws_images/{filename}"
 
+def local_backend_img(filename):
+    return f"/images/aws backend modules/{filename}"
+
 AWS_MODULES = [
     {
         "id": "compute",
@@ -22,7 +25,6 @@ AWS_MODULES = [
             {"name": "AWS Lambda", "image": f"{ICON_BASE}/Compute/Lambda.svg", "description": "Run code without provisioning servers."},
             {"name": "AWS Elastic Beanstalk", "image": f"{ICON_BASE}/Compute/Elastic-Beanstalk.svg", "description": "Deploy web apps effortlessly."},
              {"name": "Amazon Lightsail", "image": f"{ICON_BASE}/Compute/Lightsail.svg", "description": "Easy-to-use cloud platform."},
-             {"name": "AWS Outposts", "image": f"{ICON_BASE}/Compute/Outposts.svg", "description": "Run AWS infrastructure on-premises."}
         ]
     },
     {
@@ -33,8 +35,8 @@ AWS_MODULES = [
         "services": [
             {"name": "Amazon S3", "image": f"{ICON_BASE}/Storage/Simple-Storage-Service.svg", "description": "Object storage built to store and retrieve data."},
             {"name": "Amazon EBS", "image": f"{ICON_BASE}/Storage/Elastic-Block-Store.svg", "description": "Block storage for EC2 instances."},
-            {"name": "Amazon EFS", "image": f"{ICON_BASE}/Storage/Elastic-File-System.svg", "description": "Serverless, fully elastic file storage."},
-            {"name": "Amazon S3 Glacier", "image": f"{ICON_BASE}/Storage/S3-Glacier.svg", "description": "Low-cost archival storage."},
+            {"name": "Amazon EFS", "image": local_backend_img("amazon_efs.png"), "description": "Serverless, fully elastic file storage."},
+            {"name": "Amazon S3 Glacier", "image": local_backend_img("amazon glacier.png"), "description": "Low-cost archival storage."},
             {"name": "AWS Backup", "image": f"{ICON_BASE}/Storage/Backup.svg", "description": "Centralized backup service."},
             {"name": "Amazon FSx", "image": f"{ICON_BASE}/Storage/FSx.svg", "description": "File storage for diverse workloads."}
         ]
@@ -49,8 +51,8 @@ AWS_MODULES = [
             {"name": "Amazon Aurora", "image": f"{ICON_BASE}/Database/Aurora.svg", "description": "High-performance API compatible DB."},
             {"name": "Amazon DynamoDB", "image": f"{ICON_BASE}/Database/DynamoDB.svg", "description": "Fast, flexible NoSQL database service."},
             {"name": "Amazon ElastiCache", "image": f"{ICON_BASE}/Database/ElastiCache.svg", "description": "In-memory data store and cache."},
-            {"name": "Amazon Redshift", "image": f"{ICON_BASE}/Database/Redshift.svg", "description": "Fast, simple, cost-effective data warehousing."},
-             {"name": "Amazon DocumentDB", "image": f"{ICON_BASE}/Database/DocumentDB-with-MongoDB-compatibility.svg", "description": "Fast, scalable, fully managed MongoDB-compatible database."}
+            {"name": "Amazon Redshift", "image": local_backend_img("amazon_redshirt.png"), "description": "Fast, simple, cost-effective data warehousing."},
+             {"name": "Amazon DocumentDB", "image": local_backend_img("Amazon DocumentDB.png"), "description": "Fast, scalable, fully managed MongoDB-compatible database."}
         ]
     },
     {
@@ -59,20 +61,12 @@ AWS_MODULES = [
         "image": local_img("Networking & Content Delivery.webp"),
         "description": "Isolate your cloud infrastructure and deliver content with low latency.",
         "services": [
-            {"name": "Amazon VPC", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC.svg", "description": "Logically isolated virtual network."},
+            {"name": "Amazon VPC", "image": local_backend_img("Amazon VPC.png"), "description": "Logically isolated virtual network."},
             
-            # --- VPC Resources (Fixed Icons) ---
-            # Using specific filenames found commonly in AWS architecture sets
-            {"name": "Subnets", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-subnet-private.svg", "description": "Segments of a VPC's IP address range."}, 
-            {"name": "Route Tables", "image": f"{ICON_BASE}/Networking-Content-Delivery/Route-Table.svg", "description": "Rules for network traffic direction."}, 
-            {"name": "Internet Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/Internet-Gateway.svg", "description": "Connects VPC to the internet."}, 
-            {"name": "NAT Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/NAT-Gateway.svg", "description": "Internet across for private subnets."},
-            
-            # --- Other Keys ---
+            {"name": "Internet Gateway", "image": local_backend_img("Internet Gateway.png"), "description": "Connects VPC to the internet."}, 
+            {"name": "NAT Gateway", "image": local_backend_img("NAT Gateway.png"), "description": "Internet across for private subnets."},
+            {"name": "VPC Peering", "image": local_backend_img("VPC Peering.png"), "description": "Connect two VPCs."},
             {"name": "Security Groups", "image": f"{ICON_BASE}/Security-Identity-Compliance/Firewall-Manager.svg", "description": "Virtual firewall for EC2 instances."},
-            {"name": "Network ACLs", "image": f"{ICON_BASE}/Networking-Content-Delivery/NACL.svg", "description": "Firewall for subnets."}, 
-            {"name": "VPC Endpoints", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-Endpoints.svg", "description": "Private connection to services."},
-             {"name": "VPC Peering", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-Peering.svg", "description": "Connect two VPCs."},
              
             {"name": "AWS Transit Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/Transit-Gateway.svg", "description": "Connect VPCs and on-premises networks."},
             {"name": "AWS Site-to-Site VPN", "image": f"{ICON_BASE}/Networking-Content-Delivery/Site-to-Site-VPN.svg", "description": "Secure connection to on-premises."},
@@ -87,7 +81,7 @@ AWS_MODULES = [
         "image": local_img("Security, Identity & Compliance.png"),
         "description": "Secure your workloads and manage identities effectively.",
         "services": [
-            {"name": "AWS IAM", "image": f"{ICON_BASE}/Security-Identity-Compliance/Identity-Access-Management.svg", "description": "Manage access to AWS resources."},
+            {"name": "AWS IAM", "image": local_backend_img("AWS IAM.png"), "description": "Manage access to AWS resources."},
             {"name": "AWS IAM Identity Center (SSO)", "image": f"{ICON_BASE}/Security-Identity-Compliance/IAM-Identity-Center.svg", "description": "Manage workforce access."},
             {"name": "AWS Organizations", "image": f"{ICON_BASE}/Management-Governance/Organizations.svg", "description": "Central governance and management."},
             {"name": "AWS KMS", "image": f"{ICON_BASE}/Security-Identity-Compliance/Key-Management-Service.svg", "description": "Create and control encryption keys."},
@@ -118,12 +112,12 @@ AWS_MODULES = [
         "image": local_img("Application Integration.png"),
         "description": "Decouple microservices and distributed systems.",
         "services": [
-            {"name": "Amazon SNS", "image": f"{ICON_BASE}/Application-Integration/Simple-Notification-Service.svg", "description": "Pub/Sub messaging service."},
-            {"name": "Amazon SQS", "image": f"{ICON_BASE}/Application-Integration/Simple-Queue-Service.svg", "description": "Fully managed message queuing."},
-            {"name": "Amazon EventBridge", "image": f"{ICON_BASE}/Application-Integration/EventBridge.svg", "description": "Serverless event bus."},
-            {"name": "AWS Step Functions", "image": f"{ICON_BASE}/Application-Integration/Step-Functions.svg", "description": "Visual workflow orchestration."},
-             {"name": "Amazon MQ", "image": f"{ICON_BASE}/Application-Integration/MQ.svg", "description": "Managed message broker Service."},
-             {"name": "AWS AppSync", "image": f"{ICON_BASE}/Application-Integration/AppSync.svg", "description": "Accelerate app development with GraphQL APIs."}
+            {"name": "Amazon SNS", "image": local_backend_img("Amazon SNS.png"), "description": "Pub/Sub messaging service."},
+            {"name": "Amazon SQS", "image": local_backend_img("Amazon SQS.jpg"), "description": "Fully managed message queuing."},
+            {"name": "Amazon EventBridge", "image": local_backend_img("Amazon EventBridge.jpg"), "description": "Serverless event bus."},
+            {"name": "AWS Step Functions", "image": local_backend_img("AWS Step Functions.jpg"), "description": "Visual workflow orchestration."},
+             {"name": "Amazon MQ", "image": local_backend_img("Amazon MQ.jpg"), "description": "Managed message broker Service."},
+             {"name": "AWS AppSync", "image": local_backend_img("AWS AppSync.svg"), "description": "Accelerate app development with GraphQL APIs."}
         ]
     },
     {
@@ -151,7 +145,7 @@ AWS_MODULES = [
             {"name": "Amazon EKS", "image": f"{ICON_BASE}/Containers/Elastic-Kubernetes-Service.svg", "description": "Managed Kubernetes service."},
             {"name": "AWS Fargate", "image": f"{ICON_BASE}/Containers/Fargate.svg", "description": "Serverless compute for containers."},
             {"name": "Amazon ECR", "image": f"{ICON_BASE}/Containers/Elastic-Container-Registry.svg", "description": "Docker container registry."},
-             {"name": "AWS App Runner", "image": f"{ICON_BASE}/Containers/App-Runner.svg", "description": "Fully managed container application service."}
+             {"name": "AWS App Runner", "image": local_backend_img("AWS AppRunner.png"), "description": "Fully managed container application service."}
         ]
     },
     {
@@ -161,11 +155,10 @@ AWS_MODULES = [
         "description": "Move data and applications to AWS quickly and securely.",
         "services": [
             {"name": "AWS MGN", "image": f"{ICON_BASE}/Migration-Transfer/Application-Migration-Service.svg", "description": "Application Migration Service."},
-            {"name": "AWS DMS", "image": f"{ICON_BASE}/Migration-Transfer/Database-Migration-Service.svg", "description": "Migrate databases easily."},
+            {"name": "AWS DMS", "image": local_backend_img("AWS DMS.png"), "description": "Migrate databases easily."},
             {"name": "AWS DataSync", "image": f"{ICON_BASE}/Migration-Transfer/DataSync.svg", "description": "Automated data transfer."},
             {"name": "AWS Transfer Family", "image": f"{ICON_BASE}/Migration-Transfer/Transfer-Family.svg", "description": "Fully managed SFTP, FTPS, and FTP support."},
-            {"name": "AWS Snowball", "image": f"{ICON_BASE}/Migration-Transfer/Snowball.svg", "description": "Petabyte-scale data transport."},
-             {"name": "AWS Snowcone", "image": f"{ICON_BASE}/Migration-Transfer/Snowcone.svg", "description": "Small, rugged data transfer device."}
+            {"name": "AWS Snowball", "image": local_backend_img("AWS Snowball.png"), "description": "Petabyte-scale data transport."},
         ]
     },
     {
@@ -179,7 +172,7 @@ AWS_MODULES = [
             {"name": "Amazon Kinesis", "image": f"{ICON_BASE}/Analytics/Kinesis.svg", "description": "Process streaming data."},
             {"name": "Amazon QuickSight", "image": f"{ICON_BASE}/Analytics/QuickSight.svg", "description": "Business intelligence service."},
             {"name": "Amazon OpenSearch Service", "image": f"{ICON_BASE}/Analytics/OpenSearch-Service.svg", "description": "Search, visualize, and analyze data."},
-             {"name": "Amazon Redshift", "image": f"{ICON_BASE}/Database/Redshift.svg", "description": "Fast, simple, cost-effective data warehousing."}
+             {"name": "Amazon Redshift", "image": local_backend_img("amazon_redshirt.png"), "description": "Fast, simple, cost-effective data warehousing."}
         ]
     },
     {
@@ -194,7 +187,7 @@ AWS_MODULES = [
             {"name": "Amazon Comprehend", "image": f"{ICON_BASE}/Machine-Learning/Comprehend.svg", "description": "NLP and text analytics."},
              {"name": "Amazon Lex", "image": f"{ICON_BASE}/Machine-Learning/Lex.svg", "description": "Build conversational interfaces."},
             {"name": "Amazon Polly", "image": f"{ICON_BASE}/Machine-Learning/Polly.svg", "description": "Turn text into lifelike speech."},
-             {"name": "Amazon Bedrock", "image": f"{ICON_BASE}/Machine-Learning/Bedrock.svg", "description": "Build with Foundation Models."}
+             {"name": "Amazon Bedrock", "image": local_backend_img("Amazon Bedrock.webp"), "description": "Build with Foundation Models."}
         ]
     },
     {
@@ -203,10 +196,7 @@ AWS_MODULES = [
         "image": local_img("Amazon Q.jpg"),
         "description": "Your Generative AI assistant designed for work.",
         "services": [
-           {"name": "Amazon Q Developer", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "AI-powered coding assistant."}, 
-            {"name": "Amazon Q Business", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "AI assistant for business data."},
-            {"name": "Amazon Q Code Transformation", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "Upgrade code versions."},
-            {"name": "Amazon Q Knowledge Bases", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "Connect Q to your data."}
+            {"name": "Amazon Q Business", "image": local_backend_img("Amazon Q Business.png"), "description": "AI assistant for business data."},
         ]
     },
     {
@@ -217,8 +207,8 @@ AWS_MODULES = [
         "services": [
              {"name": "AWS CloudFormation", "image": f"{ICON_BASE}/Management-Governance/CloudFormation.svg", "description": "Model and provision resources."},
             {"name": "AWS CDK", "image": f"{ICON_BASE}/Developer-Tools/Cloud-Development-Kit.svg", "description": "Define infrastructure in code."},
-            {"name": "AWS Step Functions", "image": f"{ICON_BASE}/Application-Integration/Step-Functions.svg", "description": "Orchestrate workflows."},
-            {"name": "AWS Systems Manager Automation", "image": f"{ICON_BASE}/Management-Governance/Systems-Manager-Automation.svg", "description": "Simplify common maintenance tasks."},
+            {"name": "AWS Step Functions", "image": local_backend_img("AWS Step Functions.jpg"), "description": "Orchestrate workflows."},
+            {"name": "AWS Systems Manager Automation", "image": local_backend_img("AWS Systems Manager Automation.jpg"), "description": "Simplify common maintenance tasks."},
             {"name": "AWS Control Tower", "image": f"{ICON_BASE}/Management-Governance/Control-Tower.svg", "description": "Set up and govern a multi-account environment."}
         ]
     }
