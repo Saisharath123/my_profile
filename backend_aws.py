@@ -25,6 +25,8 @@ AWS_MODULES = [
             {"name": "AWS Lambda", "image": f"{ICON_BASE}/Compute/Lambda.svg", "description": "Run code without provisioning servers."},
             {"name": "AWS Elastic Beanstalk", "image": f"{ICON_BASE}/Compute/Elastic-Beanstalk.svg", "description": "Deploy web apps effortlessly."},
              {"name": "Amazon Lightsail", "image": f"{ICON_BASE}/Compute/Lightsail.svg", "description": "Easy-to-use cloud platform."},
+             {"name": "Amazon ECS", "image": f"{ICON_BASE}/Containers/Elastic-Container-Service.svg", "description": "Container orchestration service."},
+             {"name": "AWS Fargate", "image": f"{ICON_BASE}/Containers/Fargate.svg", "description": "Serverless compute for containers."},
         ]
     },
     {
