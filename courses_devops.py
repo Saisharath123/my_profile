@@ -206,7 +206,7 @@ def render():
 
       .devops-module-card-inner {
         height: auto; /* Let content dictate height */
-        min-height: 200px; /* Minimum height for consistency */
+        min-height: 150px; /* Reduced minimum height */
         border-radius: 20px;
         background: #fff; /* White cards */
         border: 1px solid #e2e8f0;
@@ -214,8 +214,8 @@ def render():
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 20px 15px; /* Comfortable padding */
-        gap: 15px;
+        padding: 15px 10px; /* Reduced padding */
+        gap: 10px; /* Reduced gap */
         box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
         transition: all 0.4s ease;
         overflow: hidden;
