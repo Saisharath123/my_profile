@@ -307,4 +307,20 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         </div>
         """
 
-        return render_page_func(detail_html, active="courses")
+
+    @app.route("/course/aws/<service_id>")
+    def aws_service_detail(service_id):
+        """
+        Specific route for AWS sub-modules (Compute, Storage, etc.)
+        Delegates to courses_aws.render_service(service_id).
+        """
+        try:
+            import courses_aws
+            if hasattr(courses_aws, "render_service"):
+                html = courses_aws.render_service(service_id)
+                return render_page_func(Markup(html), active="courses")
+        except Exception as e:
+            pass # Fallthrough or error handling
+
+        return render_page_func(f"<h2>Service not found</h2><p>Could not load service detail for {service_id}</p>", active="courses")
+
