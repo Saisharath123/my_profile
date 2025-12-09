@@ -36,9 +36,12 @@ def render():
         </div>
         """
 
-    # Prepare JS data injection
-    command_map_js = json.dumps(COMMAND_MAP)
-    lab_config_js = json.dumps(LAB_CONFIG)
+    # Generate Widget HTML
+    try:
+        from smart_widget import render_widget
+        widget_html = render_widget()
+    except ImportError:
+        widget_html = "<div style='color:white'>Error loading widget.</div>"
 
     return f"""
     <style>
@@ -80,11 +83,6 @@ def render():
         .mc-desc {{ font-size: 0.9rem; color: #64748b; margin-bottom: 16px; flex-grow: 1; line-height: 1.5; }}
         .mc-footer {{ border-top: 1px solid #f1f5f9; padding-top: 12px; font-size: 0.8rem; font-weight: 700; color: #3b82f6; text-transform: uppercase; }}
 
-        /* Smart Widget */
-        .widget-wrap {{ background: #0f172a; color: #fff; padding: 40px; border-radius: 16px; text-align: center; margin: 0 auto; max-width: 800px; }}
-        .cmd-input {{ width: 100%; padding: 16px; margin-top: 20px; border-radius: 8px; border: 2px solid #334155; background: #1e293b; color: #fff; font-family: monospace; font-size: 1.1rem; }}
-        .cmd-result {{ margin-top: 20px; padding: 20px; background: #1e293b; border-radius: 8px; text-align: left; min-height: 80px; border: 1px solid #334155; }}
-
         /* Virtual Lab */
         .term-window {{ background: #1e1e1e; border-radius: 8px; height: 500px; display: flex; flex-direction: column; font-family: monospace; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }}
         .term-bar {{ background: #333; padding: 8px 12px; display: flex; gap: 8px; }}
@@ -124,14 +122,7 @@ def render():
 
         <!-- TAB 2: SMART WIDGET -->
         <div id="view-widget" class="linux-view">
-            <div class="widget-wrap">
-                <h2 style="margin-top:0; color:#38bdf8;">Smart Command Explainer</h2>
-                <p>Type any Linux command to understand what it does (e.g. <code>tar -cxvf</code>).</p>
-                <input type="text" id="smart-input" class="cmd-input" placeholder="Enter command..." onkeyup="explainCommand(this.value)">
-                <div id="smart-output" class="cmd-result">
-                    <em>Explanation will appear here...</em>
-                </div>
-            </div>
+            {widget_html}
         </div>
 
         <!-- TAB 3: VIRTUAL LAB -->
@@ -200,28 +191,12 @@ def render():
             document.getElementById('linux-modal').style.display = 'none';
         }}
 
-        // --- Smart Widget Logic ---
-        // Backend Data Injection
-        const commandMap = {command_map_js};
-
-        function explainCommand(val) {{
-            val = val.trim();
-            const out = document.getElementById('smart-output');
-            if(!val) {{ out.innerHTML = "<em>Explanation will appear here...</em>"; return; }}
-            
-            const base = val.split(' ')[0];
-            
-            let desc = commandMap[base] || "A generic Linux command. Check the man page (man " + base + ").";
-            if(val.includes('-')) desc += " <br><small>Flags detected.</small>";
-            
-            out.innerHTML = "<h3 style='margin:0 0 10px 0; color:#38bdf8;'>" + base + "</h3>" + desc;
-        }}
-
         // --- Virtual Lab Logic ---
         const labConfig = {lab_config_js};
 
         function updateLiveText(val) {{
-            document.getElementById('term-live-text').innerText = val;
+            const el = document.getElementById('term-live-text');
+            if(el) el.innerText = val;
         }}
         
         let termPath = [labConfig.initial_path || "~"];
@@ -255,7 +230,8 @@ def render():
                     if(parts[1] && parts[1] !== '..') termPath.push(parts[1]);
                     else if(parts[1] === '..') termPath.pop();
                     if(termPath.length < 1) termPath = ["~"];
-                    document.getElementById('term-path-disp').innerText = termPath.join('/');
+                    const pathEl = document.getElementById('term-path-disp');
+                    if(pathEl) pathEl.innerText = termPath.join('/');
                 }}
                 else if(cmd) resp = "bash: " + cmd + ": command not found";
                 
@@ -267,7 +243,8 @@ def render():
                 }}
                 
                 input.value = "";
-                document.getElementById('term-live-text').innerText = "";
+                const liveEl = document.getElementById('term-live-text');
+                if(liveEl) liveEl.innerText = "";
                 output.scrollTop = output.scrollHeight;
             }}
         }}
