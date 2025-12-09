@@ -60,15 +60,21 @@ AWS_MODULES = [
         "description": "Isolate your cloud infrastructure and deliver content with low latency.",
         "services": [
             {"name": "Amazon VPC", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC.svg", "description": "Logically isolated virtual network."},
-            {"name": "Subnets", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-subnet-public.svg", "description": "Segments of a VPC's IP address range."}, # Proxy icon
-            {"name": "Route Tables", "image": f"{ICON_BASE}/Networking-Content-Delivery/Route-Table.svg", "description": "Rules for network traffic direction."}, # Using approximation or reliable generic
-            {"name": "Internet Gateway (IGW)", "image": f"{ICON_BASE}/Networking-Content-Delivery/Internet-Gateway.svg", "description": "Connects VPC to the internet."}, 
+            
+            # --- VPC Resources (Fixed Icons) ---
+            # Using specific filenames found commonly in AWS architecture sets
+            {"name": "Subnets", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-subnet-private.svg", "description": "Segments of a VPC's IP address range."}, 
+            {"name": "Route Tables", "image": f"{ICON_BASE}/Networking-Content-Delivery/Route-Table.svg", "description": "Rules for network traffic direction."}, 
+            {"name": "Internet Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/Internet-Gateway.svg", "description": "Connects VPC to the internet."}, 
             {"name": "NAT Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/NAT-Gateway.svg", "description": "Internet across for private subnets."},
-            {"name": "Security Groups", "image": f"{ICON_BASE}/Security-Identity-Compliance/Firewall-Manager.svg", "description": "Virtual firewall for EC2 instances."}, # Proxy
-            {"name": "Network ACLs", "image": f"{ICON_BASE}/Networking-Content-Delivery/NACL.svg", "description": "Firewall for subnets."}, # If exists, else generic
+            
+            # --- Other Keys ---
+            {"name": "Security Groups", "image": f"{ICON_BASE}/Security-Identity-Compliance/Firewall-Manager.svg", "description": "Virtual firewall for EC2 instances."},
+            {"name": "Network ACLs", "image": f"{ICON_BASE}/Networking-Content-Delivery/NACL.svg", "description": "Firewall for subnets."}, 
             {"name": "VPC Endpoints", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-Endpoints.svg", "description": "Private connection to services."},
              {"name": "VPC Peering", "image": f"{ICON_BASE}/Networking-Content-Delivery/VPC-Peering.svg", "description": "Connect two VPCs."},
-             {"name": "AWS Transit Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/Transit-Gateway.svg", "description": "Connect VPCs and on-premises networks."},
+             
+            {"name": "AWS Transit Gateway", "image": f"{ICON_BASE}/Networking-Content-Delivery/Transit-Gateway.svg", "description": "Connect VPCs and on-premises networks."},
             {"name": "AWS Site-to-Site VPN", "image": f"{ICON_BASE}/Networking-Content-Delivery/Site-to-Site-VPN.svg", "description": "Secure connection to on-premises."},
             {"name": "AWS Direct Connect", "image": f"{ICON_BASE}/Networking-Content-Delivery/Direct-Connect.svg", "description": "Dedicated network connection to AWS."},
             {"name": "Amazon Route 53", "image": f"{ICON_BASE}/Networking-Content-Delivery/Route-53.svg", "description": "Scalable Domain Name System (DNS)."},
@@ -197,10 +203,10 @@ AWS_MODULES = [
         "image": local_img("Amazon Q.jpg"),
         "description": "Your Generative AI assistant designed for work.",
         "services": [
-           {"name": "Amazon Q Developer", "image": f"{ICON_BASE}/General/Internet-of-Things.svg", "description": "AI-powered coding assistant."}, # Generic placeholder used if Q icon not in standard set yet
-            {"name": "Amazon Q Business", "image": f"{ICON_BASE}/General/Internet-of-Things.svg", "description": "AI assistant for business data."},
-            {"name": "Amazon Q Code Transformation", "image": f"{ICON_BASE}/General/Internet-of-Things.svg", "description": "Upgrade code versions."},
-            {"name": "Amazon Q Knowledge Bases", "image": f"{ICON_BASE}/General/Internet-of-Things.svg", "description": "Connect Q to your data."}
+           {"name": "Amazon Q Developer", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "AI-powered coding assistant."}, 
+            {"name": "Amazon Q Business", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "AI assistant for business data."},
+            {"name": "Amazon Q Code Transformation", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "Upgrade code versions."},
+            {"name": "Amazon Q Knowledge Bases", "image": "https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/master/dist/General/InternetofThings.png", "description": "Connect Q to your data."}
         ]
     },
     {
