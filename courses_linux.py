@@ -58,8 +58,27 @@ def render():
             border-radius: 20px; padding: 40px; color: #fff; margin-bottom: 24px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; overflow: hidden;
         }}
-        .linux-hero h1 {{ margin: 0 0 10px 0; font-size: 2.2rem; background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
-        .linux-hero p {{ color: #94a3b8; font-size: 1.1rem; max-width: 700px; margin: 0; }}
+        
+        .linux-hero-content {{ display: flex; align-items: center; gap: 30px; position: relative; z-index: 2; }}
+
+        .linux-logo-img {{
+            width: 110px; height: 110px; object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.25);
+            animation: floatLogo 4s ease-in-out infinite;
+        }}
+
+        .linux-hero h1 {{ 
+            margin: 0 0 10px 0; font-size: 2.5rem; font-weight: 800; 
+            background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc, #38bdf8);
+            background-size: 300% auto;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: textShine 4s linear infinite;
+        }}
+        .linux-hero p {{ color: #94a3b8; font-size: 1.1rem; max-width: 700px; margin: 0; line-height: 1.5; }}
+
+        @keyframes textShine {{ to {{ background-position: 200% center; }} }}
+        @keyframes floatLogo {{ 0%, 100% {{ transform: translateY(0); }} 50% {{ transform: translateY(-8px); }} }}
 
         /* Tabs */
         .linux-tabs {{ display: flex; gap: 8px; margin-bottom: 24px; border-bottom: 2px solid #e2e8f0; }}
@@ -98,8 +117,13 @@ def render():
     <div class="linux-wrapper">
         <!-- Hero -->
         <div class="linux-hero">
-            <h1>Linux Administration Masterclass</h1>
-            <p>Comprehensive resource for mastering the Command Line Interface (CLI) and System Administration.</p>
+            <div class="linux-hero-content">
+                <img src="/images/linux.jpg" alt="Linux" class="linux-logo-img">
+                <div>
+                    <h1>Linux Administration Masterclass</h1>
+                    <p>Comprehensive resource for mastering the Command Line Interface (CLI) and System Administration.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Navigation -->
