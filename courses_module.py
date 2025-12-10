@@ -18,7 +18,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
     @app.route("/courses")
     def courses():
         course_items = [
-            {"slug":"aws","title":"AWS Solution Architect","desc":"Foundations, hands-on labs, IAM, EC2, S3, VPC.","level":"Beginner","duration":"4 weeks","img":"AWS.png","type":"rect","scale":0.60},
+            {"slug":"aws","title":"AWS Solution Architect","desc":"Foundations, hands-on labs, IAM, EC2, S3, VPC.","level":"Beginner","duration":"4 weeks","img":"AWS.png","type":"rect","scale":0.54},
             {"slug":"linux","title":"Linux Administration","desc":"System basics, shells, users, permissions, networking.","level":"Beginner","duration":"3 weeks","img":"linux.jpg","type":"rect","scale":0.95},
             {"slug":"devops","title":"Multi-Cloud DevOps","desc":"CI/CD, containers, automation, infra as code across clouds.","level":"Intermediate","duration":"4 weeks","img":"devops.png","type":"rect","scale":1.0},
             {"slug":"spoken-english","title":"Spoken English & Corporate Etiquette","desc":"Improve communication, interviews and workplace etiquette.","level":"All levels","duration":"6 weeks","img":"37527b78-62d1-49a2-adad-0ae6d46cf44a.png","type":"square"},
