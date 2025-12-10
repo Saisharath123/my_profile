@@ -68,12 +68,20 @@ def render():
         .aws-hero {{
             background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
             border-radius: 20px;
-            padding: 50px 40px;
+            padding: 40px;
             color: #fff;
             position: relative;
             overflow: hidden;
             margin-bottom: 30px;
             box-shadow: 0 20px 40px rgba(35, 47, 62, 0.2);
+        }}
+
+        .aws-hero-content {{ display: flex; align-items: center; gap: 30px; position: relative; z-index: 2; }}
+
+        .aws-logo-img {{
+            width: 110px; height: 110px; object-fit: contain;
+            filter: drop-shadow(0 0 15px rgba(255, 153, 0, 0.3));
+            animation: floatLogo 4s ease-in-out infinite;
         }}
 
         .aws-hero after {{
@@ -88,9 +96,11 @@ def render():
             font-size: 2.8rem;
             font-weight: 800;
             margin: 0 0 12px 0;
-            background: linear-gradient(to right, #ff9900, #ffc470);
+            background: linear-gradient(to right, #ff9900, #ffc470, #ffd59e, #ff9900);
+            background-size: 300% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: textShine 4s linear infinite;
         }}
 
         .aws-hero p {{
@@ -99,6 +109,9 @@ def render():
             max-width: 700px;
             line-height: 1.6;
         }}
+
+        @keyframes textShine {{ to {{ background-position: 200% center; }} }}
+        @keyframes floatLogo {{ 0%, 100% {{ transform: translateY(0); }} 50% {{ transform: translateY(-8px); }} }}
 
         /* --- Tabs --- */
         .aws-tabs {{
@@ -264,11 +277,16 @@ def render():
 
     <div class="aws-wrapper">
         <div class="aws-hero">
-            <h1>AWS Solution Architect</h1>
-            <p>
-                Master the world's leading cloud platform. Designed for aspiring architects to build 
-                scalable, highly available, and fault-tolerant systems on the AWS Cloud.
-            </p>
+            <div class="aws-hero-content">
+                <img src="/images/AWS.png" alt="AWS" class="aws-logo-img">
+                <div>
+                    <h1>AWS Solution Architect</h1>
+                    <p>
+                        Master the world's leading cloud platform. Designed for aspiring architects to build 
+                        scalable, highly available, and fault-tolerant systems on the AWS Cloud.
+                    </p>
+                </div>
+            </div>
         </div>
 
         <div class="aws-tabs">
