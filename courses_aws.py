@@ -541,13 +541,88 @@ def render_service(service_id: str):
         .btn-enroll:hover {{ background: #ec7211; }}
 
         /* Modal Styles */
-        .aws-overlay {{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }}
-        .aws-modal {{ background: #fff; width: 100%; max-width: 700px; max-height: 85vh; border-radius: 12px; display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }}
-        .aws-modal-header {{ padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 12px 12px 0 0; }}
-        .aws-modal-body {{ padding: 30px; overflow-y: auto; line-height: 1.6; color: #334155; }}
-        .aws-modal-body pre {{ background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; font-family: 'Consolas', monospace; }}
+        .aws-overlay {{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.85); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }}
+        .aws-modal {{ background: #fff; width: 100%; max-width: 800px; max-height: 90vh; border-radius: 20px; display: flex; flex-direction: column; box-shadow: 0 25px 70px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); }}
         
-        .code-block {{ background: #f1f5f9; padding: 10px; border-radius: 6px; margin: 10px 0; }}
+        .aws-modal-header {{ 
+            padding: 24px 30px; 
+            border-bottom: 1px solid #f1f5f9; 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: linear-gradient(to right, #ffffff, #fff7ed); 
+            border-radius: 20px 20px 0 0; 
+        }}
+        #aws-modal-title {{ font-weight: 800; font-size: 1.4rem; background: linear-gradient(90deg, #232f3e, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }}
+
+        .aws-modal-body {{ padding: 40px; overflow-y: auto; line-height: 1.7; color: #334155; font-size: 1.05rem; }}
+        
+        /* Enhanced Typography */
+        .aws-modal-body h3 {{
+            font-size: 1.6rem;
+            margin: 20px 0 15px 0;
+            color: #0f172a;
+            position: relative;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #fdba74;
+            display: inline-block;
+        }}
+        
+        /* Graphical List Points */
+        .aws-modal-body ul {{
+            list-style: none;
+            padding: 0;
+            margin: 25px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }}
+        .aws-modal-body li {{
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border-left: 5px solid #ff9900;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            transition: all 0.2s ease;
+            position: relative;
+        }}
+        .aws-modal-body li:hover {{
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 10px 20px -5px rgba(255, 153, 0, 0.2);
+            border-color: #fdba74;
+            border-left-color: #ea580c;
+        }}
+        .aws-modal-body li strong {{ color: #ea580c; font-weight: 700; }}
+
+        /* Code Blocks */
+        .code-block {{ 
+            background: #1e293b; 
+            padding: 20px; 
+            border-radius: 12px; 
+            margin: 25px 0; 
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid #334155;
+            position: relative;
+        }}
+        .code-block::before {{
+            content: 'CODE';
+            position: absolute;
+            top: 0; right: 0;
+            background: #334155;
+            color: #94a3b8;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 0 12px 0 12px;
+            font-weight: bold;
+        }}
+        .aws-modal-body pre {{ 
+            background: transparent; 
+            color: #e2e8f0; 
+            padding: 0; 
+            margin: 0; 
+            font-family: 'Fira Code', 'Consolas', monospace; 
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }}
     </style>
 
     <div class="service-detail-wrap">
