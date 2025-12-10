@@ -224,3 +224,18 @@ def get_module(module_id):
         if m['id'] == module_id:
             return m
     return None
+
+# --- Content Integration ---
+try:
+    from backend_content_aws import AWS_CONTENT
+    for module in AWS_MODULES:
+        for service in module.get('services', []):
+            s_name = service.get('name')
+            if s_name and s_name in AWS_CONTENT:
+                service['content'] = AWS_CONTENT[s_name]
+            else:
+                # Default content fallback
+                service['content'] = f"<h3>{s_name}</h3><p>{service.get('description', '')}</p><p><em>Detailed content coming soon.</em></p>"
+except ImportError:
+    pass
+
