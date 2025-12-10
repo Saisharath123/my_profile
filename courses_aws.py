@@ -403,8 +403,11 @@ def render_service(service_id: str):
         
         safe_content = html.escape(raw_content)
         
+        # Staggered animation delay
+        delay = i * 0.08  # 80ms delay per card
+        
         services_html += f"""
-        <div class="inner-service-card" onclick="openAwsModal('{key}', '{html.escape(svc['name'])}')">
+        <div class="inner-service-card" style="animation-delay: {delay}s;" onclick="openAwsModal('{key}', '{html.escape(svc['name'])}')">
             <div class="inner-service-icon">
                 <img src="{svc['image']}" alt="{svc['name']}">
             </div>
@@ -419,6 +422,21 @@ def render_service(service_id: str):
 
     return f"""
     <style>
+        /* Animation Keyframes */
+        @keyframes fallIn {{
+            0% {{
+                opacity: 0;
+                transform: translateY(-80px) scale(0.95);
+            }}
+            60% {{
+                transform: translateY(10px) scale(1.02);
+            }}
+            100% {{
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }}
+        }}
+    
         .service-detail-wrap {{
             max-width: 1000px;
             margin: 20px auto;
@@ -435,6 +453,7 @@ def render_service(service_id: str):
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             margin-bottom: 30px;
             border: 1px solid #f3f4f6;
+            animation: fadeIn 0.6s ease-out;
         }}
         .service-icon {{
             width: 100px; height: 100px;
@@ -451,6 +470,7 @@ def render_service(service_id: str):
             line-height: 1.6;
             color: #4b5563;
             font-size: 1.1rem;
+            animation: fadeIn 0.8s ease-out;
         }}
 
         .inner-services-grid {{
@@ -472,6 +492,10 @@ def render_service(service_id: str):
             align-items: center;
             gap: 12px;
             cursor: pointer;
+            
+            /* Animation Properties */
+            opacity: 0; /* start invisible */
+            animation: fallIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }}
         .inner-service-card:hover {{
             transform: translateY(-5px);
