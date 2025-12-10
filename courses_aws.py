@@ -388,9 +388,23 @@ def render_service(service_id: str):
     
     # Generate Inner Services Grid
     services_html = ""
-    for svc in module.get('services', []):
+    
+    # We need a way to store content safely.
+    import html
+    
+    for i, svc in enumerate(module.get('services', [])):
+        # Create a unique key for js
+        key = f"svc-{i}"
+        
+        # Safe content for injection
+        raw_content = svc.get('content', '')
+        if not raw_content:
+             raw_content = f"<p><em>No detailed content available for {svc['name']} yet.</em></p>"
+        
+        safe_content = html.escape(raw_content)
+        
         services_html += f"""
-        <div class="inner-service-card">
+        <div class="inner-service-card" onclick="openAwsModal('{key}', '{html.escape(svc['name'])}')">
             <div class="inner-service-icon">
                 <img src="{svc['image']}" alt="{svc['name']}">
             </div>
@@ -398,6 +412,8 @@ def render_service(service_id: str):
                 <h4>{svc['name']}</h4>
                 <p>{svc['description']}</p>
             </div>
+            <!-- Hidden Content -->
+            <div id="content-{key}" style="display:none;">{safe_content}</div>
         </div>
         """
 
@@ -455,6 +471,7 @@ def render_service(service_id: str):
             flex-direction: column;
             align-items: center;
             gap: 12px;
+            cursor: pointer;
         }}
         .inner-service-card:hover {{
             transform: translateY(-5px);
@@ -498,6 +515,15 @@ def render_service(service_id: str):
             transition: background 0.2s;
         }}
         .btn-enroll:hover {{ background: #ec7211; }}
+
+        /* Modal Styles */
+        .aws-overlay {{ position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15,23,42,0.8); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px; }}
+        .aws-modal {{ background: #fff; width: 100%; max-width: 700px; max-height: 85vh; border-radius: 12px; display: flex; flex-direction: column; box-shadow: 0 25px 50px rgba(0,0,0,0.5); }}
+        .aws-modal-header {{ padding: 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; border-radius: 12px 12px 0 0; }}
+        .aws-modal-body {{ padding: 30px; overflow-y: auto; line-height: 1.6; color: #334155; }}
+        .aws-modal-body pre {{ background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 8px; overflow-x: auto; margin: 15px 0; font-family: 'Consolas', monospace; }}
+        
+        .code-block {{ background: #f1f5f9; padding: 10px; border-radius: 6px; margin: 10px 0; }}
     </style>
 
     <div class="service-detail-wrap">
@@ -527,4 +553,35 @@ def render_service(service_id: str):
             </div>
         </div>
     </div>
+
+    <!-- MODAL -->
+    <div id="aws-modal" class="aws-overlay" onclick="closeAwsModal(event)">
+        <div class="aws-modal">
+            <div class="aws-modal-header">
+                <div style="font-weight:800; font-size:1.2rem;" id="aws-modal-title">Service Details</div>
+                <button onclick="closeAwsModal(null)" style="border:none; background:none; font-size:1.5rem; cursor:pointer;">×</button>
+            </div>
+            <div class="aws-modal-body" id="aws-modal-content"></div>
+        </div>
+    </div>
+
+    <script>
+        function openAwsModal(key, title) {{
+            const contentDiv = document.getElementById('content-' + key);
+            if (!contentDiv) return;
+            
+            // Decode HTML entities
+            const txt = document.createElement("textarea");
+            txt.innerHTML = contentDiv.innerHTML;
+            
+            document.getElementById('aws-modal-title').innerText = title; 
+            document.getElementById('aws-modal-content').innerHTML = txt.value;
+            document.getElementById('aws-modal').style.display = 'flex';
+        }}
+        
+        function closeAwsModal(e) {{
+            if (e && !e.target.classList.contains('aws-overlay')) return;
+            document.getElementById('aws-modal').style.display = 'none';
+        }}
+    </script>
     """
