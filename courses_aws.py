@@ -404,7 +404,7 @@ def render_service(service_id: str):
         safe_content = html.escape(raw_content)
         
         # Staggered animation delay
-        delay = i * 0.08  # 80ms delay per card
+        delay = i * 0.25  # 250ms delay per card for a clear "one by one" sequence
         
         services_html += f"""
         <div class="inner-service-card" style="animation-delay: {delay}s;" onclick="openAwsModal('{key}', '{html.escape(svc['name'])}')">
@@ -495,7 +495,7 @@ def render_service(service_id: str):
             
             /* Animation Properties */
             opacity: 0; /* start invisible */
-            animation: fallIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: fallIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }}
         .inner-service-card:hover {{
             transform: translateY(-5px);
