@@ -10,20 +10,32 @@ LOCAL_DEVOPS_IMG = "/images/devops.png"
 
 # Service/tool definitions: id -> (label, served_image_url)
 SERVICES = {
-    "git-github": (
-        "Version Control System (Git / GitHub)",
+    "version-control": (
+        "Version Control System (Git / GitHub / Bitbucket)",
         "/images/devops_images/Git Hub.png"
+    ),
+    "bitbucket": (
+        "Bitbucket",
+        "/images/devops_images/bitbucket.png"
     ),
     "ci-cd": (
         "CI/CD (Jenkins / GitHub Actions)",
         "/images/devops_images/CI CD.png"
+    ),
+    "gitlab-ci": (
+        "GitLab CI",
+        "/images/devops_images/gitlab_ci.png"
+    ),
+    "argo-cd": (
+        "Argo CD",
+        "/images/devops_images/argo_cd.png"
     ),
     "docker": (
         "Docker & Containerization",
         "/images/devops_images/docker.png"
     ),
     "kubernetes": (
-        "Container Orchestration (Kubernetes / K8)",
+        "Container Orchestration (Kubernetes)",
         "/images/devops_images/k8.png"
     ),
     "iac-terraform": (
@@ -34,12 +46,20 @@ SERVICES = {
         "Configuration Management (Ansible)",
         "/images/devops_images/ansible.webp"
     ),
-    "monitoring-logging": (
-        "Monitoring & Logging (Prometheus / Grafana / ELK)",
+    "monitoring-prometheus": (
+        "Monitoring (Prometheus / Grafana)",
         "/images/devops_images/Monitoring.png"
     ),
+    "aws-cloudwatch": (
+        "AWS CloudWatch",
+        "/images/devops_images/aws_cloudwatch.png"
+    ),
+    "aws-cloudtrail": (
+        "AWS CloudTrail",
+        "/images/devops_images/aws_cloudtrail.png"
+    ),
     "devsecops": (
-        "DevSecOps & Security in Pipelines",
+        "DevSecOps (Security in CI/CD)",
         "/images/devops_images/DevSecOps.png"
     ),
     "scripting": (
