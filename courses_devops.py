@@ -72,11 +72,16 @@ def _card_html(href, label, icon_url, is_submodule=False):
     if is_submodule:
         card_class += " submodule-card"
 
+    # Specific override for GCP image size as requested
+    img_style = ""
+    if label == "GCP":
+        img_style = "width: 130px; height: 130px;"
+
     return f"""
       <a href="{href}" class="devops-module-link" style="text-decoration:none;color:inherit;">
         <div class="{card_class}" tabindex="0">
           <div class="devops-module-card-inner">
-            <img src="{icon_url}" alt="{label}" class="{img_class}">
+            <img src="{icon_url}" alt="{label}" class="{img_class}" style="{img_style}">
           </div>
           <div class="devops-card-label">
             {label}

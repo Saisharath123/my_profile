@@ -101,7 +101,11 @@ DEVOPS_SUBMODULES = {
         {"id": "docker-tool", "label": "Docker", "image": "/images/devops_images/docker.png"}
     ],
     "kubernetes": [
-        {"id": "k8s", "label": "Kubernetes", "image": "/images/devops_images/k8.png"}
+        {"id": "k8s", "label": "Kubernetes", "image": "/images/devops_images/k8.png"},
+        {"id": "eks", "label": "Amazon EKS", "image": "/images/AWS.png"},
+        {"id": "aks", "label": "Azure AKS", "image": "/images/devops_images/azure.png"},
+        {"id": "gke", "label": "Google GKE", "image": "/images/devops_images/gcp.png"},
+        {"id": "anthos", "label": "Google Anthos", "image": "/images/devops_images/gcp.png"}
     ],
     "iac-terraform": [
         {"id": "terraform", "label": "Terraform", "image": "/images/devops_images/terraform.png"}
@@ -113,7 +117,7 @@ DEVOPS_SUBMODULES = {
         {"id": "prometheus", "label": "Prometheus", "image": "/images/devops_images/prometheus.png"},
         {"id": "grafana", "label": "Grafana", "image": "/images/devops_images/grafana.png"},
         {"id": "aws-cloudwatch", "label": "AWS CloudWatch", "image": "/images/devops_images/aws_cloudwatch.png"},
-        {"id": "aws-cloudtrail", "label": "AWS CloudTrail", "image": "/images/devops_images/aws_cloudtrail.png"}
+        {"id": "aws-cloudtrail", "label": "AWS CloudTrail", "image": "/images/devops_images/aws_cloudtrail.jpg"}
     ],
     "devsecops": [
         # Based on user description, this might be a conceptual module or have specific tools.
@@ -124,7 +128,6 @@ DEVOPS_SUBMODULES = {
         {"id": "pipeline-security", "label": "Pipeline Security", "image": "/images/devops_images/DevSecOps.png"}
     ],
     "scripting": [
-        {"id": "linux", "label": "Linux", "image": "/images/devops_images/LINUX.png"},
         {"id": "bash", "label": "Bash", "image": "/images/devops_images/bash.png"},
         {"id": "python", "label": "Python", "image": "/images/devops_images/python.png"}
     ],
