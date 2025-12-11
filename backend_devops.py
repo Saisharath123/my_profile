@@ -102,10 +102,10 @@ DEVOPS_SUBMODULES = {
     ],
     "kubernetes": [
         {"id": "k8s", "label": "Kubernetes", "image": "/images/devops_images/k8.png"},
-        {"id": "eks", "label": "Amazon EKS", "image": "/images/AWS.png"},
+        {"id": "eks", "label": "Amazon EKS", "image": "/images/devops_images/eks.jpg"},
         {"id": "aks", "label": "Azure AKS", "image": "/images/devops_images/azure.png"},
-        {"id": "gke", "label": "Google GKE", "image": "/images/devops_images/gcp.png"},
-        {"id": "anthos", "label": "Google Anthos", "image": "/images/devops_images/gcp.png"}
+        {"id": "gke", "label": "Google GKE", "image": "/images/devops_images/gke.png"},
+        {"id": "anthos", "label": "Google Anthos", "image": "/images/devops_images/google_anthos.png"}
     ],
     "iac-terraform": [
         {"id": "terraform", "label": "Terraform", "image": "/images/devops_images/terraform.png"}
