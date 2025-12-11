@@ -1,134 +1,136 @@
 # backend_devops.py
 # Backend content definition for DevOps Modules
 
+# Main text content (Legacy/Fallback)
 DEVOPS_CONTENT = {
     "git-github": """
         <h2>Git & GitHub Fundamentals</h2>
         <p class="service-description">
-          Learn distributed version control, branching strategies, pull requests, and collaborative workflows.
+            Version control is the backbone of modern software development. 
+            Explore the tools that enable collaboration, history tracking, and code integrity.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Initialize a Git repository and perform basic commits</li>
-          <li>Master branching, merging, and resolving conflicts</li>
-          <li>Set up a GitHub repository and manage pull requests</li>
-        </ul>
     """,
 
     "ci-cd": """
-        <h2>CI/CD (Jenkins / GitHub Actions)</h2>
+        <h2>CI/CD Pipelines</h2>
         <p class="service-description">
-          Automate your build, test, and deployment processes using industry-leading CI/CD tools.
+            Continuous Integration and Continuous Deployment allow for rapid, reliable release cycles. 
+            Master the leading automation servers and cloud-native pipeline tools.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Create a Jenkins pipeline for a simple application</li>
-          <li>Configure GitHub Actions for continuous integration</li>
-          <li>Implement automated deployment to a staging environment</li>
-        </ul>
     """,
 
     "docker": """
         <h2>Docker & Containerization</h2>
         <p class="service-description">
-          Package applications into portable containers, manage images, and orchestrate multi-container apps with Docker Compose.
+             Build, Ship, and Run any app, anywhere. Docker standardizes the environment 
+             to eliminate the "it works on my machine" problem.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Write a Dockerfile to containerize a web application</li>
-          <li>Manage images and push them to a container registry</li>
-          <li>Use Docker Compose to run a multi-service application locally</li>
-        </ul>
     """,
 
     "kubernetes": """
-        <h2>Kubernetes (K8s)</h2>
+        <h2>Container Orchestration</h2>
         <p class="service-description">
-          Orchestrate containers with Kubernetes: deployments, services, ingress, and scaling strategies.
+             Kubernetes (K8s) is the industry standard for automating deployment, scaling, 
+             and management of containerized applications.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Deploy a containerized app to a Kubernetes cluster</li>
-          <li>Expose the app using Services and Ingress</li>
-          <li>Scale deployments and roll out zero-downtime updates</li>
-        </ul>
     """,
 
     "iac-terraform": """
-        <h2>Infrastructure as Code (Terraform)</h2>
+        <h2>Infrastructure as Code</h2>
         <p class="service-description">
-          Provision cloud resources declaratively using Terraform modules, state management, and workspaces.
+             Manage and provision your infrastructure through code conventions rather than manual processes.
+             Terraform is the tool of choice for platform-agnostic declarative infrastructure.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Create a Terraform configuration to deploy a VPC and EC2 instance</li>
-          <li>Use variables, outputs, and remote state backends</li>
-          <li>Refactor into reusable modules and manage environments</li>
-        </ul>
     """,
 
     "config-ansible": """
-        <h2>Configuration Management (Ansible)</h2>
+        <h2>Configuration Management</h2>
         <p class="service-description">
-          Automate server configuration using Ansible playbooks, roles, and inventories for idempotent setups.
+             Ansible leverages simple YAML to automate configuration, application deployment, 
+             and cloud provisioning without agents.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Write an Ansible playbook to configure a web server</li>
-          <li>Create roles and organize group/host inventories</li>
-          <li>Run playbooks against multiple servers in parallel</li>
-        </ul>
     """,
 
     "monitoring-logging": """
-        <h2>Monitoring & Logging (Prometheus / Grafana / ELK)</h2>
+        <h2>Monitoring & Logging</h2>
         <p class="service-description">
-          Collect metrics and logs to detect issues early and visualize system health and performance.
+             Observability is key. Track performance, visualize metrics, and aggregate logs 
+             to detect anomalies before they impact users.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Install Prometheus and Grafana, add basic dashboards</li>
-          <li>Ship application logs to an ELK or OpenSearch stack</li>
-          <li>Create alerts for error spikes and high latency</li>
-        </ul>
     """,
 
     "devsecops": """
-        <h2>DevSecOps & Security in Pipelines</h2>
+        <h2>DevSecOps</h2>
         <p class="service-description">
-          Integrate security into CI/CD pipelines using code scanning, dependency checks, and container security.
+             Shift security left. Integrate security checks, vulnerability scanning, 
+             and compliance audit automated within the CI/CD pipeline.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Enable static code analysis in a CI pipeline</li>
-          <li>Scan container images for vulnerabilities</li>
-          <li>Add dependency and secret scanning to GitHub Actions</li>
-        </ul>
     """,
 
     "scripting": """
-        <h2>Scripting (Linux / Bash / Python)</h2>
+        <h2>Scripting & Automation</h2>
         <p class="service-description">
-          Use shell and Python scripts to automate repetitive DevOps tasks on servers and in pipelines.
+              The glue of DevOps. Use Linux shell, Bash scripting, and Python to 
+             automate repetitive tasks and bridge tools together.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Write Bash scripts to automate log collection and backups</li>
-          <li>Use Python to call cloud APIs and manage resources</li>
-          <li>Integrate scripts into CI/CD jobs for automation</li>
-        </ul>
     """,
 
     "cloud-devops": """
-        <h2>Cloud DevOps (AWS / Azure / GCP)</h2>
+        <h2>Cloud DevOps</h2>
         <p class="service-description">
-          Apply DevOps practices to cloud platforms, focusing on automation, scalability, and cost optimization.
+             leverage the power of major cloud providers (AWS, Azure, GCP) to build 
+             scalable, resilient, and globally distributed systems.
         </p>
-        <h3>Hands-on labs</h3>
-        <ul class="service-labs">
-          <li>Deploy a simple app with IaC to your preferred cloud</li>
-          <li>Set up a CI/CD pipeline targeting cloud resources</li>
-          <li>Implement autoscaling and basic cost monitoring</li>
-        </ul>
     """
+}
+
+# Sub-module definitions: The tools inside each category
+DEVOPS_SUBMODULES = {
+    "git-github": [
+        {"id": "git", "label": "Git", "image": "/images/devops_images/git.png"},
+        {"id": "github", "label": "GitHub", "image": "/images/devops_images/Git Hub.png"},
+        {"id": "bitbucket", "label": "Bitbucket", "image": "/images/devops_images/bitbucket.png"}
+    ],
+    "ci-cd": [
+        {"id": "jenkins", "label": "Jenkins", "image": "/images/devops_images/jenkins.png"},
+        {"id": "github-actions", "label": "GitHub Actions", "image": "/images/devops_images/github_actions.png"},
+        {"id": "gitlab-ci", "label": "GitLab CI", "image": "/images/devops_images/gitlab_ci.png"},
+        {"id": "argo-cd", "label": "Argo CD", "image": "/images/devops_images/argo_cd.png"}
+    ],
+    "docker": [
+        {"id": "docker-tool", "label": "Docker", "image": "/images/devops_images/docker.png"}
+    ],
+    "kubernetes": [
+        {"id": "k8s", "label": "Kubernetes", "image": "/images/devops_images/k8.png"}
+    ],
+    "iac-terraform": [
+        {"id": "terraform", "label": "Terraform", "image": "/images/devops_images/terraform.png"}
+    ],
+    "config-ansible": [
+        {"id": "ansible", "label": "Ansible", "image": "/images/devops_images/ansible.webp"}
+    ],
+    "monitoring-logging": [
+        {"id": "prometheus", "label": "Prometheus", "image": "/images/devops_images/prometheus.png"},
+        {"id": "grafana", "label": "Grafana", "image": "/images/devops_images/grafana.png"},
+        {"id": "aws-cloudwatch", "label": "AWS CloudWatch", "image": "/images/devops_images/aws_cloudwatch.png"},
+        {"id": "aws-cloudtrail", "label": "AWS CloudTrail", "image": "/images/devops_images/aws_cloudtrail.png"}
+    ],
+    "devsecops": [
+        # Based on user description, this might be a conceptual module or have specific tools.
+        # If no specific tools mentioned other than "Security in...", we can put a placeholder or generic.
+        # User prompt: "DevSecOps -> Security in CI/CD pipelines"
+        # I will add a generic 'Security' item if no specific tool is requested, or just leave text.
+        # But user pattern implies cards. I'll use the main image as a 'Concept' card if needed.
+        {"id": "pipeline-security", "label": "Pipeline Security", "image": "/images/devops_images/DevSecOps.png"}
+    ],
+    "scripting": [
+        {"id": "linux", "label": "Linux", "image": "/images/devops_images/LINUX.png"},
+        {"id": "bash", "label": "Bash", "image": "/images/devops_images/bash.png"},
+        {"id": "python", "label": "Python", "image": "/images/devops_images/python.png"}
+    ],
+    "cloud-devops": [
+        {"id": "aws", "label": "AWS", "image": "/images/AWS.png"}, # Using main AWS image
+        {"id": "azure", "label": "Azure", "image": "/images/devops_images/azure.png"},
+        {"id": "gcp", "label": "GCP", "image": "/images/devops_images/gcp.png"}
+    ]
 }

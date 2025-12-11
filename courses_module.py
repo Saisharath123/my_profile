@@ -308,6 +308,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         """
 
 
+
     @app.route("/course/aws/<service_id>")
     def aws_service_detail(service_id):
         """
@@ -319,8 +320,24 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             if hasattr(courses_aws, "render_service"):
                 html = courses_aws.render_service(service_id)
                 return render_page_func(Markup(html), active="courses")
-        except Exception as e:
-            pass # Fallthrough or error handling
+        except Exception:
+            pass # Fallthrough
 
         return render_page_func(f"<h2>Service not found</h2><p>Could not load service detail for {service_id}</p>", active="courses")
+
+    @app.route("/course/devops/<service_id>")
+    def devops_service_detail(service_id):
+        """
+        Specific route for DevOps sub-modules (Version Control, CI/CD, etc.)
+        Delegates to courses_devops.render_service(service_id).
+        """
+        try:
+            import courses_devops
+            if hasattr(courses_devops, "render_service"):
+                html = courses_devops.render_service(service_id)
+                return render_page_func(Markup(html), active="courses")
+        except Exception:
+            pass
+
+        return render_page_func(f"<h2>Module not found</h2><p>Could not load module detail for {service_id}</p>", active="courses")
 
