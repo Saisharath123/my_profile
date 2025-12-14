@@ -203,69 +203,35 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
       /* --- BASE STYLES & UTILITIES --- */
       @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap');
 
-      /* --- GLOBAL OVERRIDES TO FIX VISIBILITY --- */
-      /* These override the app.py main container styles so our custom shell takes over completely */
-      .card { 
-        background: transparent !important; 
-        box-shadow: none !important; 
-        border: none !important; 
-        padding: 0 !important;
-      }
-      .container {
-        max-width: 100% !important;
-        padding: 10px !important;
-      }
-
       .devops-page-shell {
         position:relative;
         padding:40px;
         border-radius:32px;
-        background: rgba(255, 255, 255, 0.6); /* Slightly more opaque for legibility */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border:1px solid rgba(255, 255, 255, 0.5);
-        box-shadow:0 25px 50px rgba(0,0,0,0.15);
+        background: #ffffff;
+        border:1px solid #e2e8f0;
+        box-shadow:0 25px 50px rgba(0,0,0,0.1);
         overflow:hidden;
         font-family: 'Outfit', sans-serif;
         color: #1e293b;
         max-width: 1400px;
         margin: 0 auto;
-        z-index: 1; /* Establish stacking context */
       }
-
-      /* --- DYNAMIC BACKGROUND (AURORA MESH) --- */
       .devops-page-shell::before {
         content: '';
         position: absolute;
-        inset: -50%;
+        top: -50%;
+        left: -50%;
         width: 200%;
         height: 200%;
-        background: 
-            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.7) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.7) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.7) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.7) 0px, transparent 50%);
-        background-size: 150% 150%;
-        animation: aurora 15s ease-in-out infinite alternate;
-        z-index: -1; /* Behind content but in front of shell's parent background? No, relative to shell */
-        filter: blur(50px);
-        opacity: 1;
+        background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05), transparent 50%),
+                    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05), transparent 40%);
+        animation: rotate-bg 20s linear infinite;
+        z-index: 0;
       }
       
-      /* Ensure text is on top */
-      .devops-wrapper {
-        position: relative;
-        z-index: 2;
-      }
-      
-      .devops-page-shell::after {
-         content: '';
-         position: absolute;
-         inset: 0;
-         background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-         opacity: 0.4;
-         z-index: 0;
-         pointer-events: none;
+      @keyframes rotate-bg {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
       @keyframes aurora {

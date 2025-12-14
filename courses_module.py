@@ -29,6 +29,37 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         <h2>Courses & Workshops</h2>
 
         <style>
+          /* --- DYNAMIC BACKGROUND (AURORA) --- */
+          body {
+            background-color: #f8fafc;
+            min-height: 100vh;
+            position: relative;
+          }
+          body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.4) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.4) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.4) 0px, transparent 50%);
+            background-size: 140% 140%;
+            animation: globalAurora 15s ease-in-out infinite alternate;
+            z-index: -1;
+            filter: blur(80px);
+          }
+          @keyframes globalAurora {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+          }
+          
+          /* Override Main Card Container Transparency from APP.PY if needed */
+          .card { background: transparent !important; box-shadow: none !important; border: none !important; }
+          .container { max-width: 1200px !important; }
+
           .courses-top { display:flex; gap:14px; margin-top:14px; align-items:stretch; }
 
           /* course-card is explicitly positioned to host absolutely-positioned elements */
