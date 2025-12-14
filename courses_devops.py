@@ -55,27 +55,48 @@ SERVICES = {
     ),
 }
 
-def _card_html(href, label, icon_url, is_submodule=False):
+def _card_html(href, label, icon_url, is_submodule=False, back_content=None):
     """
-    Reusable card component.
+    Reusable card component. Supports standard link cards and Flip Cards.
     """
     # Cover IDs for main modules that need 'cover' fit style
     cover_ids = {"monitoring-logging", "devsecops", "cloud-devops"} 
-    # For submodules, we mostly want 'contain' to show the tool logo clearly.
     
-    # Heuristic: if valid URL specific logic needed
     img_class = "devops-card-img-contain"
     if any(x in label for x in ["Monitoring", "DevSecOps", "Cloud DevOps"]) and not is_submodule:
          img_class = "devops-card-img-cover"
-
-    card_class = "devops-module-card"
-    if is_submodule:
-        card_class += " submodule-card"
 
     # Specific override for GCP image size as requested
     img_style = ""
     if label == "GCP":
         img_style = "width: 130px; height: 130px;"
+
+    # --- FLIP CARD LOGIC (for Submodules) ---
+    if back_content:
+        return f"""
+        <div class="flip-card" tabindex="0">
+          <div class="flip-card-inner">
+            <!-- FRONT -->
+            <div class="flip-card-front">
+              <div class="devops-module-card-inner-static">
+                 <img src="{icon_url}" alt="{label}" class="{img_class}" style="{img_style}">
+                 <div class="devops-card-label">{label}</div>
+              </div>
+            </div>
+            <!-- BACK -->
+            <div class="flip-card-back">
+               <div class="flip-content-scroll">
+                  {back_content}
+               </div>
+            </div>
+          </div>
+        </div>
+        """
+    
+    # --- STANDARD LINK CARD (for Main Modules) ---
+    card_class = "devops-module-card"
+    if is_submodule: 
+        card_class += " submodule-card"
 
     return f"""
       <a href="{href}" class="devops-module-link" style="text-decoration:none;color:inherit;">
@@ -108,10 +129,11 @@ def render_service(service_id):
     """
     # 1. Get the submodules from backend
     try:
-        from backend_devops import DEVOPS_CONTENT, DEVOPS_SUBMODULES
+        from backend_devops import DEVOPS_CONTENT, DEVOPS_SUBMODULES, DEVOPS_TOOL_DETAILS
     except ImportError:
         DEVOPS_CONTENT = {}
         DEVOPS_SUBMODULES = {}
+        DEVOPS_TOOL_DETAILS = {}
 
     label, icon = SERVICES.get(service_id, (f"{service_id}", ""))
     
@@ -122,15 +144,14 @@ def render_service(service_id):
         # Render a grid of submodules
         cards_html = ""
         for item in submodules:
-            # item = {'id': 'git', 'label': 'Git', 'image': '...'}
-            # For now, sub-items are not clickable or loop back to same page or placeholder
-            # The user asked for "each tool having its own details", implying 3rd level.
-            # But currently we don't have routes for 3rd level. 
-            # We'll make it visual for now.
-            sub_href = "#"  
-            cards_html += _card_html(sub_href, item['label'], item['image'], is_submodule=True)
+            # Check for backend details
+            tool_id = item.get('id')
+            detail_html = DEVOPS_TOOL_DETAILS.get(tool_id, "<p>More details coming soon...</p>")
+            
+            # Pass detailed content to the card
+            cards_html += _card_html("#", item['label'], item['image'], is_submodule=True, back_content=detail_html)
         
-        description = "Explore the essential tools and technologies in this category."
+        description = "Explore the essential tools and technologies in this category. Hover over a card to see details."
         return _wrap_in_page(label, description, cards_html, back_link="/course/devops")
 
     else:
@@ -238,16 +259,16 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         .devops-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
       }
 
-      /* --- CARD STYLES --- */
+      /* --- CARD STYLES (MAIN) --- */
       .devops-module-card {
         cursor:pointer;
         height: 100%;
         perspective: 1000px;
       }
 
-      .devops-module-card-inner {
+      .devops-module-card-inner, .devops-module-card-inner-static {
         height: auto;
-        min-height: 160px;
+        min-height: 220px; /* Increased height for uniformity */
         border-radius: 20px;
         background: #fff;
         border: 1px solid #e2e8f0;
@@ -259,6 +280,10 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         gap: 15px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
+      }
+      
+      .devops-module-card-inner-static {
+        width: 100%; height: 100%; border:none; box-shadow:none; /* For inside flip */
       }
 
       .devops-card-img-contain, .devops-card-img-cover {
@@ -275,7 +300,7 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         color: #334155;
       }
 
-      /* Hover Effects */
+      /* Hover Effects (Main Link Cards) */
       .devops-module-card:hover .devops-module-card-inner {
         transform: translateY(-5px);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
@@ -285,6 +310,79 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
       .devops-module-card:hover .devops-card-img-contain {
         transform: scale(1.1) rotate(5deg);
       }
+
+      /* --- FLIP CARD STYLES (SUBMODULES) --- */
+      .flip-card {
+        background-color: transparent;
+        perspective: 1000px;
+        height: 320px; /* Fixed height required for flip */
+        cursor: pointer;
+      }
+
+      .flip-card-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        transition: transform 0.8s;
+        transform-style: preserve-3d;
+        border-radius: 20px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      }
+
+      .flip-card:hover .flip-card-inner, .flip-card:focus .flip-card-inner {
+        transform: rotateY(180deg);
+      }
+
+      .flip-card-front, .flip-card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        border-radius: 20px;
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+      }
+
+      .flip-card-front {
+        background-color: #fff;
+        color: black;
+      }
+      
+      /* Front content needs to mimic the standard card layout */
+      .flip-card-front .devops-module-card-inner-static {
+         display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+      }
+
+      .flip-card-back {
+        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        color: #334155;
+        transform: rotateY(180deg);
+        text-align: left;
+        display: flex; 
+        flex-direction: column;
+        border-color: #bae6fd;
+      }
+
+      .flip-content-scroll {
+        padding: 20px;
+        overflow-y: auto;
+        height: 100%;
+        font-size: 0.9rem;
+      }
+      
+      /* Scrollbar styling for back content */
+      .flip-content-scroll::-webkit-scrollbar { width: 6px; }
+      .flip-content-scroll::-webkit-scrollbar-track { background: transparent; }
+      .flip-content-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+
+      /* Typography for Back Content */
+      .flip-content-scroll h3 { font-size: 1rem; color: #0f172a; margin-top:0; margin-bottom: 8px; border-bottom: 2px solid #38bdf8; display:inline-block; padding-bottom:2px; }
+      .flip-content-scroll h4 { font-size: 0.9rem; color: #475569; margin: 12px 0 6px 0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+      .flip-content-scroll p { margin-bottom: 8px; line-height: 1.4; }
+      .flip-content-scroll ul { padding-left: 16px; margin-bottom: 8px; }
+      .flip-content-scroll li { margin-bottom: 4px; }
     </style>
     """
 
