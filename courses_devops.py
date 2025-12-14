@@ -55,9 +55,9 @@ SERVICES = {
     ),
 }
 
-def _card_html(href, label, icon_url, is_submodule=False, back_content=None):
+def _card_html(href, label, icon_url, is_submodule=False, attributes=""):
     """
-    Reusable card component. Supports standard link cards and Flip Cards.
+    Reusable card component. 
     """
     # Cover IDs for main modules that need 'cover' fit style
     cover_ids = {"monitoring-logging", "devsecops", "cloud-devops"} 
@@ -71,35 +71,12 @@ def _card_html(href, label, icon_url, is_submodule=False, back_content=None):
     if label == "GCP":
         img_style = "width: 130px; height: 130px;"
 
-    # --- FLIP CARD LOGIC (for Submodules) ---
-    if back_content:
-        return f"""
-        <div class="flip-card" tabindex="0">
-          <div class="flip-card-inner">
-            <!-- FRONT -->
-            <div class="flip-card-front">
-              <div class="devops-module-card-inner-static">
-                 <img src="{icon_url}" alt="{label}" class="{img_class}" style="{img_style}">
-                 <div class="devops-card-label">{label}</div>
-              </div>
-            </div>
-            <!-- BACK -->
-            <div class="flip-card-back">
-               <div class="flip-content-scroll">
-                  {back_content}
-               </div>
-            </div>
-          </div>
-        </div>
-        """
-    
-    # --- STANDARD LINK CARD (for Main Modules) ---
     card_class = "devops-module-card"
     if is_submodule: 
         card_class += " submodule-card"
 
     return f"""
-      <a href="{href}" class="devops-module-link" style="text-decoration:none;color:inherit;">
+      <a href="{href}" {attributes} class="devops-module-link" style="text-decoration:none;color:inherit;">
         <div class="{card_class}" tabindex="0">
           <div class="devops-module-card-inner">
             <img src="{icon_url}" alt="{label}" class="{img_class}" style="{img_style}">
@@ -141,18 +118,64 @@ def render_service(service_id):
     submodules = DEVOPS_SUBMODULES.get(service_id, [])
 
     if submodules:
+        # Prepare content for JS
+        import json
+        
+        # Helper to safely serialize content
+        tool_data_json = json.dumps(DEVOPS_TOOL_DETAILS)
+
         # Render a grid of submodules
         cards_html = ""
         for item in submodules:
-            # Check for backend details
             tool_id = item.get('id')
-            detail_html = DEVOPS_TOOL_DETAILS.get(tool_id, "<p>More details coming soon...</p>")
+            # Use onclick to open modal
+            # We revert _card_html to standard and wrap in a clickable div or adjust _card_html
+            # But simpler: _card_html returns an anchor. We can make href="javascript:void(0)" and onclick.
             
-            # Pass detailed content to the card
-            cards_html += _card_html("#", item['label'], item['image'], is_submodule=True, back_content=detail_html)
+            click_attr = f'onclick="openModal(\'{tool_id}\')"'
+            cards_html += _card_html("javascript:void(0)", item['label'], item['image'], is_submodule=True, attributes=click_attr)
         
-        description = "Explore the essential tools and technologies in this category. Hover over a card to see details."
-        return _wrap_in_page(label, description, cards_html, back_link="/course/devops")
+        description = "Explore the essential tools and technologies in this category."
+        
+        # Add Modal HTML and Script
+        modal_html = f"""
+        <!-- MODAL OVERLAY -->
+        <div id="devops-modal-overlay" class="devops-modal-overlay" onclick="closeModal(event)">
+            <div class="devops-modal-container">
+                <button class="devops-modal-close" onclick="closeModal(event)">×</button>
+                <div id="devops-modal-content" class="devops-modal-content">
+                    <!-- Content injected via JS -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const TOOL_DATA = {tool_data_json};
+
+            function openModal(toolId) {{
+                const content = TOOL_DATA[toolId];
+                if (!content) return;
+                
+                const overlay = document.getElementById('devops-modal-overlay');
+                const contentDiv = document.getElementById('devops-modal-content');
+                
+                contentDiv.innerHTML = content;
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            }}
+
+            function closeModal(e) {{
+                // Close if clicked on overlay (outside container) or close button
+                if (e.target === e.currentTarget || e.target.classList.contains('devops-modal-close')) {{
+                    const overlay = document.getElementById('devops-modal-overlay');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }}
+            }}
+        </script>
+        """
+
+        return _wrap_in_page(label, description, cards_html + modal_html, back_link="/course/devops")
 
     else:
         # Fallback to text content if no submodules
@@ -259,16 +282,16 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         .devops-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
       }
 
-      /* --- CARD STYLES (MAIN) --- */
+      /* --- CARD STYLES --- */
       .devops-module-card {
         cursor:pointer;
         height: 100%;
-        perspective: 1000px;
+        transition: transform 0.3s ease;
       }
 
-      .devops-module-card-inner, .devops-module-card-inner-static {
+      .devops-module-card-inner {
         height: auto;
-        min-height: 220px; /* Increased height for uniformity */
+        min-height: 160px; /* REVERTED TO ORIGINAL HEIGHT */
         border-radius: 20px;
         background: #fff;
         border: 1px solid #e2e8f0;
@@ -280,10 +303,6 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         gap: 15px;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         transition: all 0.3s ease;
-      }
-      
-      .devops-module-card-inner-static {
-        width: 100%; height: 100%; border:none; box-shadow:none; /* For inside flip */
       }
 
       .devops-card-img-contain, .devops-card-img-cover {
@@ -300,7 +319,7 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         color: #334155;
       }
 
-      /* Hover Effects (Main Link Cards) */
+      /* Hover Effects */
       .devops-module-card:hover .devops-module-card-inner {
         transform: translateY(-5px);
         box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
@@ -311,78 +330,121 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         transform: scale(1.1) rotate(5deg);
       }
 
-      /* --- FLIP CARD STYLES (SUBMODULES) --- */
-      .flip-card {
-        background-color: transparent;
-        perspective: 1000px;
-        height: 320px; /* Fixed height required for flip */
-        cursor: pointer;
+      /* --- HIGH-END MODAL STYLES --- */
+      .devops-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
       }
 
-      .flip-card-inner {
+      .devops-modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .devops-modal-container {
+        background: #ffffff;
+        width: 90%;
+        max-width: 800px;
+        max-height: 85vh;
+        border-radius: 24px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         position: relative;
-        width: 100%;
-        height: 100%;
-        text-align: center;
-        transition: transform 0.8s;
-        transform-style: preserve-3d;
-        border-radius: 20px;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-      }
-
-      .flip-card:hover .flip-card-inner, .flip-card:focus .flip-card-inner {
-        transform: rotateY(180deg);
-      }
-
-      .flip-card-front, .flip-card-back {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        border-radius: 20px;
-        border: 1px solid #e2e8f0;
+        transform: scale(0.95);
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         overflow: hidden;
-      }
-
-      .flip-card-front {
-        background-color: #fff;
-        color: black;
-      }
-      
-      /* Front content needs to mimic the standard card layout */
-      .flip-card-front .devops-module-card-inner-static {
-         display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
-      }
-
-      .flip-card-back {
-        background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
-        color: #334155;
-        transform: rotateY(180deg);
-        text-align: left;
-        display: flex; 
+        display: flex;
         flex-direction: column;
-        border-color: #bae6fd;
+        border: 1px solid rgba(255, 255, 255, 0.5);
       }
 
-      .flip-content-scroll {
-        padding: 20px;
+      .devops-modal-overlay.active .devops-modal-container {
+        transform: scale(1);
+      }
+
+      .devops-modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f1f5f9;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 1.2rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #64748b;
+        transition: all 0.2s;
+        z-index: 10;
+        font-family: inherit;
+      }
+
+      .devops-modal-close:hover {
+        background: #e2e8f0;
+        color: #0f172a;
+        transform: rotate(90deg);
+      }
+
+      .devops-modal-content {
+        padding: 40px;
         overflow-y: auto;
-        height: 100%;
-        font-size: 0.9rem;
+        color: #334155;
+        font-size: 1.05rem;
+        line-height: 1.7;
+      }
+
+      /* Modal Typography High-End Tweaks */
+      .devops-modal-content h3 {
+        font-size: 1.8rem;
+        background: linear-gradient(135deg, #0f172a 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-weight: 800;
       }
       
-      /* Scrollbar styling for back content */
-      .flip-content-scroll::-webkit-scrollbar { width: 6px; }
-      .flip-content-scroll::-webkit-scrollbar-track { background: transparent; }
-      .flip-content-scroll::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
-
-      /* Typography for Back Content */
-      .flip-content-scroll h3 { font-size: 1rem; color: #0f172a; margin-top:0; margin-bottom: 8px; border-bottom: 2px solid #38bdf8; display:inline-block; padding-bottom:2px; }
-      .flip-content-scroll h4 { font-size: 0.9rem; color: #475569; margin: 12px 0 6px 0; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-      .flip-content-scroll p { margin-bottom: 8px; line-height: 1.4; }
-      .flip-content-scroll ul { padding-left: 16px; margin-bottom: 8px; }
-      .flip-content-scroll li { margin-bottom: 4px; }
+      .devops-modal-content h4 {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #475569;
+        border-left: 4px solid #3b82f6;
+        padding-left: 12px;
+      }
+      
+      .devops-modal-content ul {
+        background: #f8fafc;
+        border-radius: 12px;
+        padding: 20px 40px;
+        border: 1px solid #f1f5f9;
+      }
+      
+      .devops-modal-content li {
+        margin-bottom: 8px;
+      }
+      
+      /* Scrollbar */
+      .devops-modal-content::-webkit-scrollbar { width: 8px; }
+      .devops-modal-content::-webkit-scrollbar-track { background: transparent; }
+      .devops-modal-content::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
     </style>
     """
 
