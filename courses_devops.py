@@ -203,23 +203,36 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
       /* --- BASE STYLES & UTILITIES --- */
       @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap');
 
+      /* --- GLOBAL OVERRIDES TO FIX VISIBILITY --- */
+      /* These override the app.py main container styles so our custom shell takes over completely */
+      .card { 
+        background: transparent !important; 
+        box-shadow: none !important; 
+        border: none !important; 
+        padding: 0 !important;
+      }
+      .container {
+        max-width: 100% !important;
+        padding: 10px !important;
+      }
+
       .devops-page-shell {
         position:relative;
         padding:40px;
         border-radius:32px;
-        background: rgba(255, 255, 255, 0.4); /* TRANSPARENT WHITE TO SHOW AURORA */
+        background: rgba(255, 255, 255, 0.6); /* Slightly more opaque for legibility */
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border:1px solid rgba(255, 255, 255, 0.6);
-        box-shadow:0 25px 50px rgba(0,0,0,0.1);
+        border:1px solid rgba(255, 255, 255, 0.5);
+        box-shadow:0 25px 50px rgba(0,0,0,0.15);
         overflow:hidden;
         font-family: 'Outfit', sans-serif;
         color: #1e293b;
         max-width: 1400px;
         margin: 0 auto;
+        z-index: 1; /* Establish stacking context */
       }
 
-      /* --- DYNAMIC BACKGROUND --- */
       /* --- DYNAMIC BACKGROUND (AURORA MESH) --- */
       .devops-page-shell::before {
         content: '';
@@ -228,15 +241,21 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         width: 200%;
         height: 200%;
         background: 
-            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.6) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.6) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.6) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.6) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.7) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.7) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.7) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.7) 0px, transparent 50%);
         background-size: 150% 150%;
         animation: aurora 15s ease-in-out infinite alternate;
-        z-index: 0;
-        filter: blur(40px); /* Reduced blur for more defined colors */
-        opacity: 0.8; /* Increased opacity */
+        z-index: -1; /* Behind content but in front of shell's parent background? No, relative to shell */
+        filter: blur(50px);
+        opacity: 1;
+      }
+      
+      /* Ensure text is on top */
+      .devops-wrapper {
+        position: relative;
+        z-index: 2;
       }
       
       .devops-page-shell::after {
