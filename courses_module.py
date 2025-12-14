@@ -267,6 +267,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         if module_name:
             try:
                 course_mod = importlib.import_module(module_name)
+                importlib.reload(course_mod) # Force reload to pick up changes
                 if hasattr(course_mod, "render") and callable(getattr(course_mod, "render")):
                     try:
                         # call the module's render() and if it returns HTML, use it
@@ -333,6 +334,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         """
         try:
             import courses_devops
+            importlib.reload(courses_devops)
             if hasattr(courses_devops, "render_service"):
                 html = courses_devops.render_service(service_id)
                 return render_page_func(Markup(html), active="courses")
