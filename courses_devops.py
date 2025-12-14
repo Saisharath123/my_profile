@@ -218,22 +218,40 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
       }
 
       /* --- DYNAMIC BACKGROUND --- */
+      /* --- DYNAMIC BACKGROUND (AURORA MESH) --- */
       .devops-page-shell::before {
         content: '';
         position: absolute;
-        top: -50%;
-        left: -50%;
+        inset: -50%;
         width: 200%;
         height: 200%;
-        background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05), transparent 50%),
-                    radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.05), transparent 40%);
-        animation: rotate-bg 20s linear infinite;
+        background: 
+            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.15) 0px, transparent 50%);
+        background-size: 150% 150%;
+        animation: aurora 15s ease-in-out infinite alternate;
         z-index: 0;
+        filter: blur(60px);
+        opacity: 0.6;
       }
       
-      @keyframes rotate-bg {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+      .devops-page-shell::after {
+         content: '';
+         position: absolute;
+         inset: 0;
+         background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+         opacity: 0.4;
+         z-index: 0;
+         pointer-events: none;
+      }
+
+      @keyframes aurora {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        33% { transform: translate(5%, 5%) rotate(2deg); }
+        66% { transform: translate(-5%, 2%) rotate(-2deg); }
+        100% { transform: translate(0, 0) rotate(0deg); }
       }
 
       /* --- HERO SECTION --- */
