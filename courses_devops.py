@@ -207,8 +207,10 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         position:relative;
         padding:40px;
         border-radius:32px;
-        background: #ffffff;
-        border:1px solid #e2e8f0;
+        background: rgba(255, 255, 255, 0.4); /* TRANSPARENT WHITE TO SHOW AURORA */
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border:1px solid rgba(255, 255, 255, 0.6);
         box-shadow:0 25px 50px rgba(0,0,0,0.1);
         overflow:hidden;
         font-family: 'Outfit', sans-serif;
@@ -226,15 +228,15 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         width: 200%;
         height: 200%;
         background: 
-            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.15) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.6) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.6) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.6) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.6) 0px, transparent 50%);
         background-size: 150% 150%;
         animation: aurora 15s ease-in-out infinite alternate;
         z-index: 0;
-        filter: blur(60px);
-        opacity: 0.6;
+        filter: blur(40px); /* Reduced blur for more defined colors */
+        opacity: 0.8; /* Increased opacity */
       }
       
       .devops-page-shell::after {
