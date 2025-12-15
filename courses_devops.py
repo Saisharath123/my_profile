@@ -98,7 +98,7 @@ def render():
         href = f"/course/devops/{sid}"
         cards_html += _card_html(href, label, url, is_submodule=False)
 
-    return _wrap_in_page("DevOps Mastery 2025", "Future-proof your career with next-gen infrastructure automation and CI/CD pipelines.", cards_html)
+    return _wrap_in_page("DevOps Mastery 2025", "Future-proof your career with next-gen infrastructure automation and CI/CD pipelines.", cards_html, hero_image=LOCAL_DEVOPS_IMG)
 
 def render_service(service_id):
     """
@@ -175,7 +175,7 @@ def render_service(service_id):
         </script>
         """
 
-        return _wrap_in_page(label, description, cards_html + modal_html, back_link="/course/devops")
+        return _wrap_in_page(label, description, cards_html + modal_html, back_link="/course/devops", hero_image=icon)
 
     else:
         # Fallback to text content if no submodules
@@ -183,7 +183,7 @@ def render_service(service_id):
         return _wrap_content(label, content, icon)
 
 
-def _wrap_in_page(title, subtitle, grid_content, back_link=None):
+def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None):
     """
     Wraps the grid content in the standard page shell.
     """
@@ -195,6 +195,14 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
             <a href="{back_link}" style="display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#64748b;text-decoration:none;">
                 <span>⬅ Back</span>
             </a>
+        </div>
+        """
+
+    img_html = ""
+    if hero_image:
+        img_html = f"""
+        <div class="devops-hero-img-container">
+            <img src="{hero_image}" alt="Hero" class="devops-hero-img">
         </div>
         """
 
@@ -252,10 +260,35 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
 
       .devops-hero-row {
         display:flex;
-        flex-direction:column;
+        flex-direction: row; /* Changed to row to side-by-side */
         align-items:center;
-        text-align: center;
+        justify-content: center;
+        gap: 30px;
+        text-align: left;
         padding-bottom:10px;
+      }
+      
+      /* On mobile, stack them */
+      @media (max-width: 768px) {
+        .devops-hero-row { flex-direction: column; text-align: center; }
+      }
+
+      .devops-hero-img-container {
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+      }
+      
+      .devops-hero-img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        animation: rotate-img 20s linear infinite;
+      }
+      
+      @keyframes rotate-img {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
 
       .devops-hero-text-col h1 {
@@ -271,7 +304,7 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
         color: #64748b;
         font-size:1.2rem;
         max-width: 600px;
-        margin: 0 auto;
+        margin: 0; /* Auto margin removed since we are flexing */
         font-weight: 300;
       }
 
@@ -458,6 +491,7 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None):
       {back_html}
       <div class="devops-wrapper">
         <div class="devops-hero-row">
+          {img_html}
           <div class="devops-hero-text-col">
             <h1>{title}</h1>
             <p>{subtitle}</p>
