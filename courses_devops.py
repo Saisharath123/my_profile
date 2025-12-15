@@ -71,6 +71,10 @@ def _card_html(href, label, icon_url, is_submodule=False, attributes=""):
     if label == "GCP":
         img_style = "width: 130px; height: 130px;"
 
+    # Add special class for Kubernetes (Container Orchestration)
+    if "Container Orchestration" in label:
+        img_class += " k8s-spin-target"
+
     card_class = "devops-module-card"
     if is_submodule: 
         card_class += " submodule-card"
@@ -400,8 +404,19 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
         border-color: #38bdf8;
       }
       
+      /* Standard hover: Scale only, no rotate */
       .devops-module-card:hover .devops-card-img-contain {
-        transform: scale(1.1) rotate(5deg);
+        transform: scale(1.1);
+      }
+      
+      /* Kubernetes specific: Scale + Spin */
+      .devops-module-card:hover .devops-card-img-contain.k8s-spin-target {
+        animation: spin-icon 4s linear infinite;
+      }
+      
+      @keyframes spin-icon {
+        0% { transform: scale(1.1) rotate(0deg); }
+        100% { transform: scale(1.1) rotate(360deg); }
       }
 
       /* --- HIGH-END MODAL STYLES --- */
