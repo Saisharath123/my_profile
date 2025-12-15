@@ -191,7 +191,7 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
     back_html = ""
     if back_link:
         back_html = f"""
-        <div style="margin-bottom: 20px;">
+        <div style="margin-bottom: 20px; position: relative; z-index: 10;">
             <a href="{back_link}" style="display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#64748b;text-decoration:none;">
                 <span>⬅ Back</span>
             </a>
@@ -260,23 +260,54 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
 
       .devops-hero-row {
         display:flex;
-        flex-direction: row; /* Changed to row to side-by-side */
+        flex-direction: row;
         align-items:center;
         justify-content: center;
-        gap: 30px;
+        gap: 40px;
         text-align: left;
-        padding-bottom:10px;
+        padding: 40px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(241, 245, 249, 0.9) 100%);
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 1);
+        box-shadow: 
+            0 10px 30px -10px rgba(56, 189, 248, 0.2), 
+            inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+        backdrop-filter: blur(10px);
+        margin-bottom: 20px;
+        position: relative;
+        overflow: hidden;
       }
       
+      /* Decorative subtle Glow behind text */
+      .devops-hero-row::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 70% 30%, rgba(139, 92, 246, 0.08), transparent 40%),
+                    radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.08), transparent 40%);
+        pointer-events: none;
+        z-index: 0;
+      }
+      
+      /* Make sure content is above the glow */
+      .devops-hero-img-container, .devops-hero-text-col {
+        position: relative;
+        z-index: 1;
+      }
+
       /* On mobile, stack them */
       @media (max-width: 768px) {
-        .devops-hero-row { flex-direction: column; text-align: center; }
+        .devops-hero-row { flex-direction: column; text-align: center; padding: 25px; }
       }
 
       .devops-hero-img-container {
-        width: 120px;
-        height: 120px;
+        width: 140px;
+        height: 140px;
         flex-shrink: 0;
+        filter: drop-shadow(0 10px 20px rgba(59, 130, 246, 0.3)); /* Glow for the image */
       }
       
       .devops-hero-img {
@@ -292,20 +323,25 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
       }
 
       .devops-hero-text-col h1 {
-        margin:0 0 12px 0;
-        font-size:3rem;
-        background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+        margin:0 0 15px 0;
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 50%, #8b5cf6 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        letter-spacing: -0.02em;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+        filter: drop-shadow(0 2px 4px rgba(59, 130, 246, 0.1));
       }
 
       .devops-hero-text-col p {
-        color: #64748b;
-        font-size:1.2rem;
-        max-width: 600px;
-        margin: 0; /* Auto margin removed since we are flexing */
-        font-weight: 300;
+        color: #475569;
+        font-size: 1.35rem;
+        max-width: 650px;
+        margin: 0;
+        font-weight: 500;
+        line-height: 1.6;
+        opacity: 0.9;
       }
 
       /* --- GRID LAYOUT (5 Columns) --- */
