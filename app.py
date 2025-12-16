@@ -460,6 +460,10 @@ def projects():
 import skill_analyzer_page
 skill_analyzer_page.register_routes(app, render_page)
 
+# Skill Analyzer Registration Module
+import skill_analyzer_registration
+skill_analyzer_registration.register_routes(app, render_page)
+
 # Contact Module
 import contact_page
 contact_page.register_routes(app, render_page, BASE_DIR, {

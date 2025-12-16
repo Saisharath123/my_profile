@@ -177,7 +177,7 @@ def register_routes(app, render_page_func):
                     <ul class="sa-features">
                         {''.join([f'<li>{f}</li>' for f in LIVE_TEST_CONTENT['features']])}
                     </ul>
-                    <a href="/contact" class="sa-btn">{LIVE_TEST_CONTENT['action_label']}</a>
+                    <a href="/skill-registration" class="sa-btn">{LIVE_TEST_CONTENT['action_label']}</a>
                 </div>
 
                 <!-- Virtual Interview Module -->
@@ -188,7 +188,7 @@ def register_routes(app, render_page_func):
                     <ul class="sa-features">
                         {''.join([f'<li>{f}</li>' for f in VIRTUAL_INTERVIEW_CONTENT['features']])}
                     </ul>
-                    <a href="/contact" class="sa-btn">{VIRTUAL_INTERVIEW_CONTENT['action_label']}</a>
+                    <a href="/skill-registration" class="sa-btn">{VIRTUAL_INTERVIEW_CONTENT['action_label']}</a>
                 </div>
 
             </div>
