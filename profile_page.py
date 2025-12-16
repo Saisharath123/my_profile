@@ -167,6 +167,30 @@ def register_routes(app, render_page_func):
               color: #94A3B8;
               margin-bottom: 8px;
             }
+            
+            .graphical-label {
+              font-size: 22px; 
+              font-weight: 900;
+              text-transform: uppercase;
+              letter-spacing: -0.5px;
+              margin-bottom: 16px;
+              background: linear-gradient(135deg, #0F172A 0%, #3b82f6 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              position: relative;
+              display: inline-block;
+              padding-bottom: 6px;
+            }
+            .graphical-label::after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 40px;
+              height: 4px;
+              background: linear-gradient(90deg, #3b82f6, #06b6d4);
+              border-radius: 4px;
+            }
             .info-content {
               font-size: 15px;
               font-weight: 600;
@@ -329,7 +353,7 @@ def register_routes(app, render_page_func):
               <!-- Info Grid -->
               <div class="info-grid">
                 <div class="info-card">
-                  <div class="info-label">Teaching Areas</div>
+                  <div class="graphical-label">Teaching Areas</div>
                   <div class="tech-grid">
                     <a href="{{ url_for('course_detail', slug='aws') }}" class="tech-item" style="text-decoration:none;">
                       <img src="{{ url_for('image_file', filename='AWS.png') }}" alt="AWS" style="object-fit:contain; padding:6px;">
@@ -374,22 +398,161 @@ def register_routes(app, render_page_func):
                   </div>
                 </div>
                 <div class="info-card">
-                  <div class="info-label">Academic & Mentorship</div>
+                  <div class="graphical-label">Services</div>
                   
-                  <div class="academic-row">
-                    <img src="{{ url_for('image_file', filename='icon_thesis.png') }}" class="academic-icon" alt="Thesis">
-                    <div class="academic-text">
-                      <strong>Master's Thesis</strong><br>
-                      <em>Resource Allocation in Cloud Computing</em>
+                  <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+                    .services-inner {
+                       display: flex;
+                       flex-direction: column;
+                       justify-content: space-between; /* Distribute items to fill height */
+                       height: 100%;
+                       min-height: 320px; /* Ensure it takes up vertical space */
+                       padding: 10px 0;
+                    }
+
+                    .handwriting-list {
+                      list-style: none;
+                      padding: 0;
+                      margin: 0;
+                      font-family: 'Patrick Hand', cursive;
+                      font-size: 22px; /* Larger text */
+                      color: #1e3a8a;
+                      line-height: 1.6;
+                      flex-grow: 1;
+                      display: flex;
+                      flex-direction: column;
+                      justify-content: space-around; /* Distribute list items evenly */
+                    }
+                    .handwriting-list li {
+                      margin-bottom: 12px;
+                      display: flex;
+                      align-items: center;
+                      flex-wrap: wrap; /* Allow text to wrap if very long */
+                      min-height: 40px;
+                    }
+                    
+                    /* The writing hand cursor */
+                    .pencil-cursor {
+                      display: inline-block;
+                      width: 50px; /* Much larger */
+                      height: 50px;
+                      margin-left: -5px;
+                      margin-top: -15px; /* Adjust alignment to look like tip is on line */
+                      /* Hand holding pencil SVG */
+                      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3C!-- Hand --%3E%3Cpath d='M60 50 Q75 40 85 55 T80 80 Q60 90 50 70' fill='%23ffccaa' stroke='%23d4a373' stroke-width='2'/%3E%3C!-- Fingers wrapping --%3E%3Ccircle cx='70' cy='60' r='8' fill='%23ffccaa' stroke='%23d4a373' stroke-width='1'/%3E%3Ccircle cx='65' cy='68' r='8' fill='%23ffccaa' stroke='%23d4a373' stroke-width='1'/%3E%3C!-- Pencil Body --%3E%3Cpath d='M20 90 L50 60 L65 75 L35 105 Z' fill='%23fbbf24' stroke='%23b45309' stroke-width='2' transformation='rotate(-45 50 50)'/%3E%3C!-- Pencil Tip --%3E%3Cpath d='M20 90 L10 100 L35 105 Z' fill='%23fde047'/%3E%3Cpath d='M10 100 L15 95 L20 100 Z' fill='%231e3a8a'/%3E%3C!-- Eraser --%3E%3Cpath d='M50 60 L60 50 L75 65 L65 75 Z' fill='%23f472b6' stroke='%23be185d' stroke-width='1'/%3E%3C/svg%3E");
+                      /* Better detailed SVG of hand holding pencil */
+                      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cg transform='translate(5,5)'%3E%3C!-- Pencil --%3E%3Cpath d='M38.5 12.5 L46.5 20.5 L18 49 L10 41 Z' fill='%23FBBF24' stroke='%23B45309' stroke-width='1'/%3E%3Cpath d='M10 41 L5 54 L18 49' fill='%23FDE68A' stroke='%23B45309' stroke-width='1'/%3E%3Cpath d='M5 54 L8 46 L13 51 Z' fill='%23333'/%3E%3Cpath d='M38.5 12.5 L42.5 8.5 L50.5 16.5 L46.5 20.5 Z' fill='%239CA3AF' stroke='%234B5563' stroke-width='1'/%3E%3Cpath d='M42.5 8.5 L46.5 4.5 Q50.5 0.5 54.5 4.5 L58.5 8.5 Q62.5 12.5 58.5 16.5 L54.5 20.5 L50.5 16.5 Z' fill='%23F472B6' stroke='%23BE185D' stroke-width='1'/%3E%3C!-- Hand --%3E%3Cpath d='M40 30 Q50 25 55 35 Q60 45 45 50 Q35 52 30 40' fill='%23FFDCBC' stroke='%23E0A070' stroke-width='1.5'/%3E%3Cellipse cx='42' cy='32' rx='6' ry='8' fill='%23FFDCBC' stroke='%23E0A070' stroke-width='1' transform='rotate(-20)'/%3E%3Cellipse cx='36' cy='38' rx='6' ry='8' fill='%23FFDCBC' stroke='%23E0A070' stroke-width='1' transform='rotate(-10)'/%3E%3C/g%3E%3C/svg%3E");
+                      
+                      background-size: contain;
+                      background-repeat: no-repeat;
+                      transition: transform 0.05s;
+                      z-index: 10;
+                      position: relative;
+                    }
+                    
+                    .writing-active .pencil-cursor {
+                      animation: complexWrite 0.4s infinite alternate;
+                    }
+                    
+                    @keyframes complexWrite {
+                       0% { transform: translate(0, 0) rotate(0deg); }
+                       25% { transform: translate(1px, -2px) rotate(2deg); }
+                       50% { transform: translate(-1px, 1px) rotate(-1deg); }
+                       75% { transform: translate(2px, -1px) rotate(1deg); }
+                       100% { transform: translate(0, 0) rotate(0deg); }
+                    }
+
+                    /* Green tick written styling */
+                    .check-mark {
+                        color: #16a34a;
+                        font-weight: 900;
+                        margin-right: 8px;
+                        font-size: 24px;
+                    }
+                  </style>
+
+                  <div class="services-container">
+                    <div class="services-inner">
+                        <ul id="dynamic-services" class="handwriting-list">
+                          <!-- JS will populate this -->
+                        </ul>
                     </div>
                   </div>
 
-                  <div class="academic-row">
-                    <img src="{{ url_for('image_file', filename='icon_mentorship.png') }}" class="academic-icon" alt="Mentorship">
-                    <div class="academic-text">
-                      <strong>5 Batches</strong> completed with hands-on live labs.
-                    </div>
-                  </div>
+                  <script>
+                    (function() {
+                      const services = [
+                        "Online and Offline Classes Available (Hyderabad only)",
+                        "Course Material",
+                        "Resume Preparation",
+                        "Online Profile Building",
+                        "Mock Interviews",
+                        "Complimentary Spoken English Classes"
+                      ];
+                      
+                      const container = document.getElementById('dynamic-services');
+                      
+                      async function typeService(text) {
+                        const li = document.createElement('li');
+                        
+                        // Text span (will contain the Checkmark + Text)
+                        const textSpan = document.createElement('span');
+                        li.appendChild(textSpan);
+                        
+                        // Pencil
+                        const pencil = document.createElement('span');
+                        pencil.className = 'pencil-cursor';
+                        li.appendChild(pencil);
+                        
+                        container.appendChild(li);
+                        
+                        li.classList.add('writing-active');
+                        
+                        const fullText = "✔ " + text;
+                        
+                        // Type logic
+                        for (let i = 0; i < fullText.length; i++) {
+                           const char = fullText[i];
+                           
+                           if (i === 0) {
+                               // Styling the checkmark
+                               const checkSpan = document.createElement('span');
+                               checkSpan.className = 'check-mark';
+                               checkSpan.textContent = char;
+                               textSpan.appendChild(checkSpan);
+                           } else {
+                               // Regular text
+                               textSpan.appendChild(document.createTextNode(char));
+                           }
+
+                           // small random delay for realistic writing speed
+                           // slightly faster to ensure it doesn't take forever to fill list
+                           await new Promise(r => setTimeout(r, 20 + Math.random() * 20)); 
+                        }
+                        
+                        li.classList.remove('writing-active');
+                        pencil.remove(); 
+                      }
+
+                      async function runAnimationLoop() {
+                        while (true) {
+                          container.innerHTML = '';
+                          for (const service of services) {
+                            await typeService(service);
+                            // Brief pause between lines
+                            await new Promise(r => setTimeout(r, 100)); 
+                          }
+                          // Wait before clearing and restarting
+                          await new Promise(r => setTimeout(r, 4000));
+                        }
+                      }
+
+                      // Start if visible
+                      runAnimationLoop();
+                    })();
+                  </script>
 
                 </div>
               </div>
