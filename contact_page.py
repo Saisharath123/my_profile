@@ -69,164 +69,237 @@ def register_routes(app, render_page_func, base_dir, email_config):
         # GET request - render form
         form_html = """
           <style>
+            @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&display=swap');
+            
             @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
             
+            /* Override global app.py container to be transparent */
+            .card {
+              background: transparent !important;
+              box-shadow: none !important;
+              border: none !important;
+              padding: 0 !important;
+            }
+            .container {
+              max-width: 100% !important;
+              padding: 0 !important;
+              margin: 0 !important;
+              width: 100% !important;
+            }
+
             .contact-wrap { 
               display: flex; 
-              gap: 24px; 
+              gap: 30px; 
               flex-wrap: wrap; 
               animation: fadeIn 0.6s ease-out;
+              max-width: 1100px;
+              margin: 0 auto;
+              padding: 20px;
+              font-family: 'Outfit', sans-serif; /* Global font for contact section */
             }
 
             .contact-panel {
-              flex: 1; 
-              min-width: 320px;
-              border-radius: 20px; 
-              padding: 32px;
-              background: #ffffff;
-              box-shadow: 0 20px 40px -12px rgba(0,0,0,0.05);
-              border: 1px solid rgba(0,0,0,0.04);
+              flex: 1.4; 
+              min-width: 340px;
+              border-radius: 24px; 
+              padding: 40px;
+              background: rgba(255, 255, 255, 0.25);
+              backdrop-filter: blur(24px);
+              -webkit-backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.4);
+              box-shadow: 0 20px 50px -12px rgba(0,0,0,0.1);
               transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
             .contact-panel:hover {
               transform: translateY(-2px);
-              box-shadow: 0 25px 50px -12px rgba(0,0,0,0.08);
+              box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15);
             }
 
             h2.contact-title { 
-              margin: 0 0 8px 0; 
-              font-size: 28px; 
-              color: #111827; 
-              letter-spacing: -0.5px;
+              margin: 0 0 10px 0; 
+              font-size: 36px; 
+              font-weight: 800;
+              color: #0F172A; 
+              letter-spacing: -1px;
+              background: linear-gradient(to right, #0f172a, #334155);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
             }
             p.contact-sub { 
-              margin: 0 0 24px 0; 
-              color: #6B7280; 
-              font-size: 15px; 
-              line-height: 1.5;
+              margin: 0 0 32px 0; 
+              color: #334155; 
+              font-size: 16px; 
+              line-height: 1.6;
+              font-weight: 500;
             }
 
-            .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+            .form-row { display: flex; gap: 20px; margin-bottom: 24px; }
             .form-row .field { flex: 1; }
             
             label {
-                display: block;
-                font-size: 13px;
-                font-weight: 600;
-                color: #374151;
-                margin-bottom: 6px;
-                margin-left: 2px;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 11px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                font-weight: 800;
+                color: #1e293b;
+                margin-bottom: 10px;
+                margin-left: 4px;
             }
 
+            /* Enhanced "Filling Things" (Inputs) */
             .field input, .field textarea {
               width: 100%;
-              padding: 14px 16px;
-              border-radius: 12px;
-              border: 1px solid #E5E7EB;
-              background: #F9FAFB;
-              color: #111827;
-              font-weight: 500;
-              font-size: 15px;
-              transition: all 0.2s ease;
+              padding: 16px 20px;
+              border-radius: 16px;
+              border: 2px solid rgba(255, 255, 255, 0.3);
+              background: rgba(255, 255, 255, 0.15);
+              backdrop-filter: blur(10px);
+              color: #0F172A;
+              font-weight: 600;
+              font-size: 16px;
+              font-family: 'Outfit', sans-serif;
+              transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
               box-sizing: border-box;
-              font-family: inherit;
+              box-shadow: inset 0 2px 4px rgba(0,0,0,0.03);
+            }
+            .field input::placeholder, .field textarea::placeholder {
+                color: #64748b;
+                font-weight: 500;
+                opacity: 0.8;
             }
             .field input:focus, .field textarea:focus {
               outline: none;
               border-color: #60A5FA;
-              background: #ffffff;
-              box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.1);
+              background: rgba(255, 255, 255, 0.85);
+              box-shadow: 0 10px 25px -5px rgba(96, 165, 250, 0.3), inset 0 2px 4px rgba(0,0,0,0.02);
+              transform: translateY(-2px);
             }
-            .field textarea { resize: vertical; min-height: 150px; }
+            .field textarea { resize: vertical; min-height: 160px; }
 
             .message-wrap { display: flex; gap: 24px; flex-wrap: wrap; }
             .message-container { flex: 1; min-width: 300px; }
             
             .btn-send {
-              margin-top: 8px;
-              background: linear-gradient(135deg, #3B82F6 0%, #10B981 100%);
+              margin-top: 12px;
+              background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
               border: none; 
-              padding: 14px 28px;
-              border-radius: 12px; 
+              padding: 18px 32px;
+              border-radius: 16px; 
               color: white;
-              font-weight: 700; 
+              font-weight: 800; 
               font-size: 16px;
               cursor: pointer;
-              transition: filter 0.2s ease, transform 0.1s ease;
+              transition: all 0.3s ease;
               width: 100%;
-              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+              box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
             }
             .btn-send:hover {
               filter: brightness(110%);
-              transform: translateY(-1px);
+              transform: translateY(-2px);
+              box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.5);
             }
             .btn-send:active {
                 transform: translateY(0);
             }
 
             .contact-side {
+              flex: 1;
               width: 320px; 
               min-width: 280px;
-              border-radius: 20px; 
-              padding: 28px;
-              background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
-              border: 1px solid rgba(186, 230, 253, 0.4);
+              border-radius: 24px; 
+              padding: 36px;
+              background: rgba(255, 255, 255, 0.25);
+              backdrop-filter: blur(24px);
+              -webkit-backdrop-filter: blur(24px);
+              border: 1px solid rgba(255, 255, 255, 0.3);
               height: fit-content;
+            }
+            
+            /* Graphical Header on Right Side */
+            .contact-side h3 {
+                margin: 0 0 12px 0; 
+                color: #0f172a; 
+                font-size: 24px; /* Increased size */
+                font-weight: 800;
+                background: linear-gradient(135deg, #1e293b 0%, #3b82f6 100%); /* Blue-dark gradient */
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .contact-side p {
+                margin: 0 0 24px 0; 
+                color: #334155; 
+                font-size: 15px; 
+                line-height: 1.6;
+                font-weight: 500;
             }
 
             .side-cards { 
                 display: grid; 
                 grid-template-columns: 1fr 1fr; 
-                gap: 12px; 
-                margin-top: 20px; 
+                gap: 16px; 
+                margin-top: 24px; 
             }
             .side-card {
-              background: #ffffff; 
-              padding: 16px 12px; 
-              border-radius: 12px;
-              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+              background: rgba(255, 255, 255, 0.4); 
+              padding: 20px 16px; 
+              border-radius: 16px;
+              box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
               text-align: center; 
-              font-weight: 600;
-              font-size: 13px;
-              color: #0F172A;
-              border: 1px solid #E2E8F0;
+              font-weight: 700;
+              font-size: 14px;
+              color: #1e293b;
+              border: 1px solid rgba(255, 255, 255, 0.3);
               display: flex;
               flex-direction: column;
               align-items: center;
-              gap: 8px;
-              transition: transform 0.2s;
+              gap: 10px;
+              transition: all 0.2s ease;
             }
             .side-card:hover {
-                transform: translateY(-2px);
-                border-color: #BAE6FD;
+                transform: translateY(-4px);
+                border-color: #60A5FA;
+                background: rgba(255, 255, 255, 0.7);
+                box-shadow: 0 10px 20px -5px rgba(96, 165, 250, 0.2);
             }
-            .side-card span { font-size: 20px; }
+            .side-card span { font-size: 24px; display: block; margin-bottom: 4px; }
 
             .right-contact-info {
-              margin-top: 24px; 
-              padding-top: 20px;
-              border-top: 1px solid rgba(0,0,0,0.06);
+              margin-top: 32px; 
+              padding-top: 24px;
+              border-top: 2px solid rgba(255,255,255,0.2);
             }
             .contact-link-row {
               display: flex;
               align-items: center;
-              gap: 12px;
-              padding: 10px 0;
-              color: #334155;
+              gap: 16px;
+              padding: 12px 16px;
+              background: rgba(255,255,255,0.2);
+              border-radius: 12px;
+              margin-bottom: 12px;
+              color: #0f172a;
               text-decoration: none;
-              transition: transform 0.2s;
+              transition: all 0.2s;
+              border: 1px solid transparent;
+              font-weight: 600;
             }
             .contact-link-row:hover {
                 transform: translateX(4px);
+                background: rgba(255,255,255,0.5);
+                border-color: #93c5fd;
                 color: #0284c7;
             }
-            .contact-link-row span { font-weight: 600; font-size: 15px; }
+            .contact-link-row span { font-size: 14px; }
 
-            @media (max-width: 768px){
+            @media (max-width: 850px){
               .contact-wrap { flex-direction: column; }
               .contact-side { width: 100%; box-sizing: border-box; }
               .message-container { width: 100%; }
-              .form-row { flex-direction: column; gap: 12px; }
+              .form-row { flex-direction: column; gap: 16px; }
             }
           </style>
 

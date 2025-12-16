@@ -35,6 +35,20 @@ def render(project_images):
     
     html = f"""
     <style>
+        /* Override global main container styles for this page only */
+        .card {{
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }}
+        .container {{
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+        }}
+
         .projects-wrapper {{
             padding: 40px 20px;
             perspective: 800px; /* Essential for 3D effect */

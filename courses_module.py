@@ -27,7 +27,52 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         ]
 
         html = """
-        <h2>Courses & Workshops</h2>
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+
+          /* Override global main container to be significantly more transparent (glass effect) */
+          .card {
+              background: rgba(255, 255, 255, 0.25) !important;
+              backdrop-filter: blur(20px);
+              -webkit-backdrop-filter: blur(20px);
+              border: 1px solid rgba(255, 255, 255, 0.3) !important;
+              box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+          }
+
+          /* Graphical Title Styles */
+          .courses-header-graphical {
+              text-align: center;
+              margin-bottom: 30px;
+              position: relative;
+          }
+          
+          .courses-header-graphical h1 {
+              font-family: 'Outfit', sans-serif;
+              font-size: 3.5rem;
+              font-weight: 900;
+              margin: 0;
+              text-transform: uppercase;
+              letter-spacing: -2px;
+              background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+          }
+
+          .courses-header-graphical::after {
+              content: '';
+              display: block;
+              width: 100px;
+              height: 6px;
+              background: linear-gradient(90deg, #3b82f6, #06b6d4);
+              margin: 10px auto 0;
+              border-radius: 4px;
+          }
+        </style>
+
+        <div class="courses-header-graphical">
+            <h1>Courses & Workshops</h1>
+        </div>
 
         <style>
           .courses-top { display:flex; gap:14px; margin-top:14px; align-items:stretch; }
