@@ -222,7 +222,7 @@ REGISTRATION_HTML = """
     
     <div class="sr-card">
         <div class="sr-header">
-            <h1 class="sr-title">Register Now</h1>
+            <!-- <h1 class="sr-title">Register Now</h1> -->
             <p class="sr-subtitle">Unlock your personalized skill analysis</p>
         </div>
         
