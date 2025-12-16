@@ -18,48 +18,18 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
     @app.route("/courses")
     def courses():
         course_items = [
-            {"slug":"aws","title":"AWS Solution Architect","desc":"Foundations, hands-on labs, IAM, EC2, S3, VPC.","level":"Beginner","duration":"4 weeks","img":"AWS.png","type":"rect","scale":0.54},
+            {"slug":"aws","title":"AWS Solution Architect","desc":"Foundations, hands-on labs, IAM, EC2, S3, VPC.","level":"Beginner","duration":"4 weeks","img":"AWS.png","type":"rect","scale":0.75,"fit":"contain"},
             {"slug":"linux","title":"Linux Administration","desc":"System basics, shells, users, permissions, networking.","level":"Beginner","duration":"3 weeks","img":"linux.jpg","type":"rect","scale":0.95},
             {"slug":"devops","title":"Multi-Cloud DevOps","desc":"CI/CD, containers, automation, infra as code across clouds.","level":"Intermediate","duration":"4 weeks","img":"devops.png","type":"rect","scale":1.0},
             {"slug":"spoken-english","title":"Spoken English & Corporate Etiquette","desc":"Improve communication, interviews and workplace etiquette.","level":"All levels","duration":"6 weeks","img":"37527b78-62d1-49a2-adad-0ae6d46cf44a.png","type":"square"},
-            {"slug":"sdlc","title":"SDLC & Release Management","desc":"Software development lifecycle, release pipelines, QA.","level":"Intermediate","duration":"2 weeks","img":"SDLC.jpg","type":"square"}
+            {"slug":"sdlc","title":"SDLC & Release Management","desc":"Software development lifecycle, release pipelines, QA.","level":"Intermediate","duration":"2 weeks","img":"SDLC.jpg","type":"square"},
+            {"slug":"vibe-coding","title":"Vibe Coding & Context Engineering","desc":"Building AI-driven web applications.","level":"Intermediate","duration":"3 weeks","img":"vibe_coding.png","type":"square"}
         ]
 
         html = """
         <h2>Courses & Workshops</h2>
 
         <style>
-          /* --- DYNAMIC BACKGROUND (AURORA) --- */
-          body {
-            background-color: #f8fafc;
-            min-height: 100vh;
-            position: relative;
-          }
-          body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.4) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.4) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(34, 211, 238, 0.4) 0px, transparent 50%);
-            background-size: 140% 140%;
-            animation: globalAurora 15s ease-in-out infinite alternate;
-            z-index: -1;
-            filter: blur(80px);
-          }
-          @keyframes globalAurora {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
-          }
-          
-          /* Override Main Card Container Transparency from APP.PY if needed */
-          .card { background: transparent !important; box-shadow: none !important; border: none !important; }
-          .container { max-width: 1200px !important; }
-
           .courses-top { display:flex; gap:14px; margin-top:14px; align-items:stretch; }
 
           /* course-card is explicitly positioned to host absolutely-positioned elements */
@@ -210,12 +180,14 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
                 # Offer badge injected inside the card; CSS ensures it's on top (high z-index)
                 offer_html = "<div class='offer-badge'>Offer: Multi-Cloud DevOps – Rs 20,000</div>"
 
+            extra_cls = " contain" if c.get("fit") == "contain" else ""
+
             html += f"""
             <a class='course-link' href='{url_for('course_detail', slug=c['slug'])}' style='text-decoration:none;color:inherit;'>
               <div class="course-card">
                 {offer_html}
                 <div class='hero-wrap'>
-                  <img class='course-hero' src="{thumb}" alt="{c['title']}" style="transform: scale({c['scale']});">
+                  <img class='course-hero{extra_cls}' src="{thumb}" alt="{c['title']}" style="transform: scale({c['scale']});">
                 </div>
                 <div class="course-body">
                   <div class="course-title">{c['title']}</div>
@@ -286,7 +258,8 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             'devops': { 'title': 'Multi-Cloud DevOps', 'img': 'devops.png', 'module': 'courses_devops' },
             'linux': { 'title': 'Linux Administration', 'img': 'linux.jpg', 'module': 'courses_linux' },
             'sdlc': { 'title': 'SDLC & Release Management', 'img': 'SDLC.jpg', 'module': 'courses_sdlc' },
-            'spoken-english': { 'title': 'Spoken English & Corporate Etiquette', 'img': '37527b78-62d1-49a2-adad-0ae6d46cf44a.png', 'module': 'courses_english' }
+            'spoken-english': { 'title': 'Spoken English & Corporate Etiquette', 'img': '37527b78-62d1-49a2-adad-0ae6d46cf44a.png', 'module': 'courses_english' },
+            'vibe-coding': { 'title': 'Vibe Coding & Context Engineering', 'img': 'vibe_coding.png', 'module': 'vibe_backend' }
         }
 
         info = mapping.get(slug)

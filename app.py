@@ -22,7 +22,7 @@ TO_EMAIL = "multiclouddevops4u@gmail.com"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 IMAGES_DIR = os.path.join(BASE_DIR, "images")
-CLOUD_FILENAME = "cloud.webp"
+CLOUD_FILENAME = "cloud_devops_header_v4.png"
 ME_FILENAME = "me.png"
 
 def list_images(subfolder=""):
@@ -80,10 +80,23 @@ BASE_HTML = """
       height:100%;
       margin:0;
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: #ffffff;
+      /* Dynamic Sky & Moving Clouds Background */
+      background-color: #0ea5e9; /* Fallback sky blue */
+      background-image: 
+        url("{{ url_for('image_file', filename='seamless_clouds.png') }}"),
+        linear-gradient(180deg, #38bdf8 0%, #bae6fd 100%);
+      background-blend-mode: overlay, normal;
+      background-size: 800px auto, cover; /* Cloud pattern size, Gradient covers all */
+      animation: moveClouds 40s linear infinite;
       color: #0b1620;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      overflow-x: hidden; /* Prevent horizontal scrollbar if needed */
+    }
+
+    @keyframes moveClouds {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 800px 0, 0 0; } /* Matches cloud pattern width for seamless loop */
     }
 
     /* Header */
@@ -113,7 +126,7 @@ BASE_HTML = """
 
     /* Cloud logo: no box, larger, aligned to title baseline */
     .cloud-logo {
-      height:88px;
+      height:110px;
       width:auto;
       display:flex;
       align-items:center;
@@ -123,7 +136,7 @@ BASE_HTML = """
       margin:0;
     }
     .cloud-logo img {
-      height:84px;
+      height:106px;
       width:auto;
       object-fit:contain;
       display:block;
@@ -214,6 +227,12 @@ BASE_HTML = """
       10% { opacity:0.45; }
       50% { transform: translateY(-18px) scale(1); opacity:0.85; }
       100% { transform: translateY(-46px) scale(0.9); opacity:0; }
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     /* modules */
