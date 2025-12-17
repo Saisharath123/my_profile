@@ -227,7 +227,11 @@ def get_module(module_id):
 
 # --- Content Integration ---
 try:
-    from backend_content_aws import AWS_CONTENT
+    try:
+        from .backend_content_aws import AWS_CONTENT
+    except ImportError:
+        from Courses.backend_content_aws import AWS_CONTENT
+
     for module in AWS_MODULES:
         for service in module.get('services', []):
             s_name = service.get('name')

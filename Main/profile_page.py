@@ -108,46 +108,47 @@ def register_routes(app, render_page_func):
               font-size: 18px;
               font-weight: 700;
               color: #1E293B;
-              margin-bottom: 16px;
+              margin-bottom: 12px;
               display: flex;
               align-items: center;
               gap: 8px;
             }
             .cert-grid {
               display: grid;
-              grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-              gap: 16px;
+              grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+              gap: 12px;
             }
             .cert-card {
               background: #fff;
               border: 1px solid #E2E8F0;
-              border-radius: 16px;
-              padding: 20px;
+              border-radius: 12px;
+              padding: 12px;
               display: flex;
               flex-direction: column;
               align-items: center;
               text-align: center;
-              gap: 12px;
+              gap: 8px;
               transition: transform 0.2s, box-shadow 0.2s;
             }
             .cert-card:hover {
               transform: translateY(-4px);
-              box-shadow: 0 12px 24px -8px rgba(0,0,0,0.1);
+              box-shadow: 0 8px 20px -6px rgba(0,0,0,0.1);
               border-color: #CBD5E1;
             }
             .cert-img {
-              width: 100px;
-              height: 100px;
+              width: 50px;
+              height: 50px;
               object-fit: contain;
             }
             .cert-name {
-              font-size: 14px;
+              font-size: 11px;
               font-weight: 700;
               color: #334155;
-              line-height: 1.4;
+              line-height: 1.3;
             }
 
             /* Info Grid for Teaching/Academic */
+
             .info-grid {
               display: grid;
               grid-template-columns: 1fr 1fr;
@@ -573,6 +574,26 @@ def register_routes(app, render_page_func):
                   <div class="cert-card">
                     <img class="cert-img" src="{{ url_for('image_file', filename='gcp_cloud_engineer.png') }}" alt="GCP Associate Cloud Engineer">
                     <div class="cert-name">Google Cloud<br>Associate Cloud Engineer</div>
+                  </div>
+                  <!-- Adobe Photoshop -->
+                  <div class="cert-card">
+                    <img class="cert-img" src="{{ url_for('image_file', filename='photoshop.svg') }}" alt="Adobe Photoshop">
+                    <div class="cert-name">Adobe Photoshop</div>
+                  </div>
+                  <!-- IELTS -->
+                  <div class="cert-card">
+                    <img class="cert-img" src="{{ url_for('image_file', filename='ielts_v2_transparent.png') }}" alt="IELTS">
+                    <div class="cert-name">IELTS</div>
+                  </div>
+                  <!-- CELPIP -->
+                  <div class="cert-card">
+                    <img class="cert-img" src="{{ url_for('image_file', filename='celpip_logo.png') }}" alt="CELPIP">
+                    <div class="cert-name">CELPIP</div>
+                  </div>
+                  <!-- Duolingo -->
+                  <div class="cert-card">
+                    <img class="cert-img" src="{{ url_for('image_file', filename='duolingo.svg') }}" alt="Duolingo">
+                    <div class="cert-name">Duolingo</div>
                   </div>
                 </div>
               </div>

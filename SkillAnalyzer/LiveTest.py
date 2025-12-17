@@ -10,5 +10,6 @@ LIVE_TEST_CONTENT = {
         "Detailed performance report"
     ],
     "action_label": "Start Live Test",
-    "route": "/skill-analyzer/live-test"  # Placeholder route
+    "route": "/skill-analyzer/live-test",  # Placeholder route
+    "image": "live_test_icon_transparent.png"
 }

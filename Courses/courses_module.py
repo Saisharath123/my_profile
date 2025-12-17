@@ -299,12 +299,13 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
     @app.route("/course/<slug>")
     def course_detail(slug):
         mapping = {
-            'aws': { 'title': 'AWS Solution Architect', 'img': 'AWS.png', 'module': 'courses_aws' },
-            'devops': { 'title': 'Multi-Cloud DevOps', 'img': 'devops.png', 'module': 'courses_devops' },
-            'linux': { 'title': 'Linux Administration', 'img': 'linux.jpg', 'module': 'courses_linux' },
-            'sdlc': { 'title': 'SDLC & Release Management', 'img': 'SDLC.jpg', 'module': 'courses_sdlc' },
-            'spoken-english': { 'title': 'Spoken English & Corporate Etiquette', 'img': '37527b78-62d1-49a2-adad-0ae6d46cf44a.png', 'module': 'courses_english' },
-            'vibe-coding': { 'title': 'Vibe Coding & Context Engineering', 'img': 'vibe_coding.png', 'module': 'vibe_backend' }
+            'aws': { 'title': 'AWS Solution Architect', 'img': 'AWS.png', 'module': 'Courses.courses_aws' },
+            'devops': { 'title': 'Multi-Cloud DevOps', 'img': 'devops.png', 'module': 'Courses.courses_devops' },
+            'linux': { 'title': 'Linux Administration', 'img': 'linux.jpg', 'module': 'Courses.courses_linux' },
+            'sdlc': { 'title': 'SDLC & Release Management', 'img': 'SDLC.jpg', 'module': 'Courses.courses_sdlc' },
+            'spoken-english': { 'title': 'Spoken English & Corporate Etiquette', 'img': '37527b78-62d1-49a2-adad-0ae6d46cf44a.png', 'module': 'Courses.courses_english' },
+            # 'vibe_backend' is still in root, so it remains 'vibe_backend' (or we can move it if desired, but instruction said only courses/projects files)
+            'vibe-coding': { 'title': 'Vibe Coding & Context Engineering', 'img': 'vibe_coding.png', 'module': 'Courses.vibe_backend' }
         }
 
         info = mapping.get(slug)
@@ -356,6 +357,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
           </div>
         </div>
         """
+        return render_page_func(Markup(detail_html), active="courses")
 
 
 
@@ -366,7 +368,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         Delegates to courses_aws.render_service(service_id).
         """
         try:
-            import courses_aws
+            import Courses.courses_aws as courses_aws
             if hasattr(courses_aws, "render_service"):
                 html = courses_aws.render_service(service_id)
                 return render_page_func(Markup(html), active="courses")
@@ -382,7 +384,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
         Delegates to courses_devops.render_service(service_id).
         """
         try:
-            import courses_devops
+            import Courses.courses_devops as courses_devops
             importlib.reload(courses_devops)
             if hasattr(courses_devops, "render_service"):
                 html = courses_devops.render_service(service_id)

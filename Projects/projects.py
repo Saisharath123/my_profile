@@ -6,10 +6,10 @@ from flask import url_for
 
 # Import backend content from separate modules
 try:
-    from cloud_projects import CLOUD_PROJECTS
-    from devops_projects import DEVOPS_PROJECTS
-    from web_projects import WEB_PROJECTS
-    from other_projects import OTHER_PROJECTS
+    from .cloud_projects import CLOUD_PROJECTS
+    from .devops_projects import DEVOPS_PROJECTS
+    from .web_projects import WEB_PROJECTS
+    from .other_projects import OTHER_PROJECTS
 except ImportError:
     # Fallback if files missing (e.g. during dev)
     CLOUD_PROJECTS = {}

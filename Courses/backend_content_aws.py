@@ -603,6 +603,18 @@ AWS_CONTENT = {
     """,
 
     # --- CLOUD AUTOMATION ---
+    "AWS Systems Manager Automation": """
+        <h3>AWS Systems Manager Automation</h3>
+        <p><strong>Definition:</strong> Automate common maintenance and deployment tasks for AWS resources.</p>
+        <p><strong>Key Capabilities:</strong></p>
+        <ul>
+            <li><strong>Runbooks:</strong> Define automation workflows using documents.</li>
+            <li><strong>Patching:</strong> Automate OS patching across fleets.</li>
+            <li><strong>AMI Management:</strong> Streamline image creation and updates.</li>
+            <li><strong>Remediation:</strong> Automatically fix non-compliant config rules.</li>
+        </ul>
+        <p><strong>Use Cases:</strong> Server maintenance, disaster recovery drills, state management.</p>
+    """,
     "AWS Control Tower": """
         <h3>AWS Control Tower</h3>
         <p><strong>Definition:</strong> Set up and govern secure, compliant multi-account environments.</p>

@@ -4,7 +4,7 @@
 #   - render() -> HTML string (main AWS page)
 #   - render_service(service) -> HTML string (service detail pages)
 
-from backend_aws import AWS_MODULES, get_module
+from .backend_aws import AWS_MODULES, get_module
 
 def _service_card_modern(module, idx=0):
     """

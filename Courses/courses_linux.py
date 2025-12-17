@@ -7,8 +7,9 @@ import json
 def render():
     # --- DATA IMPORT ---
     # --- DATA IMPORT ---
+    # --- DATA IMPORT ---
     try:
-        from all_modules import LINUX_TOPICS
+        from .all_modules import LINUX_TOPICS
     except ImportError:
         # Fallback for dev safety
         LINUX_TOPICS = []
@@ -35,14 +36,14 @@ def render():
 
     # Generate Widget HTML
     try:
-        from smart_widget import render_widget
+        from .smart_widget import render_widget
         widget_html = render_widget()
     except ImportError:
         widget_html = "<div style='color:white'>Error loading widget.</div>"
 
     # Generate Lab HTML
     try:
-        from virtual_lab import render_lab
+        from .virtual_lab import render_lab
         lab_html = render_lab()
     except ImportError:
         lab_html = "<div style='color:white'>Error loading Virtual Lab.</div>"

@@ -8,7 +8,7 @@
 from flask import url_for
 
 # Header image served from your images/ directory
-LOCAL_DEVOPS_IMG = "/images/devops.png"
+LOCAL_DEVOPS_IMG = "/images/devops_images/k8.png"
 
 # Service/tool definitions: id -> (label, served_image_url)
 # These are the MAIN categories.
@@ -102,7 +102,7 @@ def render():
         href = f"/course/devops/{sid}"
         cards_html += _card_html(href, label, url, is_submodule=False)
 
-    return _wrap_in_page("DevOps Mastery 2025", "Future-proof your career with next-gen infrastructure automation and CI/CD pipelines.", cards_html, hero_image=LOCAL_DEVOPS_IMG)
+    return _wrap_in_page("DevOps Mastery 2025", "Future-proof your career with next-gen infrastructure automation and CI/CD pipelines.", cards_html, hero_image=LOCAL_DEVOPS_IMG, back_link="/courses")
 
 def render_service(service_id):
     """
@@ -110,7 +110,7 @@ def render_service(service_id):
     """
     # 1. Get the submodules from backend
     try:
-        from backend_devops import DEVOPS_CONTENT, DEVOPS_SUBMODULES, DEVOPS_TOOL_DETAILS
+        from .backend_devops import DEVOPS_CONTENT, DEVOPS_SUBMODULES, DEVOPS_TOOL_DETAILS
     except ImportError:
         DEVOPS_CONTENT = {}
         DEVOPS_SUBMODULES = {}
@@ -202,11 +202,16 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
         </div>
         """
 
+    # Determine if rotation should be applied (Only for Kubernetes/Container Orchestration)
+    extra_cls = ""
+    if "Kubernetes" in title or "Container Orchestration" in title or "DevOps Mastery" in title:
+        extra_cls = " spin-me"
+
     img_html = ""
     if hero_image:
         img_html = f"""
         <div class="devops-hero-img-container">
-            <img src="{hero_image}" alt="Hero" class="devops-hero-img">
+            <img src="{hero_image}" alt="Hero" class="devops-hero-img{extra_cls}">
         </div>
         """
 
@@ -318,6 +323,9 @@ def _wrap_in_page(title, subtitle, grid_content, back_link=None, hero_image=None
         width: 100%;
         height: 100%;
         object-fit: contain;
+      }
+
+      .devops-hero-img.spin-me {
         animation: rotate-img 20s linear infinite;
       }
       

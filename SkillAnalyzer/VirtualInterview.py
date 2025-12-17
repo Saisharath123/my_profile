@@ -10,5 +10,6 @@ VIRTUAL_INTERVIEW_CONTENT = {
         "AI-generated feedback"
     ],
     "action_label": "Start Virtual Interview",
-    "route": "/skill-analyzer/virtual-interview"  # Placeholder route
+    "route": "/skill-analyzer/virtual-interview",  # Placeholder route
+    "image": "interview_icon_transparent.png"
 }

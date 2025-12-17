@@ -440,33 +440,33 @@ def render_page(content_html, **extra):
 
 # ---- Wire the courses module here (one-line import + call) ----
 # This attaches /courses and /course/<slug> without modifying other app routes.
-from courses_module import register_routes
+from Courses.courses_module import register_routes
 register_routes(app, render_page, IMAGES_DIR, CLOUD_FILENAME)
 
 # Make / (root) show the profile page directly
 # Profile Module
-import profile_page
+import Main.profile_page as profile_page
 profile_page.register_routes(app, render_page)
 
 @app.route("/projects")
 def projects():
     # Import locally to use the new projects module
-    import projects as projects_module
+    import Projects.projects as projects_module
     
     project_images = list_images("projects")
     html = projects_module.render(project_images)
     return render_page(html, active="projects")
 
 # Skill Analyzer Module
-import skill_analyzer_page
+import SkillAnalyzer.skill_analyzer_page as skill_analyzer_page
 skill_analyzer_page.register_routes(app, render_page)
 
 # Skill Analyzer Registration Module
-import skill_analyzer_registration
+import SkillAnalyzer.skill_analyzer_registration as skill_analyzer_registration
 skill_analyzer_registration.register_routes(app, render_page)
 
 # Contact Module
-import contact_page
+import Main.contact_page as contact_page
 contact_page.register_routes(app, render_page, BASE_DIR, {
     "password": "mpvbvlovezpjlgmq",
     "to_email": "multiclouddevops4u@gmail.com",
