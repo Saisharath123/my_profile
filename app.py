@@ -300,7 +300,7 @@ BASE_HTML = """
 </head>
 <body>
   <header class="app-header">
-    <div class="brand">
+    <a href="{{ url_for('profile') }}" class="brand" style="text-decoration:none;">
       <!-- cloud image kept and served from images/cloud.webp -->
       <div class="cloud-logo" aria-hidden="true">
         {% if cloud_image_url %}
@@ -321,13 +321,13 @@ BASE_HTML = """
           </div>
         </div>
       </div>
-    </div>
+    </a>
 
     <nav class="modules" role="navigation" aria-label="primary modules">
       <a class="module {% if active=='profile' %}active{% endif %}" href="{{ url_for('profile') }}"><div class="icon">👨‍🏫</div><div class="label">Profile</div></a>
       <a class="module {% if active=='courses' %}active{% endif %}" href="{{ url_for('courses') }}"><div class="icon">📚</div><div class="label">Courses</div></a>
       <a class="module {% if active=='projects' %}active{% endif %}" href="{{ url_for('projects') }}"><div class="icon">💼</div><div class="label">Projects</div></a>
-      <!-- <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_analyzer') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a> -->
+      {# <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_analyzer') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a> #}
       <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_selection') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a>
       <a class="module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon">📱</div><div class="label">Contact</div></a>
     </nav>

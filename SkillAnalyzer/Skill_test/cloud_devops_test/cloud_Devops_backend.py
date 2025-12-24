@@ -9,7 +9,7 @@ CLOUD_DEVOPS_BACKEND = {
         "certifications": [
             {
                 "name": "AWS Certified Cloud Practitioner",
-                "code": "CLF-C01",
+                "code": "CLF-C02",
                 "description": "Foundation – cloud basics",
                 "image": "aws_cloud_practitioner.png"
             },
@@ -102,7 +102,7 @@ CLOUD_DEVOPS_BACKEND = {
         "certifications": [
             {
                 "name": "AWS Certified Cloud Practitioner",
-                "code": "CLF-C01",
+                "code": "CLF-C02",
                 "description": "Foundation – cloud basics",
                 "image": "aws_cloud_practitioner.png",
                 "category": "AWS Certification Practice Tests"

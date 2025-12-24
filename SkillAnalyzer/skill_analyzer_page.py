@@ -1,7 +1,8 @@
 from flask import url_for
 
 def register_routes(app, render_page_func):
-    @app.route("/skill-selection")
+    @app.route("/skill-analyzer", methods=['GET', 'POST'])
+    @app.route("/skill-selection", methods=['GET', 'POST'])
     def skill_selection():
         # Parent Page: Shows "Live Test" and "Virtual Interview"
         try:
@@ -466,7 +467,7 @@ def register_routes(app, render_page_func):
                         {% set current_category.value = cert.get('category') %}
                     {% endif %}
                     
-                    <a href="{{ url_for('take_test', test_code=cert['code']) }}" class="cert-card" title="Start {{ cert['name'] }}">
+                    <a href="{{ url_for('skill_registration', next=url_for('take_test', test_code=cert['code'])) }}" target="_blank" class="cert-card" title="Start {{ cert['name'] }}">
                         <div class="cert-icon">
                              <img src="{{ url_for('image_file', filename=cert.get('image', 'cloud_logo_new.png')) }}" alt="{{ cert['name'] }}">
                         </div>
@@ -497,7 +498,7 @@ def register_routes(app, render_page_func):
         module_path = None
         
         # AWS
-        if test_code == 'CLF-C01':
+        if test_code in ['CLF-C01', 'CLF-C02']:
             module_path = 'SkillAnalyzer.Skill_test.cloud_devops_test.AWS.aws_cloud_practitioner'
         # Add others as they are built...
         
@@ -506,10 +507,30 @@ def register_routes(app, render_page_func):
                 mod = importlib.import_module(module_path)
                 importlib.reload(mod)
                 if hasattr(mod, 'render'):
-                    return render_page_func(mod.render(), active="skill-analyzer")
+                    # Exam Mode: Render directly without site layout
+                    from flask import render_template_string
+                    return render_template_string(mod.render())
             except Exception as e:
                 import traceback
                 tb = traceback.format_exc()
-                return render_page_func(f"<h2>Error loading test</h2><pre>{tb}</pre>", active="skill-analyzer")
+                error_html = f"""
+                <!doctype html>
+                <html lang="en">
+                <head><title>Error</title>
+                <style>body{{margin:0;padding:40px;text-align:center;font-family:sans-serif;background-color:#0ea5e9;background-image:linear-gradient(180deg,#38bdf8 0%,#bae6fd 100%);color:#fff;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;}} pre{{background:rgba(0,0,0,0.2);padding:20px;border-radius:10px;text-align:left;max-width:800px;overflow:auto;}}</style>
+                </head>
+                <body><h1>Error Loading Test</h1><p>We encountered an issue loading the exam module.</p><pre>{tb}</pre></body></html>
+                """
+                from flask import render_template_string
+                return render_template_string(error_html)
         
-        return render_page_func(f"<h2>Test Not Available</h2><p>The practice test for <strong>{test_code}</strong> is currently being initialized. Please check back soon!</p>", active="skill-analyzer")
+        fallback_html = f"""
+        <!doctype html>
+        <html lang="en">
+        <head><title>Test Not Available</title>
+        <style>body{{margin:0;padding:40px;text-align:center;font-family:sans-serif;background-color:#0ea5e9;background-image:linear-gradient(180deg,#38bdf8 0%,#bae6fd 100%);color:#fff;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;}}</style>
+        </head>
+        <body><h1>Test Not Available</h1><p>The practice test for <strong>{test_code}</strong> is currently being initialized.</p><p>Please check back soon!</p></body></html>
+        """
+        from flask import render_template_string
+        return render_template_string(fallback_html)
