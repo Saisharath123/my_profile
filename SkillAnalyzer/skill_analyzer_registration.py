@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, render_template_string, request, flash, redirect, url_for, make_response
+from flask import Blueprint, render_template, render_template_string, request, flash, redirect, url_for, make_response, session
 import json
 import os
 from datetime import datetime
 from fpdf import FPDF
+import base64
+import tempfile
 
 # ==========================================
 #  JSON DATABASE LOGIC
@@ -348,6 +350,39 @@ def register_routes(app, render_page_callback=None):
             score = data.get('score', 0)
             passed = data.get('passed', False)
             
+            # --- Graph Image ---
+            graph_img = data.get('graph_image')
+            if graph_img:
+                try:
+                    # Remove header
+                    if ',' in graph_img:
+                        graph_img = graph_img.split(',')[1]
+                    img_data = base64.b64decode(graph_img)
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp_img:
+                        tmp_img.write(img_data)
+                        tmp_name = tmp_img.name
+                    
+                    # Add to PDF
+                    pdf.image(tmp_name, x=10, y=60, w=100) # Left side
+                    os.unlink(tmp_name) # Clean up
+                except Exception as e:
+                    print(f"Graph error: {e}")
+
+            # --- Summary ---
+            summary = data.get('skill_summary', '')
+            if summary:
+                pdf.set_xy(120, 60) # Right side
+                pdf.set_font("Arial", 'B', 12)
+                pdf.cell(0, 10, "Skill Analysis:", 0, 1)
+                pdf.set_font("Arial", '', 10)
+                pdf.set_xy(120, 70)
+                pdf.multi_cell(0, 6, summary)
+            
+            # Move Cursor down for Questions
+            pdf.set_y(150)
+            
+
+            
             score_color = (16, 185, 129) if passed else (239, 68, 68)
             pdf.set_text_color(*score_color)
             pdf.set_font("Arial", 'B', 20)
@@ -402,4 +437,70 @@ def register_routes(app, render_page_callback=None):
         except Exception as e:
             print(f"Error generating PDF: {e}")
             return f"Error: {str(e)}", 500
+
+    @app.route('/skill-analyzer/download-certificate', methods=['POST'])
+    def download_certificate():
+        try:
+            exam_code = request.form.get('exam_code', 'General')
+            score = request.form.get('score', '0')
+            
+            user_name = session.get('user_info', {}).get('name', 'Candidate')
+            
+            badges = {
+                'CLF-C01': {'title': "AWS Certified Cloud Practitioner", 'image': 'aws_cloud_practitioner.png'},
+                'CLF-C02': {'title': "AWS Certified Cloud Practitioner", 'image': 'aws_cloud_practitioner.png'}
+            }
+            details = badges.get(exam_code, {'title': "Certificate of Completion", 'image': 'aws_icon.png'})
+            
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            img_path = os.path.join(base_dir, 'images', details['image'])
+            
+            pdf = FPDF(orientation='L', unit='mm', format='A4')
+            pdf.add_page()
+            
+            # Border
+            pdf.set_line_width(2)
+            pdf.rect(10, 10, 277, 190)
+            
+            # Badge
+            if os.path.exists(img_path):
+                pdf.image(img_path, x=130, y=20, w=40)
+            
+            # Title
+            pdf.set_xy(0, 65)
+            pdf.set_font("Arial", 'B', 30)
+            pdf.cell(0, 20, "CERTIFICATE OF ACHIEVEMENT", 0, 1, 'C')
+            
+            pdf.set_font("Arial", '', 16)
+            pdf.cell(0, 15, "This certificate is proudly presented to", 0, 1, 'C')
+            
+            pdf.set_font("Arial", 'B', 24)
+            pdf.cell(0, 15, user_name, 0, 1, 'C')
+            
+            pdf.set_font("Arial", '', 16)
+            pdf.cell(0, 15, "For successfully passing the examination", 0, 1, 'C')
+            
+            pdf.set_font("Arial", 'B', 20)
+            pdf.cell(0, 15, details['title'], 0, 1, 'C')
+            
+            pdf.set_font("Arial", 'I', 12)
+            pdf.cell(0, 10, f"Score: {score}%", 0, 1, 'C')
+            
+            pdf.set_xy(60, 160)
+            pdf.set_font("Arial", '', 12)
+            pdf.cell(60, 10, f"Date: {datetime.now().strftime('%B %d, %Y')}", 'T', 0, 'C')
+            
+            pdf.set_xy(180, 160)
+            pdf.cell(60, 10, "Instructor / Admin", 'T', 0, 'C')
+            
+            response = make_response(pdf.output(dest='S').encode('latin-1'))
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = f'attachment; filename=Certificate_{exam_code}.pdf'
+            return response
+
+        except Exception as e:
+            print(f"Error generating certificate: {e}")
+            return str(e), 500
+
+
 

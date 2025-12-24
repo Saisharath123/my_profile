@@ -11,71 +11,71 @@ EXAM_INFO = {
     "description": "Validate your overall understanding of the AWS Cloud platform.",
     "duration_minutes": 90,
     "questions": [
-        {"id": 1, "question": "Which AWS service is used to deploy and manage applications in the cloud without worrying about the infrastructure?", "options": ["Amazon EC2", "AWS Elastic Beanstalk", "AWS Lambda", "Amazon RDS"], "correct": 1, "explanation": "Elastic Beanstalk handles deployment details automatically."},
-        {"id": 2, "question": "What is the primary benefit of using AWS Regions?", "options": ["Reduce cost", "Data security", "Global replication", "Lower latency for end-users"], "correct": 3, "explanation": "Regions allow deploying closer to users to reduce latency."},
-        {"id": 3, "question": "Which service monitors AWS resources health and performance?", "options": ["AWS CloudTrail", "Amazon CloudWatch", "AWS Config", "Amazon Inspector"], "correct": 1, "explanation": "CloudWatch provides metrics, logs, and alarms for monitoring."},
-        {"id": 4, "question": "Durable storage for static web content?", "options": ["EBS", "S3", "EFS", "Glacier"], "correct": 1, "explanation": "S3 is ideal for static content like images/videos."},
-        {"id": 5, "question": "Pricing model with no long-term commitment?", "options": ["Reserved", "Spot", "On-Demand", "Savings Plans"], "correct": 2, "explanation": "On-Demand is pay-as-you-go with no commitment."},
-        {"id": 6, "question": "Which AWS service enables you to create and manage virtual private networks?", "options": ["Amazon VPC", "AWS Direct Connect", "Amazon Route 53", "AWS VPN"], "correct": 0, "explanation": "Amazon VPC lets you provision a logically isolated section of the AWS Cloud."},
-        {"id": 7, "question": "Which service is best for querying data directly in S3 using SQL?", "options": ["Amazon Redshift", "Amazon Athena", "Amazon Aurora", "Amazon DynamoDB"], "correct": 1, "explanation": "Athena is an interactive query service to analyze data in S3 using standard SQL."},
-        {"id": 8, "question": "Which AWS support plan includes access to a Technical Account Manager (TAM)?", "options": ["Basic", "Developer", "Business", "Enterprise"], "correct": 3, "explanation": "Only the Enterprise Support plan includes a designated TAM."},
-        {"id": 9, "question": "Who is responsible for security 'OF' the cloud?", "options": ["AWS", "Customer", "Third-party audit", "Government"], "correct": 0, "explanation": "AWS is responsible for security OF the cloud (physical, network, hypervisor)."},
-        {"id": 10, "question": "Which service provides creating and rotating encryption keys?", "options": ["AWS Secrets Manager", "AWS KMS", "AWS Shield", "Amazon Macie"], "correct": 1, "explanation": "AWS Key Management Service (KMS) creates and manages cryptographic keys."},
-        {"id": 11, "question": "Which pillar of the Well-Architected Framework focuses on recovery from failure?", "options": ["Reliability", "Performance Efficiency", "Security", "Cost Optimization"], "correct": 0, "explanation": "Reliability focuses on specific best practices for recovering from failures."},
-        {"id": 12, "question": "Which service is a serverless compute service?", "options": ["EC2", "Lambda", "LightSail", "Fargate"], "correct": 1, "explanation": "AWS Lambda is a serverless compute service that runs code in response to events."},
-        {"id": 13, "question": "Which storage class is best for archival data accessed once a year?", "options": ["S3 Standard", "S3 Intelligent-Tiering", "S3 Glacier Deep Archive", "S3 One Zone-IA"], "correct": 2, "explanation": "Glacier Deep Archive is the lowest-cost storage class for long-term retention."},
-        {"id": 14, "question": "Which service helps protect against DDoS attacks?", "options": ["AWS WAF", "AWS Shield", "Amazon GuardDuty", "AWS Inspector"], "correct": 1, "explanation": "AWS Shield provides protection against Distributed Denial of Service (DDoS) attacks."},
-        {"id": 15, "question": "What is the AWS database service that is a NoSQL database?", "options": ["RDS", "Aurora", "DynamoDB", "Redshift"], "correct": 2, "explanation": "DynamoDB is a key-value and document database (NoSQL)."},
-        {"id": 16, "question": "Which service sends email notifications?", "options": ["SQS", "SNS", "SES", "Pinpoint"], "correct": 2, "explanation": "Amazon SES (Simple Email Service) is used for sending emails."},
-        {"id": 17, "question": "How can you grant a user access to a specific bucket?", "options": ["IAM Group", "IAM Role", "Bucket Policy", "Security Group"], "correct": 2, "explanation": "Bucket Policies are resource-based policies used to grant access to S3 buckets."},
-        {"id": 18, "question": "Which pricing tool allows you to estimate costs before using services?", "options": ["Cost Explorer", "AWS Pricing Calculator", "AWS Budgets", "Cost and Usage Report"], "correct": 1, "explanation": "AWS Pricing Calculator lets you estimate the cost for your architecture solution."},
-        {"id": 19, "question": "Which service provides a dedicated network connection from premises to AWS?", "options": ["VPN", "Internet Gateway", "Direct Connect", "VPC Peering"], "correct": 2, "explanation": "AWS Direct Connect links your internal network to an AWS Direct Connect location."},
-        {"id": 20, "question": "Which service is used for Infrastructure as Code?", "options": ["CloudFormation", "CodeBuild", "OpsWorks", "Config"], "correct": 0, "explanation": "AWS CloudFormation allows you to model infrastructure using code (JSON/YAML)."},
-        {"id": 21, "question": "Which EC2 purchasing option is best for short-term, spiky workloads that can be interrupted?", "options": ["On-Demand", "Reserved", "Spot", "Dedicated Hosts"], "correct": 2, "explanation": "Spot Instances offer unused capacity at a discount but can be interrupted."},
-        {"id": 22, "question": "Which service is a content delivery network (CDN)?", "options": ["Route 53", "CloudFront", "Global Accelerator", "Direct Connect"], "correct": 1, "explanation": "Amazon CloudFront is a global CDN service."},
-        {"id": 23, "question": "What does IAM stand for?", "options": ["Internal Access Management", "Identity and Access Management", "Internet Access Method", "Integrated Account Module"], "correct": 1, "explanation": "Identity and Access Management."},
-        {"id": 24, "question": "Which service is used to manage Docker containers?", "options": ["ECS", "EC2", "Lambda", "S3"], "correct": 0, "explanation": "Amazon Elastic Container Service (ECS) is a container orchestration service."},
-        {"id": 25, "question": "Which component is required to connect a VPC to the Internet?", "options": ["NAT Gateway", "Internet Gateway", "VPN Gateway", "Egress-Only Internet Gateway"], "correct": 1, "explanation": "An Internet Gateway (IGW) enables traffic between your VPC and the internet."},
-        {"id": 26, "question": "Which service provides managed DDoS protection?", "options": ["Shield", "WAF", "Firewall Manager", "GuardDuty"], "correct": 0, "explanation": "AWS Shield Standard is automatically enabled; Advanced offers paid protection."},
-        {"id": 27, "question": "Which AWS Service is a fully managed graph database?", "options": ["DynamoDB", "Neptune", "ElastiCache", "RDS"], "correct": 1, "explanation": "Amazon Neptune is a fast, reliable, fully managed graph database service."},
-        {"id": 28, "question": "Which service alerts you when your costs exceed a threshold?", "options": ["Cost Explorer", "AWS Budgets", "Trusted Advisor", "CloudTrail"], "correct": 1, "explanation": "AWS Budgets allows you to set custom budgets and alerting."},
-        {"id": 29, "question": "Who is responsible for patching the Guest OS in EC2?", "options": ["AWS", "The Customer", "AWS Support", "Managed Services"], "correct": 1, "explanation": "Under the Shared Responsibility Model, the customer updates the Guest OS."},
-        {"id": 30, "question": "Which service is used for DNS management?", "options": ["CloudFront", "Route 53", "VPC", "Direct Connect"], "correct": 1, "explanation": "Amazon Route 53 is a scalable cloud Domain Name System (DNS) web service."},
-        {"id": 31, "question": "Which service provides automated security assessments?", "options": ["Amazon Inspector", "GuardDuty", "Shield", "Macie"], "correct": 0, "explanation": "Amazon Inspector tests network accessibility ensuring security."},
-        {"id": 32, "question": "Which service can identify sensitive data (PII) in S3?", "options": ["GuardDuty", "Macie", "Shield", "Inspector"], "correct": 1, "explanation": "Amazon Macie uses ML to discover and protect sensitive data in S3."},
-        {"id": 33, "question": "What is the global infrastructure component that contains multiple Availability Zones?", "options": ["Edge Location", "Region", "Data Center", "Zone"], "correct": 1, "explanation": "A Region is a physical location around the world which clusters data centers (AZs)."},
-        {"id": 34, "question": "Which service allows you to run code without provisioning servers?", "options": ["EC2", "Lambda", "EBS", "RDS"], "correct": 1, "explanation": "AWS Lambda is the serverless compute service."},
-        {"id": 35, "question": "Which database engine is NOT compatible with RDS?", "options": ["MySQL", "PostgreSQL", "Oracle", "MongoDB"], "correct": 3, "explanation": "MongoDB is not supported by RDS (DocumentDB is the mongo-compatible service)."},
-        {"id": 36, "question": "Which service is a fully managed in-memory data store?", "options": ["ElastiCache", "DynamoDB", "S3", "RDS"], "correct": 0, "explanation": "Amazon ElastiCache offers Redis or Memcached."},
-        {"id": 37, "question": "Which tool provides real-time guidance to provision resources following best practices?", "options": ["Trusted Advisor", "Inspector", "Config", "CloudTrail"], "correct": 0, "explanation": "AWS Trusted Advisor provides recommendations for cost, performance, and security."},
-        {"id": 38, "question": "Which service records API calls for your account?", "options": ["CloudWatch", "CloudTrail", "Config", "X-Ray"], "correct": 1, "explanation": "AWS CloudTrail tracks user activity and API usage."},
-        {"id": 39, "question": "Which service allows you to decouple components of a microservices application?", "options": ["SQS", "S3", "EC2", "IAM"], "correct": 0, "explanation": "Simple Queue Service (SQS) decouples distributed systems."},
-        {"id": 40, "question": "Which S3 storage class is for data that is recreated if lost?", "options": ["S3 Standard", "S3 One Zone-IA", "S3 Glacier", "S3 Intelligent-Tiering"], "correct": 1, "explanation": "S3 One Zone-IA stores data in a single AZ, risking loss if that AZ fails."},
-        {"id": 41, "question": "What service handles user sign-up and sign-in for mobile apps?", "options": ["IAM", "Cognito", "Directory Service", "SSO"], "correct": 1, "explanation": "Amazon Cognito enables user authentication for apps."},
-        {"id": 42, "question": "Which architecture principle suggests replacing fixed servers with ephemeral resources?", "options": ["Loose Coupling", "Disposable Resources", "Automation", "Caching"], "correct": 1, "explanation": "Treat servers as disposable resources."},
-        {"id": 43, "question": "What is the benefit of edge locations?", "options": ["Lower cost", "Lower latency for content delivery", "Higher security", "More compute power"], "correct": 1, "explanation": "Edge locations cache content closer to users via CloudFront."},
-        {"id": 44, "question": "Which service provides a shared file system for Linux EC2 instances?", "options": ["S3", "EBS", "EFS", "FSx"], "correct": 2, "explanation": "Elastic File System (EFS) provides scalable file storage."},
-        {"id": 45, "question": "Which service automates software deployments to EC2 or on-premise?", "options": ["CodeBuild", "CodeDeploy", "CodeCommit", "CodePipeline"], "correct": 1, "explanation": "AWS CodeDeploy automates code deployments."},
-        {"id": 46, "question": "Which service provides machine learning capabilities?", "options": ["SageMaker", "Athena", "Glue", "EMR"], "correct": 0, "explanation": "Amazon SageMaker helps build, train, and deploy ML models."},
-        {"id": 47, "question": "Which service manages SSL/TLS certificates?", "options": ["ACM", "IAM", "KMS", "WAF"], "correct": 0, "explanation": "AWS Certificate Manager (ACM) provisions SSL/TLS certificates."},
-        {"id": 48, "question": "Which plan provides response times of < 15 minutes for business-critical system down?", "options": ["Developer", "Business", "Enterprise", "Basic"], "correct": 3, "explanation": "Enterprise Support offers < 15 min response for business-critical down events."},
-        {"id": 49, "question": "Which service helps you migrate databases to AWS?", "options": ["DMS", "SMS", "Snowball", "Direct Connect"], "correct": 0, "explanation": "Database Migration Service (DMS)."},
-        {"id": 50, "question": "Which specialized service is for data warehousing?", "options": ["RDS", "Redshift", "DynamoDB", "Athena"], "correct": 1, "explanation": "Amazon Redshift is a data warehouse service."},
-        {"id": 51, "question": "Which service is used for configuration management using Chef/Puppet?", "options": ["OpsWorks", "Beanstalk", "CloudFormation", "Systems Manager"], "correct": 0, "explanation": "AWS OpsWorks uses Chef and Puppet."},
-        {"id": 52, "question": "Which service provides demand-based scaling for EC2?", "options": ["Auto Scaling", "Load Balancing", "CloudWatch", "Lambda"], "correct": 0, "explanation": "EC2 Auto Scaling adjusts capacity based on demand."},
-        {"id": 53, "question": "What is the text-to-speech service?", "options": ["Polly", "Transcribe", "Lex", "Rekognition"], "correct": 0, "explanation": "Amazon Polly turns text into lifelike speech."},
-        {"id": 54, "question": "Which service is for analyzing streaming data?", "options": ["Kinesis", "Glue", "EMR", "Athena"], "correct": 0, "explanation": "Amazon Kinesis enables processing of streaming data."},
-        {"id": 55, "question": "Which service provides a simple way to send notifications?", "options": ["SNS", "SQS", "SES", "Connect"], "correct": 0, "explanation": "Simple Notification Service (SNS) uses pub/sub."},
-        {"id": 56, "question": "Which service detects objects locally using Deep Learning?", "options": ["DeepLens", "DeepRacer", "DeepComposer", "SageMaker"], "correct": 0, "explanation": "AWS DeepLens (legacy/device) or Rekognition (Cloud)."},
-        {"id": 57, "question": "Which service allows private connection between 2 VPCs?", "options": ["VPC Peering", "VPN", "Direct Connect", "Gateway Endpoint"], "correct": 0, "explanation": "VPC Peering connects two VPCs."},
-        {"id": 58, "question": "Which service allows transferring exabytes of data to AWS physically?", "options": ["Snowmobile", "Snowball", "Direct Connect", "S3 Transfer Acceleration"], "correct": 0, "explanation": "Snowmobile is the truck for exabyte-scale data."},
-        {"id": 59, "question": "Which service is a managed Hadoop framework?", "options": ["EMR", "Glue", "Athena", "Redshift"], "correct": 0, "explanation": "Elastic MapReduce (EMR) runs big data frameworks like Hadoop/Spark."},
-        {"id": 60, "question": "Which service provides a virtual desktop?", "options": ["WorkSpaces", "AppStream", "Connect", "Chime"], "correct": 0, "explanation": "Amazon WorkSpaces is a DaaS (Desktop as a Service)."},
-        {"id": 61, "question": "What is the primary interactive query service?", "options": ["Athena", "Redshift", "Glue", "EMR"], "correct": 0, "explanation": "Athena queries S3 data using SQL."},
-        {"id": 62, "question": "Which service provides threat detection?", "options": ["GuardDuty", "Inspector", "Macie", "WAF"], "correct": 0, "explanation": "GuardDuty is a threat detection service."},
-        {"id": 63, "question": "Which service manages API gateways?", "options": ["API Gateway", "Route 53", "Direct Connect", "CloudFront"], "correct": 0, "explanation": "Amazon API Gateway."},
-        {"id": 64, "question": "Which service is for business intelligence (BI)?", "options": ["QuickSight", "Athena", "Redshift", "Kinesis"], "correct": 0, "explanation": "Amazon QuickSight is the BI service."},
-        {"id": 65, "question": "Which support plan offers architectural guidance for your specific use cases?", "options": ["Business", "Developer", "Basic", "Free"], "correct": 0, "explanation": "Business Support offers context-aware architectural guidance."}
+        {"id": 1, "category": "Cloud Concepts", "question": "Which AWS service is used to deploy and manage applications in the cloud without worrying about the infrastructure?", "options": ["Amazon EC2", "AWS Elastic Beanstalk", "AWS Lambda", "Amazon RDS"], "correct": 1, "explanation": "Elastic Beanstalk handles deployment details automatically."},
+        {"id": 2, "category": "Cloud Concepts", "question": "What is the primary benefit of using AWS Regions?", "options": ["Reduce cost", "Data security", "Global replication", "Lower latency for end-users"], "correct": 3, "explanation": "Regions allow deploying closer to users to reduce latency."},
+        {"id": 3, "category": "Management", "question": "Which service monitors AWS resources health and performance?", "options": ["AWS CloudTrail", "Amazon CloudWatch", "AWS Config", "Amazon Inspector"], "correct": 1, "explanation": "CloudWatch provides metrics, logs, and alarms for monitoring."},
+        {"id": 4, "category": "Storage", "question": "Durable storage for static web content?", "options": ["EBS", "S3", "EFS", "Glacier"], "correct": 1, "explanation": "S3 is ideal for static content like images/videos."},
+        {"id": 5, "category": "Billing & Pricing", "question": "Pricing model with no long-term commitment?", "options": ["Reserved", "Spot", "On-Demand", "Savings Plans"], "correct": 2, "explanation": "On-Demand is pay-as-you-go with no commitment."},
+        {"id": 6, "category": "Network", "question": "Which AWS service enables you to create and manage virtual private networks?", "options": ["Amazon VPC", "AWS Direct Connect", "Amazon Route 53", "AWS VPN"], "correct": 0, "explanation": "Amazon VPC lets you provision a logically isolated section of the AWS Cloud."},
+        {"id": 7, "category": "Database/Analytics", "question": "Which service is best for querying data directly in S3 using SQL?", "options": ["Amazon Redshift", "Amazon Athena", "Amazon Aurora", "Amazon DynamoDB"], "correct": 1, "explanation": "Athena is an interactive query service to analyze data in S3 using standard SQL."},
+        {"id": 8, "category": "Billing & Support", "question": "Which AWS support plan includes access to a Technical Account Manager (TAM)?", "options": ["Basic", "Developer", "Business", "Enterprise"], "correct": 3, "explanation": "Only the Enterprise Support plan includes a designated TAM."},
+        {"id": 9, "category": "Security", "question": "Who is responsible for security 'OF' the cloud?", "options": ["AWS", "Customer", "Third-party audit", "Government"], "correct": 0, "explanation": "AWS is responsible for security OF the cloud (physical, network, hypervisor)."},
+        {"id": 10, "category": "Security", "question": "Which service provides creating and rotating encryption keys?", "options": ["AWS Secrets Manager", "AWS KMS", "AWS Shield", "Amazon Macie"], "correct": 1, "explanation": "AWS Key Management Service (KMS) creates and manages cryptographic keys."},
+        {"id": 11, "category": "Architecture", "question": "Which pillar of the Well-Architected Framework focuses on recovery from failure?", "options": ["Reliability", "Performance Efficiency", "Security", "Cost Optimization"], "correct": 0, "explanation": "Reliability focuses on specific best practices for recovering from failures."},
+        {"id": 12, "category": "Compute", "question": "Which service is a serverless compute service?", "options": ["EC2", "Lambda", "LightSail", "Fargate"], "correct": 1, "explanation": "AWS Lambda is a serverless compute service that runs code in response to events."},
+        {"id": 13, "category": "Storage", "question": "Which storage class is best for archival data accessed once a year?", "options": ["S3 Standard", "S3 Intelligent-Tiering", "S3 Glacier Deep Archive", "S3 One Zone-IA"], "correct": 2, "explanation": "Glacier Deep Archive is the lowest-cost storage class for long-term retention."},
+        {"id": 14, "category": "Security", "question": "Which service helps protect against DDoS attacks?", "options": ["AWS WAF", "AWS Shield", "Amazon GuardDuty", "AWS Inspector"], "correct": 1, "explanation": "AWS Shield provides protection against Distributed Denial of Service (DDoS) attacks."},
+        {"id": 15, "category": "Database", "question": "What is the AWS database service that is a NoSQL database?", "options": ["RDS", "Aurora", "DynamoDB", "Redshift"], "correct": 2, "explanation": "DynamoDB is a key-value and document database (NoSQL)."},
+        {"id": 16, "category": "App Integration", "question": "Which service sends email notifications?", "options": ["SQS", "SNS", "SES", "Pinpoint"], "correct": 2, "explanation": "Amazon SES (Simple Email Service) is used for sending emails."},
+        {"id": 17, "category": "Security", "question": "How can you grant a user access to a specific bucket?", "options": ["IAM Group", "IAM Role", "Bucket Policy", "Security Group"], "correct": 2, "explanation": "Bucket Policies are resource-based policies used to grant access to S3 buckets."},
+        {"id": 18, "category": "Billing & Pricing", "question": "Which pricing tool allows you to estimate costs before using services?", "options": ["Cost Explorer", "AWS Pricing Calculator", "AWS Budgets", "Cost and Usage Report"], "correct": 1, "explanation": "AWS Pricing Calculator lets you estimate the cost for your architecture solution."},
+        {"id": 19, "category": "Network", "question": "Which service provides a dedicated network connection from premises to AWS?", "options": ["VPN", "Internet Gateway", "Direct Connect", "VPC Peering"], "correct": 2, "explanation": "AWS Direct Connect links your internal network to an AWS Direct Connect location."},
+        {"id": 20, "category": "Management", "question": "Which service is used for Infrastructure as Code?", "options": ["CloudFormation", "CodeBuild", "OpsWorks", "Config"], "correct": 0, "explanation": "AWS CloudFormation allows you to model infrastructure using code (JSON/YAML)."},
+        {"id": 21, "category": "Compute", "question": "Which EC2 purchasing option is best for short-term, spiky workloads that can be interrupted?", "options": ["On-Demand", "Reserved", "Spot", "Dedicated Hosts"], "correct": 2, "explanation": "Spot Instances offer unused capacity at a discount but can be interrupted."},
+        {"id": 22, "category": "Network", "question": "Which service is a content delivery network (CDN)?", "options": ["Route 53", "CloudFront", "Global Accelerator", "Direct Connect"], "correct": 1, "explanation": "Amazon CloudFront is a global CDN service."},
+        {"id": 23, "category": "Security", "question": "What does IAM stand for?", "options": ["Internal Access Management", "Identity and Access Management", "Internet Access Method", "Integrated Account Module"], "correct": 1, "explanation": "Identity and Access Management."},
+        {"id": 24, "category": "Compute", "question": "Which service is used to manage Docker containers?", "options": ["ECS", "EC2", "Lambda", "S3"], "correct": 0, "explanation": "Amazon Elastic Container Service (ECS) is a container orchestration service."},
+        {"id": 25, "category": "Network", "question": "Which component is required to connect a VPC to the Internet?", "options": ["NAT Gateway", "Internet Gateway", "VPN Gateway", "Egress-Only Internet Gateway"], "correct": 1, "explanation": "An Internet Gateway (IGW) enables traffic between your VPC and the internet."},
+        {"id": 26, "category": "Security", "question": "Which service provides managed DDoS protection?", "options": ["Shield", "WAF", "Firewall Manager", "GuardDuty"], "correct": 0, "explanation": "AWS Shield Standard is automatically enabled; Advanced offers paid protection."},
+        {"id": 27, "category": "Database", "question": "Which AWS Service is a fully managed graph database?", "options": ["DynamoDB", "Neptune", "ElastiCache", "RDS"], "correct": 1, "explanation": "Amazon Neptune is a fast, reliable, fully managed graph database service."},
+        {"id": 28, "category": "Billing & Pricing", "question": "Which service alerts you when your costs exceed a threshold?", "options": ["Cost Explorer", "AWS Budgets", "Trusted Advisor", "CloudTrail"], "correct": 1, "explanation": "AWS Budgets allows you to set custom budgets and alerting."},
+        {"id": 29, "category": "Security", "question": "Who is responsible for patching the Guest OS in EC2?", "options": ["AWS", "The Customer", "AWS Support", "Managed Services"], "correct": 1, "explanation": "Under the Shared Responsibility Model, the customer updates the Guest OS."},
+        {"id": 30, "category": "Network", "question": "Which service is used for DNS management?", "options": ["CloudFront", "Route 53", "VPC", "Direct Connect"], "correct": 1, "explanation": "Amazon Route 53 is a scalable cloud Domain Name System (DNS) web service."},
+        {"id": 31, "category": "Security", "question": "Which service provides automated security assessments?", "options": ["Amazon Inspector", "GuardDuty", "Shield", "Macie"], "correct": 0, "explanation": "Amazon Inspector tests network accessibility ensuring security."},
+        {"id": 32, "category": "Security", "question": "Which service can identify sensitive data (PII) in S3?", "options": ["GuardDuty", "Macie", "Shield", "Inspector"], "correct": 1, "explanation": "Amazon Macie uses ML to discover and protect sensitive data in S3."},
+        {"id": 33, "category": "Cloud Concepts", "question": "What is the global infrastructure component that contains multiple Availability Zones?", "options": ["Edge Location", "Region", "Data Center", "Zone"], "correct": 1, "explanation": "A Region is a physical location around the world which clusters data centers (AZs)."},
+        {"id": 34, "category": "Compute", "question": "Which service allows you to run code without provisioning servers?", "options": ["EC2", "Lambda", "EBS", "RDS"], "correct": 1, "explanation": "AWS Lambda is the serverless compute service."},
+        {"id": 35, "category": "Database", "question": "Which database engine is NOT compatible with RDS?", "options": ["MySQL", "PostgreSQL", "Oracle", "MongoDB"], "correct": 3, "explanation": "MongoDB is not supported by RDS (DocumentDB is the mongo-compatible service)."},
+        {"id": 36, "category": "Database", "question": "Which service is a fully managed in-memory data store?", "options": ["ElastiCache", "DynamoDB", "S3", "RDS"], "correct": 0, "explanation": "Amazon ElastiCache offers Redis or Memcached."},
+        {"id": 37, "category": "Management", "question": "Which tool provides real-time guidance to provision resources following best practices?", "options": ["Trusted Advisor", "Inspector", "Config", "CloudTrail"], "correct": 0, "explanation": "AWS Trusted Advisor provides recommendations for cost, performance, and security."},
+        {"id": 38, "category": "Management", "question": "Which service records API calls for your account?", "options": ["CloudWatch", "CloudTrail", "Config", "X-Ray"], "correct": 1, "explanation": "AWS CloudTrail tracks user activity and API usage."},
+        {"id": 39, "category": "App Integration", "question": "Which service allows you to decouple components of a microservices application?", "options": ["SQS", "S3", "EC2", "IAM"], "correct": 0, "explanation": "Simple Queue Service (SQS) decouples distributed systems."},
+        {"id": 40, "category": "Storage", "question": "Which S3 storage class is for data that is recreated if lost?", "options": ["S3 Standard", "S3 One Zone-IA", "S3 Glacier", "S3 Intelligent-Tiering"], "correct": 1, "explanation": "S3 One Zone-IA stores data in a single AZ, risking loss if that AZ fails."},
+        {"id": 41, "category": "Security", "question": "What service handles user sign-up and sign-in for mobile apps?", "options": ["IAM", "Cognito", "Directory Service", "SSO"], "correct": 1, "explanation": "Amazon Cognito enables user authentication for apps."},
+        {"id": 42, "category": "Architecture", "question": "Which architecture principle suggests replacing fixed servers with ephemeral resources?", "options": ["Loose Coupling", "Disposable Resources", "Automation", "Caching"], "correct": 1, "explanation": "Treat servers as disposable resources."},
+        {"id": 43, "category": "Cloud Concepts", "question": "What is the benefit of edge locations?", "options": ["Lower cost", "Lower latency for content delivery", "Higher security", "More compute power"], "correct": 1, "explanation": "Edge locations cache content closer to users via CloudFront."},
+        {"id": 44, "category": "Storage", "question": "Which service provides a shared file system for Linux EC2 instances?", "options": ["S3", "EBS", "EFS", "FSx"], "correct": 2, "explanation": "Elastic File System (EFS) provides scalable file storage."},
+        {"id": 45, "category": "Management", "question": "Which service automates software deployments to EC2 or on-premise?", "options": ["CodeBuild", "CodeDeploy", "CodeCommit", "CodePipeline"], "correct": 1, "explanation": "AWS CodeDeploy automates code deployments."},
+        {"id": 46, "category": "Machine Learning", "question": "Which service provides machine learning capabilities?", "options": ["SageMaker", "Athena", "Glue", "EMR"], "correct": 0, "explanation": "Amazon SageMaker helps build, train, and deploy ML models."},
+        {"id": 47, "category": "Security", "question": "Which service manages SSL/TLS certificates?", "options": ["ACM", "IAM", "KMS", "WAF"], "correct": 0, "explanation": "AWS Certificate Manager (ACM) provisions SSL/TLS certificates."},
+        {"id": 48, "category": "Billing & Support", "question": "Which plan provides response times of < 15 minutes for business-critical system down?", "options": ["Developer", "Business", "Enterprise", "Basic"], "correct": 3, "explanation": "Enterprise Support offers < 15 min response for business-critical down events."},
+        {"id": 49, "category": "Database", "question": "Which service helps you migrate databases to AWS?", "options": ["DMS", "SMS", "Snowball", "Direct Connect"], "correct": 0, "explanation": "Database Migration Service (DMS)."},
+        {"id": 50, "category": "Database/Analytics", "question": "Which specialized service is for data warehousing?", "options": ["RDS", "Redshift", "DynamoDB", "Athena"], "correct": 1, "explanation": "Amazon Redshift is a data warehouse service."},
+        {"id": 51, "category": "Management", "question": "Which service is used for configuration management using Chef/Puppet?", "options": ["OpsWorks", "Beanstalk", "CloudFormation", "Systems Manager"], "correct": 0, "explanation": "AWS OpsWorks uses Chef and Puppet."},
+        {"id": 52, "category": "Compute", "question": "Which service provides demand-based scaling for EC2?", "options": ["Auto Scaling", "Load Balancing", "CloudWatch", "Lambda"], "correct": 0, "explanation": "EC2 Auto Scaling adjusts capacity based on demand."},
+        {"id": 53, "category": "Machine Learning", "question": "What is the text-to-speech service?", "options": ["Polly", "Transcribe", "Lex", "Rekognition"], "correct": 0, "explanation": "Amazon Polly turns text into lifelike speech."},
+        {"id": 54, "category": "Analytics", "question": "Which service is for analyzing streaming data?", "options": ["Kinesis", "Glue", "EMR", "Athena"], "correct": 0, "explanation": "Amazon Kinesis enables processing of streaming data."},
+        {"id": 55, "category": "App Integration", "question": "Which service provides a simple way to send notifications?", "options": ["SNS", "SQS", "SES", "Connect"], "correct": 0, "explanation": "Simple Notification Service (SNS) uses pub/sub."},
+        {"id": 56, "category": "Machine Learning", "question": "Which service detects objects locally using Deep Learning?", "options": ["DeepLens", "DeepRacer", "DeepComposer", "SageMaker"], "correct": 0, "explanation": "AWS DeepLens (legacy/device) or Rekognition (Cloud)."},
+        {"id": 57, "category": "Network", "question": "Which service allows private connection between 2 VPCs?", "options": ["VPC Peering", "VPN", "Direct Connect", "Gateway Endpoint"], "correct": 0, "explanation": "VPC Peering connects two VPCs."},
+        {"id": 58, "category": "Storage", "question": "Which service allows transferring exabytes of data to AWS physically?", "options": ["Snowmobile", "Snowball", "Direct Connect", "S3 Transfer Acceleration"], "correct": 0, "explanation": "Snowmobile is the truck for exabyte-scale data."},
+        {"id": 59, "category": "Analytics", "question": "Which service is a managed Hadoop framework?", "options": ["EMR", "Glue", "Athena", "Redshift"], "correct": 0, "explanation": "Elastic MapReduce (EMR) runs big data frameworks like Hadoop/Spark."},
+        {"id": 60, "category": "Compute", "question": "Which service provides a virtual desktop?", "options": ["WorkSpaces", "AppStream", "Connect", "Chime"], "correct": 0, "explanation": "Amazon WorkSpaces is a DaaS (Desktop as a Service)."},
+        {"id": 61, "category": "Analytics", "question": "What is the primary interactive query service?", "options": ["Athena", "Redshift", "Glue", "EMR"], "correct": 0, "explanation": "Athena queries S3 data using SQL."},
+        {"id": 62, "category": "Security", "question": "Which service provides threat detection?", "options": ["GuardDuty", "Inspector", "Macie", "WAF"], "correct": 0, "explanation": "GuardDuty is a threat detection service."},
+        {"id": 63, "category": "Network", "question": "Which service manages API gateways?", "options": ["API Gateway", "Route 53", "Direct Connect", "CloudFront"], "correct": 0, "explanation": "Amazon API Gateway."},
+        {"id": 64, "category": "Analytics", "question": "Which service is for business intelligence (BI)?", "options": ["QuickSight", "Athena", "Redshift", "Kinesis"], "correct": 0, "explanation": "Amazon QuickSight is the BI service."},
+        {"id": 65, "category": "Billing & Support", "question": "Which support plan offers architectural guidance for your specific use cases?", "options": ["Business", "Developer", "Basic", "Free"], "correct": 0, "explanation": "Business Support offers context-aware architectural guidance."}
     ]
 }
 
@@ -86,6 +86,7 @@ def render():
     exam_json = json.dumps(EXAM_INFO)
     
     return f"""
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
         
@@ -292,34 +293,43 @@ def render():
         /* Results Modal */
         .modal-overlay {{
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(5px);
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(8px);
             display: flex; justify-content: center; align-items: center;
             z-index: 1000;
             opacity: 0; visibility: hidden;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
         }}
         .modal-overlay.active {{ opacity: 1; visibility: visible; }}
         
         .result-card {{
-            background: #fff;
-            padding: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
             border-radius: 24px;
             text-align: center;
-            max-width: 500px;
-            width: 90%;
+            max-width: 900px; /* Wider */
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255,255,255,0.8);
             transform: scale(0.95);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }}
         .modal-overlay.active .result-card {{ transform: scale(1); }}
         
+        .result-header {{
+            display: flex; flex-direction: column; align-items: center; margin-bottom: 20px;
+        }}
+
         .score-circle {{
             width: 120px; height: 120px;
             border-radius: 50%;
-            background: conic-gradient(var(--primary) 0%, #e2e8f0 0%);
-            margin: 0 auto 30px;
+            background: conic-gradient(#0ea5e9 0%, #e2e8f0 0%); /* Dynamic updated via JS */
+            margin: 0 auto 10px;
             display: flex; align-items: center; justify-content: center;
             position: relative;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }}
         .score-circle::before {{
             content: '';
@@ -327,9 +337,59 @@ def render():
             background: #fff; border-radius: 50%;
         }}
         .score-val {{
-            position: relative; font-size: 2.5rem; font-weight: 800; color: #1e293b;
+            position: relative; font-size: 2.2rem; font-weight: 800; color: #0284c7; z-index: 2;
         }}
-        .score-label {{ position: relative; font-size: 0.9rem; color: #64748b; margin-top:-5px;}}
+
+        .result-body {{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }}
+        .chart-container {{
+            flex: 1;
+            min-width: 320px;
+            max-width: 450px;
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }}
+        #skill-summary {{
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            max-height: 400px;
+            overflow-y: auto;
+        }}
+        
+        /* Skill Items */
+        .skill-item {{
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0; border-bottom: 1px solid #f1f5f9;
+        }}
+        .skill-item:last-child {{ border-bottom: none; }}
+        .skill-name {{ font-weight: 500; color: #475569; font-size: 0.9rem; }}
+        .skill-val {{ font-weight: 600; font-size: 0.9rem; }}
+        
+        .action-buttons {{
+             display: flex;
+             justify-content: center;
+             gap: 10px;
+             flex-wrap: wrap;
+             margin: 0 auto;
+        }}
+        .action-buttons .btn {{
+            min-width: 140px;
+             flex: 1;
+             max-width: 200px;
+        }}
 
     </style>
 
@@ -376,21 +436,30 @@ def render():
     <div class="modal-overlay" id="result-modal">
         <div class="result-card">
             <h2 style="margin-top:0; color:#1e293b;">Exam Completed!</h2>
-            <p style="color:#64748b;">Here is your performance summary.</p>
-            
-            <div class="score-circle" id="score-circle">
-                <div style="display:flex; flex-direction:column;">
+            <div class="result-header">
+                <div class="score-circle" id="score-circle">
+                    <!-- Note: JS updates gradient background -->
                     <span class="score-val" id="score-val">0%</span>
+                </div>
+                <div id="score-msg" style="font-weight:800; font-size:1.8rem; margin-bottom:5px; color:#1e293b;"></div>
+                <p style="color:#64748b; margin:0;">Here is your detailed performance breakdown.</p>
+            </div>
+            
+            <div class="result-body">
+                <div class="chart-container">
+                    <canvas id="skillChart"></canvas>
+                </div>
+                <div id="skill-summary">
+                    <!-- JS Injected Content -->
                 </div>
             </div>
             
-            <div id="score-msg" style="font-weight:600; font-size:1.2rem; margin-bottom:30px;">
-                <!-- Pass/Fail msg -->
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="window.location.reload()">Retake Exam</button>
+                <button class="btn btn-secondary" onclick="window.history.back()">Exit</button>
+                <button class="btn btn-info" onclick="downloadCertificate()" style="background-color:#3b82f6; color:white;">Download Certificate 🎖️</button>
+                <button class="btn btn-success" onclick="downloadExamPaper()" style="background-color:#10b981; color:white;">Download Report 📄</button>
             </div>
-            
-            <button class="btn btn-primary" onclick="window.location.reload()" style="width:100%">Retake Exam</button>
-            <button class="btn btn-success" onclick="downloadExamPaper()" style="width:100%; margin-top:10px; background-color:#10b981; border:none; color:white; font-weight:600;">Download Report 📄</button>
-            <button class="btn btn-secondary" onclick="window.history.back()" style="width:100%; margin-top:10px;">Exit</button>
         </div>
     </div>
 
@@ -399,6 +468,8 @@ def render():
         let currentQ = 0;
         let answers = new Array(EXAM_DATA.questions.length).fill(null);
         let timeLeft = EXAM_DATA.duration_minutes * 60; // in seconds
+        let finalScore = 0;
+
 
         // Timer Logic
         function startTimer() {{
@@ -476,6 +547,8 @@ def render():
             }});
             
             const scorePct = Math.round((correct / EXAM_DATA.questions.length) * 100);
+            finalScore = scorePct;
+
             
             // Show Result
             document.getElementById('result-modal').classList.add('active');
@@ -494,6 +567,89 @@ def render():
                 msg.textContent = "Keep practicing. You got this!";
                 msg.style.color = "#ef4444";
             }}
+            
+            startSkillAnalysis();
+        }}
+
+        function startSkillAnalysis() {{
+            // Calculate Category Scores
+            const categories = {{}};
+            EXAM_DATA.questions.forEach((q, i) => {{
+                const cat = q.category || "General";
+                if (!categories[cat]) categories[cat] = {{ total: 0, correct: 0 }};
+                categories[cat].total++;
+                if (answers[i] === q.correct) categories[cat].correct++;
+            }});
+
+            const labels = Object.keys(categories);
+            const data = labels.map(l => Math.round((categories[l].correct / categories[l].total) * 100));
+
+            // Render Radar Chart
+            const ctx = document.getElementById('skillChart').getContext('2d');
+            
+            new Chart(ctx, {{
+                type: 'radar',
+                data: {{
+                    labels: labels,
+                    datasets: [{{
+                        label: 'Skill Proficiency (%)',
+                        data: data,
+                        fill: true,
+                        backgroundColor: 'rgba(255, 153, 0, 0.2)',
+                        borderColor: '#FF9900',
+                        pointBackgroundColor: '#FF9900',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#FF9900'
+                    }}]
+                }},
+                options: {{
+                    elements: {{ line: {{ borderWidth: 3 }} }},
+                    scales: {{ r: {{ min: 0, max: 100, ticks: {{ stepSize: 20 }} }} }}
+                }}
+            }});
+
+            // Summary Text
+            let summaryHTML = "<strong>Skill Breakdown</strong>";
+            labels.forEach((l, i) => {{
+                const score = data[i];
+                let qual = score >= 80 ? "Strong" : (score >= 50 ? "Average" : "Weak");
+                let color = score >= 80 ? "#10b981" : (score >= 50 ? "#f59e0b" : "#ef4444");
+                summaryHTML += `
+                <div class="skill-item">
+                    <span class="skill-name">${{l}}</span>
+                    <span class="skill-val" style="color:${{color}}">${{score}}% (${{qual}})</span>
+                </div>`;
+            }});
+            document.getElementById('skill-summary').innerHTML = summaryHTML;
+        }}
+
+        function downloadCertificate() {{
+            if (finalScore < 70) {{
+                alert("You must pass the exam (70%+) to download the certificate.");
+                return;
+            }}
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/skill-analyzer/download-certificate';
+            
+            const fields = {{
+                'exam_code': 'CLF-C01',
+                'score': finalScore,
+                'passed': true // verified by check above
+            }};
+            
+            for (const key in fields) {{
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }}
+            
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
         }}
 
         function downloadExamPaper() {{
@@ -509,13 +665,21 @@ def render():
                 }};
             }});
             const scorePct = Math.round((correct / EXAM_DATA.questions.length) * 100);
+            finalScore = scorePct; // Update global score
+
+            // Capture the graph image from canvas
+            const chartCanvas = document.getElementById('skillChart');
+            const graphImg = chartCanvas ? chartCanvas.toDataURL('image/png') : null;
+            const summaryText = document.getElementById('skill-summary').innerText;
 
             const payload = {{
-                user_name: "Candidate",
+                user_name: "Candidate", // Backend will override with session name if available
                 exam_title: EXAM_DATA.title,
                 score: scorePct,
                 passed: scorePct >= 70,
-                questions: questionData
+                questions: questionData,
+                graph_image: graphImg,
+                skill_summary: summaryText
             }};
 
             const form = document.createElement('form');
