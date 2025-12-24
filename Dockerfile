@@ -20,4 +20,4 @@ EXPOSE 80
 ENV FLASK_APP=app.py
 
 # Run app.py when the container launches
-CMD ["python", "app.py"]
+CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
