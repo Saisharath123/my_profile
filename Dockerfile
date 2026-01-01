@@ -1,6 +1,11 @@
 # Use an official Python runtime as a parent image
 FROM python:3.9-slim
 
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+ENV FLASK_APP=app.py
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -16,8 +21,5 @@ COPY . .
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
-# Define environment variable
-ENV FLASK_APP=app.py
-
 # Run app.py when the container launches
-CMD ["gunicorn", "-b", "0.0.0.0:80", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "app:app"]

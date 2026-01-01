@@ -500,6 +500,8 @@ def register_routes(app, render_page_func):
         # AWS
         if test_code in ['CLF-C01', 'CLF-C02']:
             module_path = 'SkillAnalyzer.Skill_test.cloud_devops_test.AWS.aws_cloud_practitioner'
+        elif test_code == 'SAA-C03':
+            module_path = 'SkillAnalyzer.Skill_test.cloud_devops_test.AWS.aws_solutions_architect'
         # Add others as they are built...
         
         if module_path:

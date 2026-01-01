@@ -307,6 +307,9 @@ def register_routes(app, render_page_callback=None):
                 except Exception as e:
                     print(f"DEBUG: Save crashed {e}")
 
+                # Save to session for exam/certificate use
+                session['user_info'] = registration_data
+
                 # Always redirect if validation passes
                 print(f"DEBUG: Redirecting to {next_url or 'Fallback'}")
                 flash(f"Success! Redirecting you to the assessment...", "success")
@@ -317,6 +320,9 @@ def register_routes(app, render_page_callback=None):
 
         # GET Handling
         next_url = request.args.get('next', '')
+        
+        # Registration page is active (mute removed)
+
         html = REGISTRATION_HTML # Use native action="/skill-registration"
         html = html.replace('NEXT_URL_PLACEHOLDER', next_url)
 
@@ -342,9 +348,13 @@ def register_routes(app, render_page_callback=None):
             pdf.set_font("Arial", 'B', 24)
             pdf.cell(0, 20, "Skill Analysis Report", 0, 1, 'C')
             
+            # Sanitize strings for FPDF
+            u_name = data.get('user_name', 'Candidate').encode('latin-1', 'replace').decode('latin-1')
+            e_title = data.get('exam_title', 'Cloud Assessment').encode('latin-1', 'replace').decode('latin-1')
+
             pdf.set_font("Arial", '', 14)
-            pdf.cell(0, 10, f"Candidate: {data.get('user_name', 'Candidate')}", 0, 1)
-            pdf.cell(0, 10, f"Exam: {data.get('exam_title', 'Cloud Assessment')}", 0, 1)
+            pdf.cell(0, 10, f"Candidate: {u_name}", 0, 1)
+            pdf.cell(0, 10, f"Exam: {e_title}", 0, 1)
             pdf.cell(0, 10, f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}", 0, 1)
             
             score = data.get('score', 0)
@@ -376,7 +386,9 @@ def register_routes(app, render_page_callback=None):
                 pdf.cell(0, 10, "Skill Analysis:", 0, 1)
                 pdf.set_font("Arial", '', 10)
                 pdf.set_xy(120, 70)
-                pdf.multi_cell(0, 6, summary)
+                # Sanitize summary
+                safe_summary = summary.encode('latin-1', 'replace').decode('latin-1')
+                pdf.multi_cell(0, 6, safe_summary)
             
             # Move Cursor down for Questions
             pdf.set_y(150)
@@ -429,7 +441,19 @@ def register_routes(app, render_page_callback=None):
                 
                 pdf.ln(8)
                 
-            response = make_response(pdf.output(dest='S').encode('latin-1'))
+            # Use temp file for robust binary handling
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_pdf:
+                pdf.output(name=tmp_pdf.name)
+                tmp_pdf_path = tmp_pdf.name
+            
+            with open(tmp_pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+            try:
+                os.unlink(tmp_pdf_path)
+            except Exception:
+                pass # Non-critical cleanup
+
+            response = make_response(pdf_bytes)
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = 'attachment; filename=Skill_Analysis_Report.pdf'
             return response
@@ -448,7 +472,8 @@ def register_routes(app, render_page_callback=None):
             
             badges = {
                 'CLF-C01': {'title': "AWS Certified Cloud Practitioner", 'image': 'aws_cloud_practitioner.png'},
-                'CLF-C02': {'title': "AWS Certified Cloud Practitioner", 'image': 'aws_cloud_practitioner.png'}
+                'CLF-C02': {'title': "AWS Certified Cloud Practitioner", 'image': 'aws_cloud_practitioner.png'},
+                'SAA-C03': {'title': "AWS Certified Solutions Architect – Associate", 'image': 'aws_solutions_architect_associate.png'}
             }
             details = badges.get(exam_code, {'title': "Certificate of Completion", 'image': 'aws_icon.png'})
             
@@ -474,14 +499,18 @@ def register_routes(app, render_page_callback=None):
             pdf.set_font("Arial", '', 16)
             pdf.cell(0, 15, "This certificate is proudly presented to", 0, 1, 'C')
             
+            # Sanitize for PDF
+            safe_name = user_name.encode('latin-1', 'replace').decode('latin-1')
+            safe_title = details['title'].encode('latin-1', 'replace').decode('latin-1')
+
             pdf.set_font("Arial", 'B', 24)
-            pdf.cell(0, 15, user_name, 0, 1, 'C')
+            pdf.cell(0, 15, safe_name, 0, 1, 'C')
             
             pdf.set_font("Arial", '', 16)
             pdf.cell(0, 15, "For successfully passing the examination", 0, 1, 'C')
             
             pdf.set_font("Arial", 'B', 20)
-            pdf.cell(0, 15, details['title'], 0, 1, 'C')
+            pdf.cell(0, 15, safe_title, 0, 1, 'C')
             
             pdf.set_font("Arial", 'I', 12)
             pdf.cell(0, 10, f"Score: {score}%", 0, 1, 'C')
@@ -493,7 +522,19 @@ def register_routes(app, render_page_callback=None):
             pdf.set_xy(180, 160)
             pdf.cell(60, 10, "Instructor / Admin", 'T', 0, 'C')
             
-            response = make_response(pdf.output(dest='S').encode('latin-1'))
+            # Use temp file for robust binary handling
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as tmp_pdf:
+                pdf.output(name=tmp_pdf.name)
+                tmp_pdf_path = tmp_pdf.name
+            
+            with open(tmp_pdf_path, 'rb') as f:
+                pdf_bytes = f.read()
+            try:
+                os.unlink(tmp_pdf_path)
+            except Exception:
+                pass # Non-critical cleanup
+
+            response = make_response(pdf_bytes)
             response.headers['Content-Type'] = 'application/pdf'
             response.headers['Content-Disposition'] = f'attachment; filename=Certificate_{exam_code}.pdf'
             return response
