@@ -42,31 +42,40 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
           /* Graphical Title Styles */
           .courses-header-graphical {
               text-align: center;
-              margin-bottom: 30px;
+              margin-bottom: 40px;
               position: relative;
           }
           
           .courses-header-graphical h1 {
               font-family: 'Outfit', sans-serif;
-              font-size: 3.5rem;
+              font-size: 4.2rem;
               font-weight: 900;
               margin: 0;
               text-transform: uppercase;
-              letter-spacing: -2px;
-              background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #06b6d4 100%);
+              letter-spacing: -1px;
+              /* Dynamic gradient syncing with sky/cloud theme */
+              background: linear-gradient(135deg, #0284c7 0%, #38bdf8 25%, #818cf8 50%, #38bdf8 75%, #0284c7 100%);
+              background-size: 200% auto;
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
-              filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+              animation: titleShimmer 6s linear infinite;
+              filter: drop-shadow(0 4px 12px rgba(56, 189, 248, 0.3));
+          }
+
+          @keyframes titleShimmer {
+              0% { background-position: 0% 50%; }
+              100% { background-position: 200% 50%; }
           }
 
           .courses-header-graphical::after {
               content: '';
               display: block;
-              width: 100px;
+              width: 140px;
               height: 6px;
-              background: linear-gradient(90deg, #3b82f6, #06b6d4);
-              margin: 10px auto 0;
-              border-radius: 4px;
+              background: linear-gradient(90deg, #38bdf8, #818cf8);
+              margin: 16px auto 0;
+              border-radius: 10px;
+              box-shadow: 0 4px 12px rgba(56, 189, 248, 0.4);
           }
         </style>
 
