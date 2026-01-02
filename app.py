@@ -329,7 +329,7 @@ BASE_HTML = """
       <a class="module {% if active=='projects' %}active{% endif %}" href="{{ url_for('projects') }}"><div class="icon">💼</div><div class="label">Projects</div></a>
       {# <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_analyzer') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a> #}
       <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_selection') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a>
-      <a class="module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='contact_icon.png') }}" style="width:24px; height:24px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
+      <a class="module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='contact_icon.png') }}" style="width:36px; height:36px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
     </nav>
   </header>
 
