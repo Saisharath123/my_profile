@@ -297,20 +297,20 @@ BASE_HTML = """
       .container { padding:12px; margin-top:8px; }
     }
 
-    /* Ringing animation for Contact icon */
+    /* Ringing animation for Contact module */
     @keyframes vibrate-ring {
-      0% { transform: rotate(0) scale(1); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
-      3% { transform: rotate(15deg) scale(1.15); }
-      6% { transform: rotate(-15deg) scale(1.15); }
-      9% { transform: rotate(15deg) scale(1.15); filter: drop-shadow(0 0 8px rgba(96,165,250,0.8)); }
-      12% { transform: rotate(-15deg) scale(1.15); }
-      15% { transform: rotate(15deg) scale(1.15); }
-      18% { transform: rotate(0) scale(1); }
-      100% { transform: rotate(0) scale(1); filter: drop-shadow(0 0 0 rgba(255,255,255,0)); }
+      0% { transform: rotate(0) scale(1); box-shadow: 0 6px 18px rgba(12,24,36,0.04); border-color: rgba(10,20,30,0.06); }
+      4% { transform: rotate(2deg) scale(1.02); }
+      8% { transform: rotate(-2deg) scale(1.02); }
+      12% { transform: rotate(2deg) scale(1.02); box-shadow: 0 10px 25px rgba(96,165,250,0.5); border-color: rgba(96,165,250,0.5); }
+      16% { transform: rotate(-2deg) scale(1.02); }
+      20% { transform: rotate(0) scale(1); }
+      100% { transform: rotate(0) scale(1); box-shadow: 0 6px 18px rgba(12,24,36,0.04); border-color: rgba(10,20,30,0.06); }
     }
-    .ringing-icon {
-      animation: vibrate-ring 2.5s infinite ease-in-out;
+    .ringing-module {
+      animation: vibrate-ring 3s infinite ease-in-out;
       transform-origin: center center;
+      z-index: 10; /* Ensure it stays on top during animation */
     }
   </style>
 </head>
@@ -345,7 +345,7 @@ BASE_HTML = """
       <a class="module {% if active=='projects' %}active{% endif %}" href="{{ url_for('projects') }}"><div class="icon">💼</div><div class="label">Projects</div></a>
       {# <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_analyzer') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a> #}
       <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_selection') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a>
-      <a class="module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='contact_icon.png') }}" class="ringing-icon" style="width:36px; height:36px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
+      <a class="module ringing-module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='contact_icon.png') }}" style="width:36px; height:36px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
     </nav>
   </header>
 
