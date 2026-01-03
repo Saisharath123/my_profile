@@ -22,11 +22,11 @@ jobs:
 
     - name: Deploy application
       run: |
-        ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << EOF
+        ssh -i ~/.ssh/id_ed25519 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
           set -e
           cd /var/www/my_profile
           git pull origin master
           source venv/bin/activate
           pip install -r requirements.txt
-          sudo /usr/bin/systemctl restart my_profile
+          sudo /usr/local/bin/restart_my_profile.sh
         EOF
