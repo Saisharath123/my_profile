@@ -209,61 +209,6 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             .hero-wrap { height:140px; }
             .hero-wrap.square { padding-top:66%; }
           }
-          
-          /* --- NEW DYNAMIC ENHANCEMENTS --- */
-          
-          /* 1. Entrance Animation */
-          @keyframes slideUpFade {
-            0% { opacity:0; transform:translateY(30px) scale(0.95); }
-            100% { opacity:1; transform:translateY(0) scale(1); }
-          }
-          
-          /* Apply animation to cards */
-          .course-card {
-             animation: slideUpFade 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-             overflow: hidden; /* Needed for shine effect */
-          }
-          
-          /* Stagger delays for top row */
-          .courses-top .course-link:nth-child(1) .course-card { animation-delay: 0.1s; }
-          .courses-top .course-link:nth-child(2) .course-card { animation-delay: 0.2s; }
-          .courses-top .course-link:nth-child(3) .course-card { animation-delay: 0.3s; }
-          
-          /* Stagger delays for bottom row */
-          .courses-bottom .course-link:nth-child(1) .course-card { animation-delay: 0.4s; }
-          .courses-bottom .course-link:nth-child(2) .course-card { animation-delay: 0.5s; }
-          .courses-bottom .course-link:nth-child(3) .course-card { animation-delay: 0.6s; }
-
-          /* 2. Shine Effect on Hover */
-          .course-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-20deg);
-            transition: none;
-            pointer-events: none;
-            z-index: 10;
-          }
-          
-          .course-card:hover::after {
-             left: 150%;
-             transition: 0.7s ease-in-out;
-          }
-
-          /* 3. Image Zoom on Hover (using CSS var) */
-          .course-card:hover .course-hero {
-             transform: scale(calc(var(--base-scale) * 1.15)) !important;
-             transition: transform 0.4s ease-out;
-          }
-          
-          /* Smooth out general transitions */
-          .courses-top .course-card, .courses-bottom .course-card {
-             transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease;
-          }
         </style>
 
         <div class="courses-top">
@@ -296,7 +241,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
               <div class="course-card">
                 {offer_html}
                 <div class='hero-wrap'>
-                  <img class='course-hero{extra_cls}' src="{thumb}" alt="{c['title']}" style="--base-scale:{c['scale']}; transform: scale(var(--base-scale));">
+                  <img class='course-hero{extra_cls}' src="{thumb}" alt="{c['title']}" style="transform: scale({c['scale']});">
                 </div>
                 <div class="course-body">
                   <div class="course-title">{c['title']}</div>
@@ -339,7 +284,7 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             <a class='course-link' href='{url_for('course_detail', slug=c['slug'])}' style='text-decoration:none;color:inherit;'>
               <div class="course-card">
                 <div class='hero-wrap square'>
-                  <img class='course-hero contain' src="{thumb}" alt="{c['title']}" style="--base-scale:{scale_override}; transform: scale(var(--base-scale));">
+                  <img class='course-hero contain' src="{thumb}" alt="{c['title']}" style="transform: scale({scale_override});">
                 </div>
                 <div class="course-body">
                   <div class="course-title">{c['title']}</div>
@@ -457,4 +402,3 @@ def register_routes(app, render_page_func, images_dir, cloud_filename):
             pass
 
         return render_page_func(f"<h2>Module not found</h2><p>Could not load module detail for {service_id}</p>", active="courses")
-
