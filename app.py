@@ -340,12 +340,12 @@ BASE_HTML = """
     </a>
 
     <nav class="modules" role="navigation" aria-label="primary modules">
-      <a class="module {% if active=='profile' %}active{% endif %}" href="{{ url_for('profile') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_profile.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="Profile"></div><div class="label">Profile</div></a>
-      <a class="module {% if active=='courses' %}active{% endif %}" href="{{ url_for('courses') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_courses.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="Courses"></div><div class="label">Courses</div></a>
-      <a class="module {% if active=='projects' %}active{% endif %}" href="{{ url_for('projects') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_projects.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="Projects"></div><div class="label">Projects</div></a>
+      <a class="module {% if active=='profile' %}active{% endif %}" href="{{ url_for('profile') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_profile.png', v=2) }}" style="width:48px; height:48px; object-fit:contain;" alt="Profile"></div><div class="label">Profile</div></a>
+      <a class="module {% if active=='courses' %}active{% endif %}" href="{{ url_for('courses') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_courses.png', v=2) }}" style="width:48px; height:48px; object-fit:contain;" alt="Courses"></div><div class="label">Courses</div></a>
+      <a class="module {% if active=='projects' %}active{% endif %}" href="{{ url_for('projects') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_projects.png', v=2) }}" style="width:48px; height:48px; object-fit:contain;" alt="Projects"></div><div class="label">Projects</div></a>
       {# <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_analyzer') }}"><div class="icon">📊</div><div class="label">Skill Analyzer</div></a> #}
-      <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_selection') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_skill_analyzer.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="Skill Analyzer"></div><div class="label">Skill Analyzer</div></a>
-      <a class="module ringing-module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_contact.png') }}" style="width:48px; height:48px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
+      <a class="module {% if active=='skill-analyzer' %}active{% endif %}" href="{{ url_for('skill_selection') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_skill_analyzer.png', v=2) }}" style="width:48px; height:48px; object-fit:contain;" alt="Skill Analyzer"></div><div class="label">Skill Analyzer</div></a>
+      <a class="module ringing-module {% if active=='contact' %}active{% endif %}" href="{{ url_for('contact') }}"><div class="icon"><img src="{{ url_for('image_file', filename='module_icon_contact.png', v=2) }}" style="width:48px; height:48px; object-fit:contain;" alt="Contact"></div><div class="label">Contact</div></a>
     </nav>
   </header>
 
