@@ -1,9 +1,9 @@
-name: Deploy Flask App to EC2
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - master
+      - master  # or main, depending on your default branch
 
 jobs:
   deploy:
@@ -11,22 +11,24 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
-    - name: Configure SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_ed25519
-        chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+    - name: Copy files to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "."  # or specify folders like 'Main/', 'Projects/'
+        target: "~/deployments/my_profile"
 
-    - name: Deploy application
-      run: |
-        ssh -i ~/.ssh/id_ed25519 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          set -e
-          cd /var/www/my_profile
-          git pull origin master
-          source venv/bin/activate
-          pip install -r requirements.txt
-          sudo /usr/local/bin/restart_my_profile.sh
-        EOF
+    - name: Restart app on EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USER }}
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd ~/deployments/my_profile
+          # Replace with your actual restart command
+          sudo systemctl restart myapp.service
