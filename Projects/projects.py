@@ -32,7 +32,6 @@ def render(project_images):
     # Images for the folders
     cloud_img = url_for('image_file', filename='cloud.webp')
     devops_img = url_for('image_file', filename='devops.png')
-    other_img = url_for('image_file', filename='other_projects_icon.png')
     
     html = f"""
     <style>
@@ -207,7 +206,11 @@ def render(project_images):
                 <div class="folder-back"></div>
                 <div class="folder-paper"></div>
                 <div class="folder-front">
-                    <img src="{other_img}" alt="Other" class="folder-icon">
+                    <svg class="folder-icon" viewBox="0 0 24 24" fill="none" stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                    </svg>
                     <div class="folder-label">Other Projects</div>
                 </div>
             </div>
