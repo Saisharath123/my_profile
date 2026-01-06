@@ -168,14 +168,16 @@ def render(project_images):
         <div class="folders-row">
             
             <!-- Cloud Folder -->
-            <div class="folder">
-                <div class="folder-back"></div>
-                <div class="folder-paper"></div>
-                <div class="folder-front">
-                    <img src="{cloud_img}" alt="Cloud" class="folder-icon">
-                    <div class="folder-label">Cloud Projects</div>
+            <a href="{url_for('projects_cloud')}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{cloud_img}" alt="Cloud" class="folder-icon">
+                        <div class="folder-label">Cloud Projects</div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <!-- DevOps Folder -->
             <div class="folder">

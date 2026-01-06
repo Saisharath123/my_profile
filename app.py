@@ -473,6 +473,15 @@ def projects():
     html = projects_module.render(project_images)
     return render_page(html, active="projects")
 
+@app.route("/projects/cloud")
+def projects_cloud():
+    # Import locally
+    import Projects.cloud_projects as cloud_projects_module
+    
+    html = cloud_projects_module.render_cloud_page()
+    # We keep active="projects" to highlight the Projects nav item
+    return render_page(html, active="projects")
+
 # Skill Analyzer Module
 import SkillAnalyzer.skill_analyzer_page as skill_analyzer_page
 skill_analyzer_page.register_routes(app, render_page)
