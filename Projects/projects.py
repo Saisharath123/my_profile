@@ -164,6 +164,8 @@ def render(project_images):
         }}
     </style>
 
+
+
     <div class="projects-wrapper">
         <div class="folders-row">
             
@@ -180,14 +182,16 @@ def render(project_images):
             </a>
 
             <!-- DevOps Folder -->
-            <div class="folder">
-                <div class="folder-back"></div>
-                <div class="folder-paper"></div>
-                <div class="folder-front">
-                    <img src="{devops_img}" alt="DevOps" class="folder-icon">
-                    <div class="folder-label">DevOps Projects</div>
+            <a href="{url_for('projects_devops')}" style="text-decoration: none; color: inherit; display: block;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{devops_img}" alt="DevOps" class="folder-icon">
+                        <div class="folder-label">DevOps Projects</div>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <!-- Web Folder -->
             <div class="folder">
@@ -218,6 +222,24 @@ def render(project_images):
             </div>
 
         </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 40px;">
+        <a href="/" class="back-link" style="
+            display: inline-flex; 
+            align-items: center; 
+            color: #0f172a; 
+            font-weight: 800; 
+            text-decoration: none; 
+            background: rgba(255, 255, 255, 0.9); 
+            padding: 12px 24px; 
+            border-radius: 9999px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+            transition: all 0.3s; 
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        ">← Back to Home</a>
     </div>
     """
     return html

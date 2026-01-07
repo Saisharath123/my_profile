@@ -1,193 +1,193 @@
 from flask import url_for
+from .cloud_aws import AWS_PROJECTS
+from .cloud_gcp import GCP_PROJECTS
+from .cloud_azure import AZURE_PROJECTS
+from .cloud_multi import MULTI_PROJECTS
 
-CLOUD_PROJECTS = {
-    "aws_migration": {
-        "title": "AWS Lift & Shift Migration",
-        "tags": ["AWS", "DMS", "EC2"],
-        "desc": "Zero-downtime migration of a monolithic app to AWS.",
-        "category": "cloud"
-    },
-    "serverless_api": {
-        "title": "Serverless REST API",
-        "tags": ["Lambda", "API Gateway", "DynamoDB"],
-        "desc": "High-scale serverless backend.",
-        "category": "cloud"
-    },
-    "project1": {"title": "Cloud Infra Demo", "tags": ["Cloud"], "desc": "Infrastructure demo.", "category": "cloud"},
-}
+CLOUD_PROJECTS = {}
+CLOUD_PROJECTS.update(AWS_PROJECTS)
+CLOUD_PROJECTS.update(GCP_PROJECTS)
+CLOUD_PROJECTS.update(AZURE_PROJECTS)
+CLOUD_PROJECTS.update(MULTI_PROJECTS)
 
 def render_cloud_page():
     """
-    Render the Cloud Projects detailed view with 3 main modules: AWS, GCP, Azure.
+    Render the Cloud Projects detailed view with 4 folders: AWS, GCP, Azure, Multi-Cloud.
+    Uses the same folder metaphor as the main projects page.
     """
     aws_img = url_for('image_file', filename='aws_icon.png')
     gcp_img = url_for('image_file', filename='gcp_icon.png')
     azure_img = url_for('image_file', filename='azure_icon.png')
+    multi_img = url_for('image_file', filename='cloud.webp') # Using cloud.webp for Multi-Cloud
     
     html = f"""
     <style>
-        .cloud-modules-container {{
-            padding: 40px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* Override global main container styles for this page only */
+        .card {{
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+            padding: 0 !important;
         }}
-        
-        .header-section {{
-            text-align: center;
-            margin-bottom: 50px;
-        }}
-        
-        .header-section h2 {{
-            font-size: 2.5rem;
-            color: #0f172a;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }}
-        
-        .header-section p {{
-            color: #64748b;
-            font-size: 1.1rem;
+        .container {{
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
         }}
 
-        .modules-grid {{
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            justify-items: center;
+        /* Reusing the Folder styles */
+        .projects-wrapper {{
+            padding: 40px 20px;
+            perspective: 800px;
+            margin-top: 20px;
         }}
-        
-        .cloud-module-card {{
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            width: 100%;
-            max-width: 350px;
+
+        .folders-row {{
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }}
+
+        .folder {{
+            width: 220px;
+            height: 160px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }}
+
+        .folder:hover {{
+            transform: translateY(-10px) rotateX(5deg);
+        }}
+
+        .folder-back {{
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, #d4a76a, #bf9052);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }}
+        .folder-back::after {{
+            content: '';
+            position: absolute;
+            top: -14px; left: 0;
+            width: 90px; height: 14px;
+            background: #d4a76a;
+            border-radius: 8px 8px 0 0;
+        }}
+
+        .folder-paper {{
+            position: absolute;
+            top: 10px; left: 10px;
+            width: calc(100% - 20px); height: calc(100% - 15px);
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            transform-origin: bottom center;
+        }}
+        .folder:hover .folder-paper {{
+            transform: translateY(-8px) scaleY(1.02);
+        }}
+
+        .folder-front {{
+            position: absolute;
+            top: 20px; left: 0;
+            width: 100%; height: 140px;
+            background: linear-gradient(135deg, #e6b97b 0%, #d4a76a 100%);
+            border-radius: 0 0 8px 8px;
+            transform-origin: bottom center;
+            transform: rotateX(-12deg); 
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            position: relative;
-            overflow: hidden;
-        }}
-        
-        .cloud-module-card::before {{
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }}
-        
-        .cloud-module-card:hover {{
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: rgba(14, 165, 233, 0.4);
-        }}
-        
-        .cloud-module-card:hover::before {{
-            opacity: 1;
-        }}
-        
-        .logo-container {{
-            width: 120px;
-            height: 120px;
-            margin-bottom: 25px;
-            position: relative;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            transition: transform 0.4s ease;
+            backface-visibility: hidden;
+            border-top: 1px solid rgba(255,255,255,0.3);
         }}
-        
-        .cloud-module-card:hover .logo-container {{
-            transform: scale(1.1) rotate(5deg);
-        }}
-        
-        .module-logo {{
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-        }}
-        
-        .module-title {{
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #1e293b;
-            margin-bottom: 15px;
-        }}
-        
-        .module-desc {{
-            color: #64748b;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }}
-        
-        .card-decoration {{
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, transparent 50%, rgba(14, 165, 233, 0.05) 50%);
-            border-bottom-right-radius: 20px;
-            pointer-events: none;
-        }}
-        
-        /* Specific hover colors */
-        .cloud-module-card.aws:hover {{ border-color: #FF9900; }}
-        .cloud-module-card.gcp:hover {{ border-color: #4285F4; }}
-        .cloud-module-card.azure:hover {{ border-color: #0078D4; }}
 
+        .folder:hover .folder-front {{
+            transform: rotateX(-25deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }}
+
+        .folder-icon {{
+            width: 64px;
+            height: 64px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transform: translateZ(20px);
+            backface-visibility: hidden;
+        }}
+        
+        .folder-label {{
+            font-weight: 800;
+            color: #3f2e18;
+            font-size: 1.1rem;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+            transform: translateZ(20px);
+        }}
     </style>
 
-    <div class="cloud-modules-container">
-        <div class="header-section">
-            <h2>Cloud Platforms</h2>
-            <p>Explore projects and resources across major cloud providers</p>
-        </div>
-
-        <div class="modules-grid">
-            <!-- AWS Module -->
-            <div class="cloud-module-card aws" onclick="window.location.href='#'"> <!-- Placeholder link -->
-                <div class="logo-container">
-                    <img src="{aws_img}" alt="AWS" class="module-logo">
+    <div class="projects-wrapper">
+        <div class="folders-row">
+            
+            <!-- AWS Folder -->
+            <a href="/projects/cloud/aws" style="text-decoration: none; color: inherit;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{aws_img}" alt="AWS" class="folder-icon">
+                        <div class="folder-label">AWS</div>
+                    </div>
                 </div>
-                <div class="module-title">AWS</div>
-                <div class="module-desc">Amazon Web Services architecture, serverless patterns, and infrastructure as code.</div>
-                <div class="card-decoration"></div>
-            </div>
+            </a>
 
-            <!-- GCP Module -->
-            <div class="cloud-module-card gcp" onclick="window.location.href='#'">
-                <div class="logo-container">
-                    <img src="{gcp_img}" alt="GCP" class="module-logo">
+            <!-- GCP Folder -->
+            <a href="/projects/cloud/gcp" style="text-decoration: none; color: inherit;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{gcp_img}" alt="GCP" class="folder-icon">
+                        <div class="folder-label">Google Cloud</div>
+                    </div>
                 </div>
-                <div class="module-title">Google Cloud</div>
-                <div class="module-desc">GCP native solutions, Kubernetes (GKE), and data analytics pipelines.</div>
-                <div class="card-decoration"></div>
-            </div>
+            </a>
 
-            <!-- Azure Module -->
-            <div class="cloud-module-card azure" onclick="window.location.href='#'">
-                <div class="logo-container">
-                    <img src="{azure_img}" alt="Azure" class="module-logo">
+            <!-- Azure Folder -->
+            <a href="/projects/cloud/azure" style="text-decoration: none; color: inherit;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{azure_img}" alt="Azure" class="folder-icon">
+                        <div class="folder-label">Azure</div>
+                    </div>
                 </div>
-                <div class="module-title">Azure</div>
-                <div class="module-desc">Microsoft Azure enterprise solutions, DevOps integration, and hybrid cloud.</div>
-                <div class="card-decoration"></div>
-            </div>
+            </a>
+
+            <!-- Multi-Cloud Folder -->
+            <a href="/projects/cloud/multi" style="text-decoration: none; color: inherit;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{multi_img}" alt="Multi-Cloud" class="folder-icon">
+                        <div class="folder-label">Multi-Cloud</div>
+                    </div>
+                </div>
+            </a>
+            
         </div>
     </div>
     """

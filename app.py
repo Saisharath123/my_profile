@@ -482,6 +482,36 @@ def projects_cloud():
     # We keep active="projects" to highlight the Projects nav item
     return render_page(html, active="projects")
 
+@app.route("/projects/cloud/aws")
+def projects_cloud_aws():
+    import Projects.cloud_aws as cloud_aws_module
+    html = cloud_aws_module.render()
+    return render_page(html, active="projects")
+
+@app.route("/projects/cloud/gcp")
+def projects_cloud_gcp():
+    import Projects.cloud_gcp as cloud_gcp_module
+    html = cloud_gcp_module.render()
+    return render_page(html, active="projects")
+
+@app.route("/projects/cloud/azure")
+def projects_cloud_azure():
+    import Projects.cloud_azure as cloud_azure_module
+    html = cloud_azure_module.render()
+    return render_page(html, active="projects")
+
+@app.route("/projects/cloud/multi")
+def projects_cloud_multi():
+    import Projects.cloud_multi as cloud_multi_module
+    html = cloud_multi_module.render()
+    return render_page(html, active="projects")
+
+@app.route("/projects/devops")
+def projects_devops():
+    import Projects.devops_projects as devops_projects_module
+    html = devops_projects_module.render()
+    return render_page(html, active="projects")
+
 # Skill Analyzer Module
 import SkillAnalyzer.skill_analyzer_page as skill_analyzer_page
 skill_analyzer_page.register_routes(app, render_page)
