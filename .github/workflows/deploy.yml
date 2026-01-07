@@ -3,32 +3,26 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - master  # or main, depending on your default branch
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Copy files to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        source: "."  # or specify folders like 'Main/', 'Projects/'
-        target: "~/deployments/my_profile"
-
-    - name: Restart app on EC2
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USER }}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd ~/deployments/my_profile
-          # Replace with your actual restart command
-          sudo systemctl restart myapp.service
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            cd /var/www/my_profile
+            git pull origin master
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo systemctl restart my_profile
