@@ -32,6 +32,8 @@ def render(project_images):
     # Images for the folders
     cloud_img = url_for('image_file', filename='cloud.webp')
     devops_img = url_for('image_file', filename='devops.png')
+    github_img = url_for('image_file', filename='github_logo.png')
+    docker_img = url_for('image_file', filename='docker_logo.png')
     
     html = f"""
     <style>
@@ -220,6 +222,30 @@ def render(project_images):
                     <div class="folder-label">Other Projects</div>
                 </div>
             </div>
+
+            <!-- GitHub Folder -->
+            <a href="https://github.com/Saisharath123" target="_blank" style="text-decoration: none; color: inherit; display: block;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{github_img}" alt="GitHub" class="folder-icon">
+                        <div class="folder-label">GitHub</div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- DockerHub Folder -->
+            <a href="https://hub.docker.com/u/saisarath14" target="_blank" style="text-decoration: none; color: inherit; display: block;">
+                <div class="folder">
+                    <div class="folder-back"></div>
+                    <div class="folder-paper"></div>
+                    <div class="folder-front">
+                        <img src="{docker_img}" alt="DockerHub" class="folder-icon">
+                        <div class="folder-label">DockerHub</div>
+                    </div>
+                </div>
+            </a>
 
         </div>
         </div>

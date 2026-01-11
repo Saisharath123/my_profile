@@ -337,6 +337,10 @@ def register_routes(app, render_page_func):
                   <img src="/images/devops_images/docker.png" alt="DockerHub" style="width:20px;height:20px;object-fit:contain;">
                   <span>Docker Hub: saisarath14</span>
                 </a>
+                <a href="https://www.urbanpro.com/hyderabad/sai-n-aws-devops-trainer-with-10-years-of-it-experience-and-5-years-in-real-time-cloud-projects" target="_blank" class="contact-link">
+                  <img src="{{ url_for('image_file', filename='urbanpro_logo.jpg') }}" alt="UrbanPro" style="width:20px;height:20px;object-fit:contain;">
+                  <span>UrbanPro Profile</span>
+                </a>
               </div>
             </div>
 

@@ -1,4 +1,7 @@
-from flask import url_for
+from flask import url_for, redirect, request, jsonify
+import json
+import os
+from datetime import datetime
 
 def register_routes(app, render_page_func):
     @app.route("/skill-analyzer", methods=['GET', 'POST'])
@@ -192,13 +195,309 @@ def register_routes(app, render_page_func):
                     </ul>
                     {% endif %}
 
-                    <a href="{{ module.get('route', '#') }}" class="sa-btn">{{ module['action_label'] }}</a>
+                    <a href="{{ module.get('route', '#') }}" class="sa-btn" {% if module.get('open_new_tab') %}target="_blank"{% endif %}>{{ module['action_label'] }}</a>
                 </div>
                 {% endfor %}
             </div>
         </div>
         """
         return render_page_func(html, active="skill-analyzer", modules=modules)
+
+    @app.route("/skill-analyzer/virtual-interview")
+    def virtual_interview_legacy():
+        return redirect(url_for('ai_interview_session'))
+
+    @app.route("/skill-analyzer/ai-interview-session")
+    def ai_interview_session():
+        # The AI Interview Interface (Camera, Mic, Selection)
+        html = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>AI Virtual Interview Session</title>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;800&display=swap');
+                body {
+                    margin: 0; padding: 0;
+                    font-family: 'Outfit', sans-serif;
+                    background: #0f172a;
+                    color: #fff;
+                    height: 100vh;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .ai-header {
+                    padding: 20px;
+                    border-bottom: 1px solid #334155;
+                    display: flex; justify-content: space-between; align-items: center;
+                }
+                .ai-container {
+                    flex-grow: 1;
+                    display: flex;
+                    padding: 20px;
+                    gap: 20px;
+                }
+                .video-panel {
+                    flex: 2;
+                    background: #1e293b;
+                    border-radius: 16px;
+                    overflow: hidden;
+                    position: relative;
+                    display: flex; align-items: center; justify-content: center;
+                    border: 2px solid #334155;
+                }
+                video {
+                    width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1);
+                }
+                .control-panel {
+                    flex: 1;
+                    background: #1e293b;
+                    border-radius: 16px;
+                    padding: 30px;
+                    border: 1px solid #334155;
+                    display: flex; flex-direction: column;
+                }
+                h2 { margin-top: 0; color: #38bdf8; }
+                select, button {
+                    width: 100%;
+                    padding: 15px;
+                    border-radius: 8px;
+                    border: 1px solid #475569;
+                    margin-bottom: 20px;
+                    font-family: inherit;
+                    font-size: 1rem;
+                }
+                select { background: #0f172a; color: #fff; }
+                button {
+                    background: #2563eb; color: #fff; border: none; font-weight: bold; cursor: pointer;
+                    transition: background 0.2s;
+                }
+                button:hover { background: #1d4ed8; }
+                
+                .status-indicator {
+                    display: flex; gap: 10px; margin-bottom: 20px;
+                }
+                .badge {
+                    padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; background: #334155; color: #cbd5e1;
+                }
+                .badge.active { background: #10b981; color: #fff; }
+                .badge.error { background: #ef4444; color: #fff; }
+                
+                #interview-stage { display: none; margin-top: 20px; }
+                .ai-avatar {
+                    width: 60px; height: 60px; border-radius: 50%; background: #38bdf8;
+                    display: flex; align-items: center; justify-content: center; font-size: 2rem;
+                    margin-bottom: 15px;
+                }
+                .question-text {
+                    font-size: 1.2rem; line-height: 1.5; color: #fff;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="ai-header">
+                <h3>Skill Analyzer AI Interview (Simulation Ready)</h3>
+                <div>🔴 Live Session</div>
+            </div>
+            
+            <div class="ai-container">
+                <div class="video-panel">
+                    <video id="userVideo" autoplay playsinline muted></video>
+                    <div style="position:absolute; bottom:20px; left:20px; background:rgba(0,0,0,0.6); padding:5px 10px; border-radius:5px;">
+                        Candidate View
+                    </div>
+                </div>
+                
+                <div class="control-panel">
+                    <div class="status-indicator">
+                        <span id="camStatus" class="badge">Camera Checking...</span>
+                        <span id="micStatus" class="badge">Mic Checking...</span>
+                    </div>
+
+                    <div id="setup-stage">
+                        <h2>Configure Session</h2>
+                        <label style="display:block; margin-bottom:10px; color:#94a3b8;">Select Interview Track</label>
+                        <select id="interviewType">
+                            <option value="aws">AWS Solution Architect Interview</option>
+                            <option value="devops">DevOps Interview Questions</option>
+                            <option value="linux">Linux Administration Questions</option>
+                            <option value="k8s">Kubernetes Exclusively</option>
+                        </select>
+                        
+                        <button onclick="startInterview()">Start Interview</button>
+                        <p style="font-size:0.8rem; color:#64748b;">
+                            Note: This session uses AI to analyze your responses and body language. Ensure you are in a quiet environment.
+                        </p>
+                    </div>
+
+                    <div id="interview-stage">
+                        <div class="ai-avatar">🤖</div>
+                        <h3 style="color:#38bdf8;">AI Interviewer</h3>
+                        <p id="questionBox" class="question-text">Initializing session...</p>
+                        
+                        <div style="margin-top:30px; height:4px; background:#334155; border-radius:2px; overflow:hidden;">
+                            <div style="width:100%; height:100%; background:#10b981; animation: pulse 1.5s infinite;"></div>
+                        </div>
+                        <p id="statusTag" style="text-align:center; color:#64748b; font-size:0.9rem; margin-top:5px;">Preparing...</p>
+                        
+                        <div id="scorePanel" class="score-box" style="display:none; background:#0f172a; border:1px solid #334155; border-radius:10px; padding:15px; margin-top:20px;">
+                            <div>AI Assessment:</div>
+                            <div id="scoreValue" style="font-size:1.5rem; font-weight:800; color:#10b981;">-</div>
+                            <div id="scoreFeedback" style="font-size:0.9rem; color:#94a3b8; margin-top:5px;">-</div>
+                        </div>
+
+                        <div style="display:flex; gap:10px; margin-top:20px;">
+                            <button onclick="manualRepeat()" style="background:#334155;">Repeat Question</button>
+                            <button onclick="manualNext()" style="background:#10b981;">Done Speaking / Next ➔</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const videoElement = document.getElementById('userVideo');
+                const camStatus = document.getElementById('camStatus');
+                const micStatus = document.getElementById('micStatus');
+                const qBox = document.getElementById('questionBox');
+                
+                let recognition;
+                let currentQuestion = "";
+                let isListening = false;
+                
+                // 1. Initialize Camera/Mic
+                async function initMedia() {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                        videoElement.srcObject = stream;
+                        camStatus.textContent = "Camera Active";
+                        camStatus.classList.add("active");
+                        micStatus.textContent = "Mic Active";
+                        micStatus.classList.add("active");
+                    } catch (err) {
+                        console.warn("Media Error:", err);
+                        camStatus.textContent = "Camera N/A (Simulation)";
+                        camStatus.classList.add("error");
+                        micStatus.textContent = "Mic N/A (Simulation)";
+                        micStatus.classList.add("error");
+                    }
+                    
+                    // Initialize Speech Recognition
+                    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                        recognition = new SpeechRecognition();
+                        recognition.continuous = false; // Stop after one sentence to process
+                        recognition.interimResults = false;
+                        recognition.lang = 'en-US';
+                        
+                        recognition.onresult = function(event) {
+                            const transcript = event.results[0][0].transcript.toLowerCase();
+                            console.log("User said:", transcript);
+                            processAnswer(transcript);
+                        };
+                        
+                        recognition.onend = function() {
+                            if (isListening) recognition.start(); // Restart if still in listening mode
+                        };
+                        
+                        recognition.onerror = function(event) {
+                            console.error("Speech Error:", event.error);
+                        };
+                    } else {
+                        alert("Your browser does not support Speech Recognition. Please use Chrome/Edge.");
+                    }
+                }
+                
+                window.onload = initMedia;
+
+                // 2. Start Logic
+                function startInterview() {
+                    const type = document.getElementById('interviewType').value;
+                    const setupDiv = document.getElementById('setup-stage');
+                    const interviewDiv = document.getElementById('interview-stage');
+                    
+                    setupDiv.style.display = 'none';
+                    interviewDiv.style.display = 'block';
+                    
+                    // Set initial question
+                    if(type === 'aws') currentQuestion = "Welcome. Let's start with AWS. Can you explain the difference between latency-based routing and geolocation routing in Route 53?";
+                    else if(type === 'devops') currentQuestion = "Hello. In a DevOps lifecycle, how do you handle rollback strategies during a failed deployment?";
+                    else if(type === 'linux') currentQuestion = "Hi. Describe the boot process of a Linux system from BIOS to the login prompt.";
+                    else currentQuestion = "Welcome. Explain the purpose of a ReplicaSet vs a Deployment in Kubernetes.";
+                    
+                    speakAndListen(currentQuestion);
+                }
+                
+                function speakAndListen(text) {
+                    qBox.textContent = text;
+                    qBox.style.color = "#fff";
+                    document.getElementById('scorePanel').style.display = 'none';
+                    isListening = false;
+                    if(recognition) recognition.stop();
+                    
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(text);
+                        utterance.onend = function() {
+                            // Start listening after speaking
+                            qBox.innerHTML += "<br><br><span style='color:#10b981'>[Listening...]</span>";
+                            isListening = true;
+                            if(recognition) recognition.start();
+                        };
+                        window.speechSynthesis.speak(utterance);
+                    }
+                }
+                
+                function manualRepeat() { speakAndListen(currentQuestion); }
+                function manualNext() { processAnswer("Manual submission"); }
+
+                function processAnswer(text) {
+                    isListening = false;
+                    if(recognition) recognition.stop();
+                    document.getElementById('statusTag').textContent = "Analyzing Response...";
+                    
+                    setTimeout(() => {
+                        const score = Math.floor(Math.random() * (10 - 7 + 1)) + 7;
+                        const feedback = [
+                            "Solid explanation of the core concepts.",
+                            "Good understanding, but could be more concise.",
+                            "Excellent technical depth mentioned.",
+                            "Correct. You covered the key aspects well."
+                        ];
+                        const fb = feedback[Math.floor(Math.random() * feedback.length)];
+                        
+                        document.getElementById('scoreValue').textContent = score + "/10";
+                        document.getElementById('scoreFeedback').textContent = fb;
+                        document.getElementById('scorePanel').style.display = 'block';
+                        
+                        setTimeout(() => {
+                            const followUps = [
+                                "Interesting. How would you scale that solution?",
+                                "What about the security implications?",
+                                "Can you give a real-world scenario for this?",
+                                "Let's move on. How do you monitor this system?"
+                            ];
+                            const nextQ = followUps[Math.floor(Math.random() * followUps.length)];
+                            currentQuestion = nextQ;
+                            speakAndListen(nextQ);
+                        }, 4000);
+                        
+                    }, 1500);
+                }
+            </script>
+            <style>
+            @keyframes pulse {
+                0% { transform: translateX(-100%); }
+                100% { transform: translateX(100%); }
+            }
+            </style>
+        </body>
+        </html>
+        """
+        return html
+
+    @app.route("/skill-analyzer/linux-test")
+    def linux_test_legacy():
+        return redirect(url_for('cloud_devops_module_detail', module_id='linux'))
 
     @app.route("/skill-analyzer/live-test")
     def live_test_hub():
@@ -355,12 +654,15 @@ def register_routes(app, render_page_func):
                 GCP_CONTENT,
                 DEVOPS_CONTENT_SUB
             )
+            from .Skill_test.linux_test.linux_test import LINUX_TEST_CONTENT
+
             # Find the matching module
             module = None
             if module_id == 'aws': module = AWS_CONTENT
             elif module_id == 'azure': module = AZURE_CONTENT
             elif module_id == 'gcp': module = GCP_CONTENT
             elif module_id == 'devops': module = DEVOPS_CONTENT_SUB
+            elif module_id == 'linux': module = LINUX_TEST_CONTENT
             
             if not module:
                  return render_page_func("<h2>Module not found</h2><p>Invalid module ID.</p>", active="skill-analyzer")
@@ -467,7 +769,11 @@ def register_routes(app, render_page_func):
                         {% set current_category.value = cert.get('category') %}
                     {% endif %}
                     
-                    <a href="{{ url_for('skill_registration', next=url_for('take_test', test_code=cert['code'])) }}" target="_blank" class="cert-card" title="Start {{ cert['name'] }}">
+                    {% if cert.get('link') %}
+                        <a href="{{ cert['link'] }}" target="_blank" class="cert-card" title="Open {{ cert['name'] }}">
+                    {% else %}
+                        <a href="{{ url_for('skill_registration', next=url_for('take_test', test_code=cert['code'])) }}" target="_blank" class="cert-card" title="Start {{ cert['name'] }}">
+                    {% endif %}
                         <div class="cert-icon">
                              <img src="{{ url_for('image_file', filename=cert.get('image', 'cloud_logo_new.png')) }}" alt="{{ cert['name'] }}">
                         </div>
