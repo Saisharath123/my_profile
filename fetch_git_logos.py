@@ -16,6 +16,9 @@ images = {
 # Let's try: https://avatars.githubusercontent.com/u/4515128?s=280&v=4 (Linux Foundation GitHub Avatar)
 images["lf_logo.png"] = "https://avatars.githubusercontent.com/u/4515128?s=280&v=4"
 
+# Add GitHub Logo
+images["github_logo.png"] = "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+
 
 headers = {'User-Agent': 'Mozilla/5.0'}
 save_dir = r"c:/Users/HP/Desktop/my_profile/images/"
