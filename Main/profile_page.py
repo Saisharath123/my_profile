@@ -334,7 +334,7 @@ def register_routes(app, render_page_func):
                   <span>www.linkedin.com/in/sai-s-n</span>
                 </a>
                 <a href="https://github.com/Saisharath123" target="_blank" class="contact-link">
-                  <img src="/images/devops_images/Git Hub.png" alt="GitHub" style="width:20px;height:20px;object-fit:contain;">
+                  <img src="{{ url_for('image_file', filename='github_logo_new.png') }}" alt="GitHub" style="width:20px;height:20px;object-fit:contain;">
                   <span>github.com/Saisharath123</span>
                 </a>
                 <a href="https://hub.docker.com/u/saisarath14" target="_blank" class="contact-link">
