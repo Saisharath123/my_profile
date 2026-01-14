@@ -32,7 +32,7 @@ def render(project_images):
     # Images for the folders
     cloud_img = url_for('image_file', filename='cloud.webp')
     devops_img = url_for('image_file', filename='devops.png')
-    github_img = url_for('image_file', filename='github_logo.png')
+    github_img = url_for('image_file', filename='github_logo_new.png')
     docker_img = url_for('image_file', filename='docker_logo.png')
     
     html = f"""
