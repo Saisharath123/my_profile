@@ -418,9 +418,8 @@ def register_routes(app, render_page_func):
                     .services-inner {
                        display: flex;
                        flex-direction: column;
-                       justify-content: space-between; /* Distribute items to fill height */
-                       height: 100%;
-                       min-height: 320px; /* Ensure it takes up vertical space */
+                       justify-content: flex-start; /* Distribute items naturally */
+                       min-height: 420px; /* Provide enough room for all services */
                        padding: 10px 0;
                     }
 
