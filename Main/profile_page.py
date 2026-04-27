@@ -355,7 +355,11 @@ def register_routes(app, render_page_func):
               <div class="bio-card">
                 <div class="bio-header">Hello, I am Sai.</div>
                 <div class="bio-text">
-                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>10+ years of IT experience</strong>, with over 5 years specializing in <strong>Cloud and DevOps technologies</strong>. I completed my Master’s thesis on resource allocation in cloud computing, gaining strong expertise in optimization, scalability, and performance-driven architectures. Additionally, I provide freelance consulting services to help businesses scale, optimize, and modernize their cloud infrastructure.
+                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>4+ years of extensive hands-on experience</strong> in Cloud Infrastructure and DevOps, along with a broader <strong>10 years of overall exposure in IT</strong>, which includes freelancing, technical training, and research.
+                  <br><br>
+                  I completed my Master's thesis on resource allocation in cloud computing, building strong expertise in optimization, scalability, and performance-driven architectures. I am also a <strong>certified AWS Solutions Architect &ndash; Associate</strong> and <strong>Google Cloud Associate Cloud Engineer</strong>, reflecting my practical knowledge across multi-cloud environments.
+                  <br><br>
+                  In addition to my core industry experience, I actively provide freelance consulting and training, helping individuals and businesses design, scale, and optimize modern cloud infrastructure with real-world best practices.
                 </div>
               </div>
 
