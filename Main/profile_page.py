@@ -354,12 +354,11 @@ def register_routes(app, render_page_func):
               <!-- Bio -->
               <div class="bio-card">
                 <div class="bio-header">Hello, I am Sai.</div>
-                <div class="bio-text">
-                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>4+ years of extensive hands-on experience</strong> in Cloud Infrastructure and DevOps, along with a broader <strong>10 years of overall exposure in IT</strong>, which includes freelancing, technical training, and research.
+                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>4+ years of extensive hands-on experience</strong> in Cloud Infrastructure and DevOps, with strong expertise in designing, deploying, and managing scalable, performance-driven architectures.
                   <br><br>
-                  I completed my Master's thesis on resource allocation in cloud computing, building strong expertise in optimization, scalability, and performance-driven architectures. I am also a <strong>certified AWS Solutions Architect &ndash; Associate</strong> and <strong>Google Cloud Associate Cloud Engineer</strong>, reflecting my practical knowledge across multi-cloud environments.
+                  I completed my Master's thesis on resource allocation in cloud computing, which strengthened my understanding of optimization and scalability in distributed systems. I am also a <strong>certified AWS Solutions Architect &ndash; Associate</strong> and <strong>Google Cloud Associate Cloud Engineer</strong>, demonstrating practical proficiency across multi-cloud platforms. With close to <strong>10 years of overall exposure</strong> to the IT ecosystem&mdash;including academic research, freelance consulting, and technical training&mdash;I bring a well-rounded perspective to solving real-world cloud challenges.
                   <br><br>
-                  In addition to my core industry experience, I actively provide freelance consulting and training, helping individuals and businesses design, scale, and optimize modern cloud infrastructure with real-world best practices.
+                  In addition to my core industry experience, I provide freelance consulting services, helping businesses scale, optimize, and modernize their cloud infrastructure using industry best practices.
                 </div>
               </div>
 
