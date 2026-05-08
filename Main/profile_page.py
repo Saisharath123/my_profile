@@ -327,7 +327,7 @@ def register_routes(app, render_page_func):
                 </a>
                 <a href="{{ url_for('contact') }}" class="contact-link">
                   <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                  <span>+91 91826 72012</span>
+                  <span>+91 96665 62012</span>
                 </a>
                 <a href="https://www.linkedin.com/in/sai-s-n" target="_blank" class="contact-link">
                   <img src="{{ url_for('image_file', filename='linkedin.png') }}" alt="LinkedIn" style="width:20px;height:20px;object-fit:contain;">
@@ -355,11 +355,7 @@ def register_routes(app, render_page_func):
               <div class="bio-card">
                 <div class="bio-header">Hello, I am Sai.</div>
                 <div class="bio-text">
-                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>4+ years of extensive hands-on experience</strong> in Cloud Infrastructure and DevOps, with strong expertise in designing, deploying, and managing scalable, performance-driven architectures.
-                  <br><br>
-                  I completed my Master's thesis on resource allocation in cloud computing, which strengthened my understanding of optimization and scalability in distributed systems. I am also a <strong>certified AWS Solutions Architect &ndash; Associate</strong> and <strong>Google Cloud Associate Cloud Engineer</strong>, demonstrating practical proficiency across multi-cloud platforms. With close to 10 years of overall exposure to the IT ecosystem&mdash;including academic research, freelance consulting, and technical training&mdash;I bring a well-rounded perspective to solving real-world cloud challenges.
-                  <br><br>
-                  In addition to my core industry experience, I provide freelance consulting services, helping businesses scale, optimize, and modernize their cloud infrastructure using industry best practices.
+                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>10+ years of IT experience</strong>, with over 5 years specializing in <strong>Cloud and DevOps technologies</strong>. I completed my Master’s thesis on resource allocation in cloud computing, gaining strong expertise in optimization, scalability, and performance-driven architectures. Additionally, I provide freelance consulting services to help businesses scale, optimize, and modernize their cloud infrastructure.
                 </div>
               </div>
 
@@ -419,8 +415,9 @@ def register_routes(app, render_page_func):
                     .services-inner {
                        display: flex;
                        flex-direction: column;
-                       justify-content: flex-start; /* Distribute items naturally */
-                       min-height: 420px; /* Provide enough room for all services */
+                       justify-content: space-between; /* Distribute items to fill height */
+                       height: 100%;
+                       min-height: 320px; /* Ensure it takes up vertical space */
                        padding: 10px 0;
                     }
 
