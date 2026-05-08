@@ -355,7 +355,7 @@ def register_routes(app, render_page_func):
               <div class="bio-card">
                 <div class="bio-header">Hello, I am Sai.</div>
                 <div class="bio-text">
-                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>10+ years of IT experience</strong>, with over 5 years specializing in <strong>Cloud and DevOps technologies</strong>. I completed my Master’s thesis on resource allocation in cloud computing, gaining strong expertise in optimization, scalability, and performance-driven architectures. Additionally, I provide freelance consulting services to help businesses scale, optimize, and modernize their cloud infrastructure.
+                  A cloud enthusiast and instructor committed to hands-on learning through real-time labs and industry-grade projects. I bring <strong>7+ years of IT experience</strong>, with over 5 years specializing in <strong>Cloud and DevOps technologies</strong>. I completed my Master’s thesis on resource allocation in cloud computing, gaining strong expertise in optimization, scalability, and performance-driven architectures. Additionally, I provide freelance consulting services to help businesses scale, optimize, and modernize their cloud infrastructure.
                 </div>
               </div>
 
